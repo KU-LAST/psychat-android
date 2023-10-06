@@ -1,69 +1,43 @@
+@file:Suppress("UnstableApiUsage", "INLINE_FROM_HIGHER_PLATFORM")
+
 plugins {
-    alias(libs.plugins.com.android.application)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
+  psychat("android-application")
+  psychat("android-compose")
+  psychat("android-hilt")
 }
 
 android {
-    namespace = "com.last.psychat.android"
-    compileSdk = 33
+  namespace = "com.last.psychat.android"
 
-    defaultConfig {
-        applicationId = "com.last.psychat.android"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+  buildTypes {
+    getByName("debug") {
+      isDebuggable = true
+      applicationIdSuffix = ".dev"
+      manifestPlaceholders += mapOf(
+        "appName" to "@string/app_name_dev",
+      )
+    }
+  }
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
-    }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+  buildFeatures {
+    buildConfig = true
+  }
 }
 
 dependencies {
-
-    implementation(libs.core.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.activity.compose)
-    implementation(platform(libs.compose.bom))
-    implementation(libs.ui)
-    implementation(libs.ui.graphics)
-    implementation(libs.ui.tooling.preview)
-    implementation(libs.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.ui.test.junit4)
-    debugImplementation(libs.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
+  coreLibraryDesugaring(libs.desugar.jdk)
+  implementations(
+    projects.core.data,
+    projects.core.designsystem,
+    projects.core.domain,
+    projects.core.ui,
+    projects.core.util,
+    projects.feature.main,
+    libs.androidx.splash,
+    libs.androidx.startup,
+    libs.androidx.core,
+    libs.androidx.splash,
+    libs.timber,
+    libs.bundles.androidx.compose,
+  )
 }

@@ -1,17 +1,31 @@
-pluginManagement {
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
-}
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
+@file:Suppress("UnstableApiUsage")
+
 rootProject.name = "psychat-android"
-include(":app")
- 
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+
+pluginManagement {
+  repositories {
+    google()
+    mavenCentral()
+    gradlePluginPortal()
+  }
+  includeBuild("build-logic")
+}
+
+buildCache {
+  local {
+    removeUnusedEntriesAfterDays = 7
+  }
+}
+
+include(
+  ":app",
+  ":core:data",
+  ":core:designsystem",
+  ":core:domain",
+  ":core:ui",
+  ":core:util",
+  ":feature:main",
+)

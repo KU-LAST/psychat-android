@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">psychat-android</string>
+    <string name="app_name">psychat</string>
+    <string name="app_name_dev">psychat.dev</string>
 </resources>

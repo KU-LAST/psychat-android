@@ -7,15 +7,15 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="${appName}"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Psychatandroid"
-        tools:targetApi="31">
+        android:theme="@style/Theme.Psychat"
+        tools:targetApi="s">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Psychatandroid">
+            android:theme="@style/Theme.Psychat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
