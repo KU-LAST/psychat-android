@@ -1,20 +1,10 @@
-@file:Suppress("UnstableApiUsage", "INLINE_FROM_HIGHER_PLATFORM")
-
 plugins {
-  psychat("android-library")
-}
-
-android {
-  namespace = "com.last.psychat.android.core.util"
-
-  buildFeatures {
-    buildConfig = true
-  }
+  psychat("jvm-kotlin")
 }
 
 dependencies {
   implementations(
     libs.kotlinx.datetime,
-    libs.androidx.core,
+    libs.kotlinx.coroutines.core,
   )
 }

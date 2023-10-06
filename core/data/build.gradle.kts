@@ -5,6 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
   psychat("android-library")
   psychat("android-hilt")
+  alias(libs.plugins.google.secrets)
   alias(libs.plugins.kotlinx.serialization)
 }
 
@@ -31,4 +32,8 @@ tasks.withType<KotlinCompile> {
   kotlinOptions {
     freeCompilerArgs = freeCompilerArgs + listOf("-opt-in=kotlin.ExperimentalStdlibApi")
   }
+}
+
+secrets {
+  defaultPropertiesFileName = "secrets.properties"
 }

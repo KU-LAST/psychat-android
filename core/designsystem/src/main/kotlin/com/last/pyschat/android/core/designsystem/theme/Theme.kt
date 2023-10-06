@@ -15,13 +15,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.nexters.bandalart.android.core.designsystem.theme.Pink40
-import com.nexters.bandalart.android.core.designsystem.theme.Pink80
-import com.nexters.bandalart.android.core.designsystem.theme.Purple40
-import com.nexters.bandalart.android.core.designsystem.theme.Purple80
-import com.nexters.bandalart.android.core.designsystem.theme.PurpleGrey40
-import com.nexters.bandalart.android.core.designsystem.theme.PurpleGrey80
-import com.nexters.bandalart.android.core.designsystem.theme.Typography
 
 private val DarkColorScheme = darkColorScheme(
   primary = Purple80,

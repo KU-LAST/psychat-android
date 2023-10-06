@@ -18,7 +18,7 @@ kotlinx-collections-immutable = "0.3.5"
 
 android-hilt = "2.48"
 
-androidx-core = "1.12.0"
+androidx-core = "1.10.0"
 androidx-datastore = "1.0.0"
 androidx-lifecycle-runtime = "2.6.2"
 androidx-splash = "1.0.1"
