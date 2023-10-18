@@ -13,7 +13,6 @@ gradlePlugin {
     "AndroidComposePlugin" to "android-compose",
     "AndroidHiltPlugin" to "android-hilt",
     "JvmKotlinPlugin" to "jvm-kotlin",
-    "KotlinExplicitApiPlugin" to "kotlin-explicit-api",
   )
 
   plugins {
