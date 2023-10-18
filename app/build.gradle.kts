@@ -9,16 +9,6 @@ plugins {
 android {
   namespace = "com.last.psychat.android"
 
-  buildTypes {
-    getByName("debug") {
-      isDebuggable = true
-      applicationIdSuffix = ".dev"
-      manifestPlaceholders += mapOf(
-        "appName" to "@string/app_name_dev",
-      )
-    }
-  }
-
   buildFeatures {
     buildConfig = true
   }
