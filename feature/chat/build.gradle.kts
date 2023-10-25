@@ -1,13 +1,13 @@
 @file:Suppress("UnstableApiUsage", "INLINE_FROM_HIGHER_PLATFORM")
 
 plugins {
-  psychat("android-application")
+  psychat("android-library")
   psychat("android-compose")
   psychat("android-hilt")
 }
 
 android {
-  namespace = "com.last.psychat.android"
+  namespace = "com.last.psychat.android.feature.chat"
 
   buildFeatures {
     buildConfig = true
@@ -15,21 +15,18 @@ android {
 }
 
 dependencies {
-  coreLibraryDesugaring(libs.desugar.jdk)
   implementations(
-    projects.core.data,
     projects.core.designsystem,
     projects.core.domain,
     projects.core.ui,
     projects.core.util,
-    projects.feature.main,
-    projects.feature.chat,
-    projects.feature.result,
-    libs.androidx.splash,
-    libs.androidx.startup,
+    libs.kotlinx.collections.immutable,
     libs.androidx.core,
-    libs.androidx.splash,
+    libs.androidx.hilt.compose.navigation,
+    libs.lottie.compose,
+    libs.facebook.shimmer,
     libs.timber,
     libs.bundles.androidx.compose,
+    libs.bundles.androidx.lifecycle,
   )
 }

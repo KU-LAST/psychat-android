@@ -28,4 +28,6 @@ include(
   ":core:ui",
   ":core:util",
   ":feature:main",
+  ":feature:chat",
+  ":feature:result"
 )
