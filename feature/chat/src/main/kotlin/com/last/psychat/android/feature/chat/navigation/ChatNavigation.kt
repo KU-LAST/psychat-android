@@ -12,8 +12,14 @@ fun NavController.navigateToChat(navOptions: NavOptions? = null) {
   this.navigate(CHAT_NAVIGATION_ROUTE, navOptions)
 }
 
-fun NavGraphBuilder.chatScreen(navigateToResult: (NavOptions) -> Unit) {
+fun NavGraphBuilder.chatScreen(
+  onNavigateBack: () -> Unit,
+  navigateToResult: (NavOptions) -> Unit
+) {
   composable(route = CHAT_NAVIGATION_ROUTE) {
-    ChatRoute(navigateToResult)
+    ChatRoute(
+      onNavigateBack = onNavigateBack,
+      navigateToResult = navigateToResult
+    )
   }
 }

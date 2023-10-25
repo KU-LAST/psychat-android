@@ -1,7 +1,10 @@
 package com.last.psychat.android.feature.chat
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -16,15 +19,20 @@ import com.last.pyschat.android.core.designsystem.theme.Gray50
 
 @Composable
 internal fun ChatRoute(
-  navigateToResult: (NavOptions) -> Unit
+  onNavigateBack: () -> Unit,
+  navigateToResult: (NavOptions) -> Unit,
 ) {
-  ChatScreen(navigateToResult = navigateToResult)
+  ChatScreen(
+    onNavigateBack = onNavigateBack,
+    navigateToResult = navigateToResult
+  )
 }
 
 @Composable
 internal fun ChatScreen(
   modifier: Modifier = Modifier,
-  navigateToResult: (NavOptions) -> Unit
+  onNavigateBack: () -> Unit,
+  navigateToResult: (NavOptions) -> Unit,
 ) {
   val context = LocalContext.current
   Surface(
@@ -32,18 +40,24 @@ internal fun ChatScreen(
     color = Gray50,
   ) {
     Box {
-      PsyChatButton(
-        onClick = {
-          val options = NavOptions.Builder()
-            .setPopUpTo(CHAT_NAVIGATION_ROUTE, inclusive = true)
-            .build()
-          navigateToResult(options)
-        },
-        text = context.getString(R.string.check_result),
-        modifier = Modifier
-          .align(Alignment.BottomCenter)
-          .padding(bottom = 32.dp),
-      )
+      Column {
+        Spacer(modifier = Modifier.height(16.dp))
+        ChatTopBar(onNavigateBack = onNavigateBack)
+        Box(modifier = Modifier.fillMaxSize()) {
+          PsyChatButton(
+            onClick = {
+              val options = NavOptions.Builder()
+                .setPopUpTo(CHAT_NAVIGATION_ROUTE, inclusive = true)
+                .build()
+              navigateToResult(options)
+            },
+            text = context.getString(R.string.check_result),
+            modifier = Modifier
+              .align(Alignment.BottomCenter)
+              .padding(bottom = 32.dp),
+          )
+        }
+      }
     }
   }
 }

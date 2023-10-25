@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="check_result">결과 확인하기</string>
+  <string name="arrow_forward_descrption">Arrow Forward Icon</string>
 </resources>

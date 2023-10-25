@@ -29,6 +29,7 @@ fun PsyChatNavHost(
     )
 
     chatScreen(
+      onNavigateBack = navController::popBackStack,
       navigateToResult = navController::navigateToResult
     )
 
