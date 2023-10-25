@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavOptions
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.main.navigation.MAIN_NAVIGATION_ROUTE
+import com.last.pyschat.android.core.designsystem.theme.Gray50
 
 @Composable
 internal fun MainRoute(
@@ -29,6 +30,7 @@ internal fun MainScreen(
 
   Surface(
     modifier = modifier.fillMaxSize(),
+    color = Gray50,
   ) {
     Box {
       PsyChatButton(
