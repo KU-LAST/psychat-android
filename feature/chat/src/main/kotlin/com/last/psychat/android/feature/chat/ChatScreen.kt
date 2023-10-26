@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,6 +37,25 @@ internal fun ChatScreen(
   navigateToResult: (NavOptions) -> Unit,
 ) {
   val context = LocalContext.current
+
+  val chatMessages = listOf(
+    ChatMessage(
+      message = "안녕, 잘 지냈어?ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
+      time = "오후 3:05",
+      isUser = false // 상대방이 보낸 메시지
+    ),
+    ChatMessage(
+      message = "응, 나도 잘 지냈어!",
+      time = "오후 3:06",
+      isUser = true // 사용자가 보낸 메시지
+    ),
+    ChatMessage(
+      message = "오랜만이야, 뭐하고 지냈어?",
+      time = "오후 3:07",
+      isUser = false // 상대방이 보낸 메시지
+    ),
+  )
+
   Surface(
     modifier = modifier.fillMaxSize(),
     color = Gray50,
@@ -44,6 +65,13 @@ internal fun ChatScreen(
         Spacer(modifier = Modifier.height(16.dp))
         ChatTopBar(onNavigateBack = onNavigateBack)
         Box(modifier = Modifier.fillMaxSize()) {
+          // TODO item key 추가
+          LazyColumn {
+            items(chatMessages) { chatMessage ->
+              ChatBubble(chatMessage = chatMessage)
+            }
+          }
+
           PsyChatButton(
             onClick = {
               val options = NavOptions.Builder()
