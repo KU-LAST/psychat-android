@@ -37,7 +37,7 @@ internal object NetworkModule {
   @Provides
   internal fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
     return HttpLoggingInterceptor { message ->
-      Timber.tag("OkHttp").d(message)
+      Timber.tag("HttpClient").d(message)
     }.apply {
       level = if (BuildConfig.DEBUG) {
         HttpLoggingInterceptor.Level.BODY
@@ -59,7 +59,7 @@ internal object NetworkModule {
       .addInterceptor { chain: Interceptor.Chain ->
         val request = chain.request().newBuilder()
           .addHeader("Content-Type", "application/json")
-          .addHeader("X-GUEST-KEY", runBlocking { dataStoreProvider.getGuestLoginToken() })
+          .addHeader("X-GUEST-KEY", runBlocking { dataStoreProvider.getLoginToken() })
           .build()
         chain.proceed(request)
       }

@@ -15,20 +15,20 @@ class DataStoreProvider @Inject constructor(
 ) {
 
   companion object {
-    private const val GUEST_LOGIN_TOKEN = "guest_login_token"
+    private const val LOGIN_TOKEN = "login_token"
   }
 
-  private val prefKeyGuestLoginToken = stringPreferencesKey(GUEST_LOGIN_TOKEN)
+  private val prefKeyLoginToken = stringPreferencesKey(LOGIN_TOKEN)
 
-  suspend fun setGuestLoginToken(guestLoginToken: String) {
+  suspend fun setLoginToken(loginToken: String) {
     dataStore.edit { preferences ->
-      preferences[prefKeyGuestLoginToken] = guestLoginToken
+      preferences[prefKeyLoginToken] = loginToken
     }
   }
 
-  suspend fun getGuestLoginToken() = dataStore.data
+  suspend fun getLoginToken() = dataStore.data
     .catch { exception ->
       if (exception is IOException) emit(emptyPreferences())
       else throw exception
-    }.first()[prefKeyGuestLoginToken] ?: ""
+    }.first()[prefKeyLoginToken] ?: ""
 }

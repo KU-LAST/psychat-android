@@ -1,7 +1,7 @@
 package com.last.psychat.android.core.data.di
 
-import com.last.psychat.android.core.data.repository.GuestLoginTokenRepositoryImpl
-import com.last.psychat.android.core.domain.repository.GuestLoginTokenRepository
+import com.last.psychat.android.core.data.repository.LoginRepositoryImpl
+import com.last.psychat.android.core.domain.repository.LoginRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,7 +14,5 @@ internal abstract class RepositoryModule {
 
   @Binds
   @Singleton
-  abstract fun bindGuestLoginTokenRepository(
-    guestLoginTokenRepositoryImpl: GuestLoginTokenRepositoryImpl,
-  ): GuestLoginTokenRepository
+  abstract fun bindLoginRepository(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
 }

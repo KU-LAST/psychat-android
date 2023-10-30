@@ -1,6 +1,6 @@
 package com.last.psychat.android.core.data.di
 
-import com.last.psychat.android.core.data.service.GuestLoginService
+import com.last.psychat.android.core.data.service.LoginService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ internal object ServiceModule {
 
   @Singleton
   @Provides
-  internal fun provideGuestLoginService(retrofit: Retrofit): GuestLoginService {
-    return retrofit.create(GuestLoginService::class.java)
+  internal fun provideLoginService(retrofit: Retrofit): LoginService {
+    return retrofit.create(LoginService::class.java)
   }
 }

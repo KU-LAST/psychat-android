@@ -1,7 +1,7 @@
 package com.last.psychat.android.core.data.mapper
 
-import com.last.psychat.android.core.data.model.GuestLoginTokenResponse
-import com.last.psychat.android.core.domain.entity.GuestLoginTokenEntity
+import com.last.psychat.android.core.data.model.LoginResponse
+import com.last.psychat.android.core.domain.entity.LoginEntity
 
-internal fun GuestLoginTokenResponse.toEntity() =
-  GuestLoginTokenEntity(key = key)
+internal fun LoginResponse.toEntity() =
+  LoginEntity(token = token)
