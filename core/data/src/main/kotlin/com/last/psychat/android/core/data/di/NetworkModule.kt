@@ -16,6 +16,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 private const val MaxTimeoutMillis = 15000L
@@ -49,6 +50,26 @@ internal object NetworkModule {
 
   @Singleton
   @Provides
+  @Named("AuthHttpClient")
+  internal fun provideRetrofitAuthHttpClient(
+    httpLoggingInterceptor: HttpLoggingInterceptor,
+  ): Retrofit {
+    val contentType = "application/json".toMediaType()
+    val httpClient = OkHttpClient.Builder()
+      .connectTimeout(MaxTimeoutMillis, TimeUnit.MILLISECONDS)
+      .addInterceptor(httpLoggingInterceptor)
+      .build()
+
+    return Retrofit.Builder()
+      .baseUrl(BuildConfig.SERVER_BASE_URL)
+      .client(httpClient)
+      .addConverterFactory(jsonRule.asConverterFactory(contentType))
+      .build()
+  }
+
+  @Singleton
+  @Provides
+  @Named("HttpClient")
   internal fun provideRetrofitHttpClient(
     dataStoreProvider: DataStoreProvider,
     httpLoggingInterceptor: HttpLoggingInterceptor,
@@ -58,7 +79,6 @@ internal object NetworkModule {
       .connectTimeout(MaxTimeoutMillis, TimeUnit.MILLISECONDS)
       .addInterceptor { chain: Interceptor.Chain ->
         val request = chain.request().newBuilder()
-          .addHeader("Content-Type", "application/json")
           .addHeader("X-GUEST-KEY", runBlocking { dataStoreProvider.getLoginToken() })
           .build()
         chain.proceed(request)
