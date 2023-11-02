@@ -22,19 +22,19 @@ fun PsyChatNavHost(
   NavHost(
     modifier = modifier,
     navController = navController,
-    startDestination = MAIN_NAVIGATION_ROUTE
+    startDestination = MAIN_NAVIGATION_ROUTE,
   ) {
     mainScreen(
-      navigateToChat = navController::navigateToChat
+      navigateToChat = navController::navigateToChat,
     )
 
     chatScreen(
       onNavigateBack = navController::popBackStack,
-      navigateToResult = navController::navigateToResult
+      navigateToResult = navController::navigateToResult,
     )
 
     resultScreen(
-      navigateToMain = navController::navigateToMain
+      navigateToMain = navController::navigateToMain,
     )
   }
 }

@@ -26,7 +26,7 @@ internal fun ChatRoute(
 ) {
   ChatScreen(
     onNavigateBack = onNavigateBack,
-    navigateToResult = navigateToResult
+    navigateToResult = navigateToResult,
   )
 }
 

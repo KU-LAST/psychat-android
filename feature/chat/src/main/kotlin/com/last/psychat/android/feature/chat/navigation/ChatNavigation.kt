@@ -19,7 +19,7 @@ fun NavGraphBuilder.chatScreen(
   composable(route = CHAT_NAVIGATION_ROUTE) {
     ChatRoute(
       onNavigateBack = onNavigateBack,
-      navigateToResult = navigateToResult
+      navigateToResult = navigateToResult,
     )
   }
 }

@@ -10,9 +10,9 @@ import javax.inject.Inject
 class SendChatMessageUseCase @Inject constructor(
   private val repository: ChatRepository,
 ) {
-  suspend operator fun invoke(chatRequest: ChatRequestEntity): Result<ChatResponseEntity> {
+  suspend operator fun invoke(chatRequestEntity: ChatRequestEntity): Result<ChatResponseEntity> {
     return runSuspendCatching {
-      repository.sendChatMessage(chatRequest) ?: throw SendChatMessageResponseIsNull
+      repository.sendChatMessage(chatRequestEntity) ?: throw SendChatMessageResponseIsNull
     }
   }
 }

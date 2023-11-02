@@ -2,11 +2,11 @@ package com.last.psychat.android.core.data.service
 
 import com.last.psychat.android.core.data.model.chat.ChatRequest
 import com.last.psychat.android.core.data.model.chat.ChatResponse
+import com.last.psychat.android.core.data.model.chat.EmotionResponse
 import com.last.psychat.android.core.data.model.chat.EndChatRequest
+import com.last.psychat.android.core.data.model.chat.PreviousChatDetailResponse
 import com.last.psychat.android.core.data.model.chat.PreviousChatListResponse
 import com.last.psychat.android.core.data.model.chat.SessionResponse
-import com.last.psychat.android.core.data.model.chat.EmotionResponse
-import com.last.psychat.android.core.data.model.chat.PreviousChatDetailResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

@@ -17,5 +17,5 @@ fun rememberPsyChatAppState(
 
 @Stable
 class PsyChatAppState(
-  val navController: NavHostController
+  val navController: NavHostController,
 )
