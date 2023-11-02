@@ -1,9 +1,11 @@
 package com.last.psychat.android.core.data.di
 
-import com.last.psychat.android.core.data.datasource.local.LoginLocalDataSource
-import com.last.psychat.android.core.data.datasource.local.LoginLocalDataSourceImpl
-import com.last.psychat.android.core.data.datasource.remote.chat.ChatDataSource
-import com.last.psychat.android.core.data.datasource.remote.chat.ChatDataSourceImpl
+import com.last.psychat.android.core.data.datasource.local.chat.ChatLocalDataSource
+import com.last.psychat.android.core.data.datasource.local.chat.ChatLocalDataSourceImpl
+import com.last.psychat.android.core.data.datasource.local.login.LoginLocalDataSource
+import com.last.psychat.android.core.data.datasource.local.login.LoginLocalDataSourceImpl
+import com.last.psychat.android.core.data.datasource.remote.chat.ChatRemoteDataSource
+import com.last.psychat.android.core.data.datasource.remote.chat.ChatRemoteDataSourceImpl
 import com.last.psychat.android.core.data.datasource.remote.login.LoginRemoteDataSource
 import com.last.psychat.android.core.data.datasource.remote.login.LoginRemoteDataSourceImpl
 import com.last.psychat.android.core.data.datasource.remote.recommend.RecommendDataSource
@@ -32,9 +34,15 @@ internal abstract class DataSourceModule {
 
   @Binds
   @Singleton
+  abstract fun bindChatLocalDataSource(
+    chatLocalDataSourceImpl: ChatLocalDataSourceImpl,
+  ): ChatLocalDataSource
+
+  @Binds
+  @Singleton
   abstract fun bindChatRemoteDataSource(
-    chatDataSourceImpl: ChatDataSourceImpl,
-  ): ChatDataSource
+    chatRemoteDataSourceImpl: ChatRemoteDataSourceImpl,
+  ): ChatRemoteDataSource
 
   @Binds
   @Singleton

@@ -1,4 +1,4 @@
-package com.last.psychat.android.core.data.datasource.local
+package com.last.psychat.android.core.data.datasource.local.login
 
 interface LoginLocalDataSource {
   suspend fun setLoginToken(loginToken: String)

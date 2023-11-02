@@ -11,9 +11,9 @@ import com.last.psychat.android.core.data.service.ChatService
 import com.last.psychat.android.core.data.util.extension.safeRequest
 import javax.inject.Inject
 
-internal class ChatDataSourceImpl @Inject constructor(
+internal class ChatRemoteDataSourceImpl @Inject constructor(
   private val service: ChatService,
-) : ChatDataSource {
+) : ChatRemoteDataSource {
   override suspend fun getPreviousChatList(): PreviousChatListResponse? {
     return safeRequest {
       service.getPreviousChatList()

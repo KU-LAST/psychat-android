@@ -1,4 +1,4 @@
-package com.last.psychat.android.core.data.datasource.local
+package com.last.psychat.android.core.data.datasource.local.login
 
 import com.last.psychat.android.core.data.datastore.DataStoreProvider
 import javax.inject.Inject

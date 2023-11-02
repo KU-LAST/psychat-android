@@ -8,7 +8,7 @@ import com.last.psychat.android.core.data.model.chat.SessionResponse
 import com.last.psychat.android.core.data.model.chat.EmotionResponse
 import com.last.psychat.android.core.data.model.chat.PreviousChatDetailResponse
 
-interface ChatDataSource {
+interface ChatRemoteDataSource {
   suspend fun getPreviousChatList(): PreviousChatListResponse?
 
   suspend fun getPreviousChatDetail(sessionId: Long): PreviousChatDetailResponse?

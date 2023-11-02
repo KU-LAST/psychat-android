@@ -9,6 +9,10 @@ import com.last.psychat.android.core.domain.entity.chat.SessionEntity
 import com.last.psychat.android.core.domain.entity.recommend.EmotionResponseEntity
 
 interface ChatRepository {
+  suspend fun setSessionId(sessionId: Long)
+
+  suspend fun getSessionId(): Long
+
   suspend fun getPreviousChatList(): PreviousChatListEntity?
 
   suspend fun getPreviousChatDetail(sessionId: Long): PreviousChatDetailEntity?
