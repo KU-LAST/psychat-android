@@ -26,6 +26,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavOptions
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 
+// TODO 뒤로 가기 버튼이 있어야 하는지 결정
+// 종료된 세션이 아니면 다시 돌아와서 이어가야 할 것 같은데
+// TODO 키보드가 올라오면 이전 채팅 내역이 보이지 않는 문제
 @Composable
 internal fun ChatRoute(
   onNavigateBack: () -> Unit,
