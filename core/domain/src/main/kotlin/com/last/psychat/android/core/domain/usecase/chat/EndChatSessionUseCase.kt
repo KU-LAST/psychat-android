@@ -6,7 +6,9 @@ import com.last.psychat.android.core.domain.repository.ChatRepository
 import com.last.psychat.android.core.domain.util.EndChatSessionResponseIsNull
 import com.last.psychat.android.core.domain.util.runSuspendCatching
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class EndChatSessionUseCase @Inject constructor(
   private val repository: ChatRepository,
 ) {

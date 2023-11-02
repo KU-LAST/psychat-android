@@ -5,7 +5,9 @@ import com.last.psychat.android.core.domain.repository.LoginRepository
 import com.last.psychat.android.core.domain.util.CreateLoginTokenResponseIsNull
 import com.last.psychat.android.core.domain.util.runSuspendCatching
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CreateLoginTokenUseCase @Inject constructor(
   private val repository: LoginRepository,
 ) {
