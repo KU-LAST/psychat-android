@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import com.last.psychat.android.feature.chat.model.ChatMessage
+import com.last.psychat.core.util.toKoreanTimeString
 import com.last.pyschat.android.core.designsystem.theme.Gray200
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import com.last.pyschat.android.core.designsystem.theme.Gray900
@@ -41,13 +43,13 @@ fun ChatBubble(
   ) {
 
     if (chatMessage.isUser) {
-      TimeText(chatMessage.time)
+      TimeText(time = chatMessage.timestamp.toKoreanTimeString())
       Spacer(modifier = Modifier.width(8.dp))
       MessageBox(message = chatMessage.message)
     } else {
       MessageBox(message = chatMessage.message)
       Spacer(modifier = Modifier.width(8.dp))
-      TimeText(chatMessage.time)
+      TimeText(time = chatMessage.timestamp.toKoreanTimeString())
     }
   }
 }

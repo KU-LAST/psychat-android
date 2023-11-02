@@ -21,6 +21,7 @@ dependencies {
     projects.core.ui,
     projects.core.util,
     libs.kotlinx.collections.immutable,
+    libs.kotlinx.datetime,
     libs.androidx.core,
     libs.androidx.hilt.compose.navigation,
     libs.lottie.compose,

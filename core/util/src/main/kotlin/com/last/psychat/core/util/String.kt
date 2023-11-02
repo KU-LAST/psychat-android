@@ -24,3 +24,15 @@ fun String.toLocalDateTime(): LocalDateTime {
   val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")
   return LocalDateTime.parse(this.substring(0, 16), formatter)
 }
+
+fun String.toInstant(): Instant {
+  return Instant.parse(this)
+}
+
+fun String.toKoreanTimeString(): String {
+  val current = this.toInstant().toLocalDateTime(TimeZone.currentSystemDefault())
+  val hour = current.hour
+  val minute = current.minute
+  val period = if (hour < 12) "오전" else "오후"
+  return "$period ${hour % 12}시 ${minute}분"
+}

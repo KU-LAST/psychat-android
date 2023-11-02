@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,12 +19,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavOptions
-import com.last.psychat.android.core.ui.components.PsyChatButton
-import com.last.psychat.android.feature.chat.navigation.CHAT_NAVIGATION_ROUTE
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 
 @Composable
@@ -47,6 +49,8 @@ internal fun ChatRoute(
     uiState = uiState,
     onNavigateBack = onNavigateBack,
     navigateToResult = navigateToResult,
+    updateChatInputMessage = viewModel::updateChatInputMessage,
+    sendChatMessage = viewModel::sendChatMessage,
   )
 }
 
@@ -56,27 +60,9 @@ internal fun ChatScreen(
   uiState: ChatUiState,
   onNavigateBack: () -> Unit,
   navigateToResult: (NavOptions) -> Unit,
+  updateChatInputMessage: (String) -> Unit,
+  sendChatMessage: () -> Unit,
 ) {
-  val context = LocalContext.current
-
-  val chatMessages = listOf(
-    ChatMessage(
-      message = "안녕, 잘 지냈어?ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
-      time = "오후 3:05",
-      isUser = false // 상대방이 보낸 메시지
-    ),
-    ChatMessage(
-      message = "응, 나도 잘 지냈어!",
-      time = "오후 3:06",
-      isUser = true // 사용자가 보낸 메시지
-    ),
-    ChatMessage(
-      message = "오랜만이야, 뭐하고 지냈어?",
-      time = "오후 3:07",
-      isUser = false // 상대방이 보낸 메시지
-    ),
-  )
-
   Surface(
     modifier = modifier.fillMaxSize(),
     color = Gray50,
@@ -86,24 +72,37 @@ internal fun ChatScreen(
         Spacer(modifier = Modifier.height(16.dp))
         ChatTopBar(onNavigateBack = onNavigateBack)
         Box(modifier = Modifier.fillMaxSize()) {
-          // TODO item key 추가
           LazyColumn {
-            items(chatMessages) { chatMessage ->
-              ChatBubble(chatMessage = chatMessage)
+            items(
+              count = uiState.chatMessageList.size,
+              key = { index -> uiState.chatMessageList[index].timestamp },
+            ) { index ->
+              ChatBubble(chatMessage = uiState.chatMessageList[index])
             }
           }
 
-          PsyChatButton(
-            onClick = {
-              val options = NavOptions.Builder()
-                .setPopUpTo(CHAT_NAVIGATION_ROUTE, inclusive = true)
-                .build()
-              navigateToResult(options)
-            },
-            text = context.getString(R.string.check_result),
+          OutlinedTextField(
             modifier = Modifier
+              .fillMaxWidth()
               .align(Alignment.BottomCenter)
-              .padding(bottom = 32.dp),
+              .padding(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 32.dp,
+              ),
+            value = uiState.chatInputMessage,
+            singleLine = true,
+            onValueChange = updateChatInputMessage,
+            keyboardOptions = KeyboardOptions(
+              imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+              onDone = {
+                if (uiState.chatInputMessage.isNotEmpty()) {
+                  sendChatMessage()
+                }
+              }
+            )
           )
         }
       }
