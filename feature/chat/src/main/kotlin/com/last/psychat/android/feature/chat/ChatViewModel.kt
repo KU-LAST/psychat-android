@@ -7,6 +7,7 @@ import com.last.psychat.android.core.domain.entity.chat.ChatRequestEntity
 import com.last.psychat.android.core.domain.usecase.chat.GetSessionIdUseCase
 import com.last.psychat.android.core.domain.usecase.chat.SendChatMessageUseCase
 import com.last.psychat.android.core.ui.UiText
+import com.last.psychat.android.feature.chat.navigation.CHAT_SESSION_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,10 +16,13 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 data class ChatUiState(
+  val chatMessages: List<ChatMessage> = listOf(),
+  val chatInputMessage: String = "",
   val isSessionEnd: Boolean = false,
   val isLoading: Boolean = false,
   val error: Throwable? = null,
@@ -33,7 +37,9 @@ class ChatViewModel @Inject constructor(
   private val sendChatMessageUseCase: SendChatMessageUseCase,
   private val getSessionIdUseCase: GetSessionIdUseCase,
   savedStateHandle: SavedStateHandle,
-): ViewModel() {
+) : ViewModel() {
+  private val sessionId: Long =
+    requireNotNull(savedStateHandle.get<Long>(CHAT_SESSION_ID)) { "CHAT_SESSION_ID is require." }
 
   private val _uiState = MutableStateFlow(ChatUiState())
   val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
@@ -43,7 +49,7 @@ class ChatViewModel @Inject constructor(
 
   init {
     viewModelScope.launch {
-      val sessionId = getSessionIdUseCase()
+      // val sessionId = getSessionIdUseCase()
       val result = sendChatMessageUseCase(
         ChatRequestEntity(
           sessionId = sessionId,
@@ -52,7 +58,7 @@ class ChatViewModel @Inject constructor(
       )
       when {
         result.isSuccess && result.getOrNull() != null -> {
-          val botMessage = result.getOrNull()!!.messageContent
+          val botMessage = result.getOrNull()!!.responseContent
           Timber.d(botMessage)
         }
         result.isFailure -> {
@@ -60,6 +66,12 @@ class ChatViewModel @Inject constructor(
           _eventFlow.emit(ChatUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
         }
       }
+    }
+  }
+
+  fun updateChatInputMessage(message: String) {
+    _uiState.update {
+      it.copy(chatInputMessage = message)
     }
   }
 }

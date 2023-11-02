@@ -25,7 +25,9 @@ fun PsyChatNavHost(
     startDestination = MAIN_NAVIGATION_ROUTE,
   ) {
     mainScreen(
-      navigateToChat = navController::navigateToChat,
+      navigateToChat = { sessionId ->
+        navController.navigateToChat(sessionId = sessionId)
+      },
     )
 
     chatScreen(

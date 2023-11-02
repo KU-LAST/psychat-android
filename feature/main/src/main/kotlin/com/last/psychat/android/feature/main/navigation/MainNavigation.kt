@@ -12,7 +12,9 @@ fun NavController.navigateToMain(navOptions: NavOptions? = null) {
   this.navigate(MAIN_NAVIGATION_ROUTE, navOptions)
 }
 
-fun NavGraphBuilder.mainScreen(navigateToChat: (NavOptions) -> Unit) {
+fun NavGraphBuilder.mainScreen(
+  navigateToChat: (Long) -> Unit,
+) {
   composable(route = MAIN_NAVIGATION_ROUTE) {
     MainRoute(navigateToChat)
   }

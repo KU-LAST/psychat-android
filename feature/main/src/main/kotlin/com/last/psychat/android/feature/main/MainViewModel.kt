@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class MainUiState(
+  val sessionId: Long = -1,
   val isSessionIdCreated: Boolean = false,
   val isLoggedIn: Boolean = false,
   val isLoading: Boolean = false,
@@ -76,9 +77,12 @@ class MainViewModel @Inject constructor(
       when {
         result.isSuccess && result.getOrNull() != null -> {
           val sessionId = result.getOrNull()!!.sessionId
-          setSessionIdUseCase(sessionId)
+          // setSessionIdUseCase(sessionId)
           _uiState.update {
-            it.copy(isSessionIdCreated = true)
+            it.copy(
+              sessionId = sessionId,
+              isSessionIdCreated = true,
+            )
           }
         }
 

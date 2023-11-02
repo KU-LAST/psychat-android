@@ -15,14 +15,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavOptions
 import com.last.psychat.android.core.ui.components.PsyChatButton
-import com.last.psychat.android.feature.main.navigation.MAIN_NAVIGATION_ROUTE
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 
 @Composable
 internal fun MainRoute(
-  navigateToChat: (NavOptions) -> Unit,
+  navigateToChat: (Long) -> Unit,
   viewModel: MainViewModel = hiltViewModel(),
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -50,14 +48,11 @@ internal fun MainScreen(
   modifier: Modifier = Modifier,
   uiState: MainUiState,
   startChatSession: () -> Unit,
-  navigateToChat: (NavOptions) -> Unit,
+  navigateToChat: (Long) -> Unit,
 ) {
   LaunchedEffect(key1 = uiState.isSessionIdCreated) {
     if (uiState.isSessionIdCreated) {
-      val options = NavOptions.Builder()
-        .setPopUpTo(MAIN_NAVIGATION_ROUTE, inclusive = false)
-        .build()
-      navigateToChat(options)
+      navigateToChat(uiState.sessionId)
     }
   }
 
