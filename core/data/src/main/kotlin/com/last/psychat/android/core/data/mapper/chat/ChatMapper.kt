@@ -31,7 +31,7 @@ internal fun ChatRequestEntity.toModel() =
 
 internal fun ChatResponse.toEntity() =
   ChatResponseEntity(
-    messageContent = messageContent,
+    responseContent = responseContent,
   )
 
 internal fun EndChatEntity.toModel() =
