@@ -3,21 +3,20 @@ package com.last.psychat.android.core.data.di
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.last.psychat.android.core.data.BuildConfig
 import com.last.psychat.android.core.data.datastore.DataStoreProvider
+import com.last.psychat.android.core.data.service.TokenInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.runBlocking
+import java.util.concurrent.TimeUnit
+import javax.inject.Named
+import javax.inject.Singleton
 import kotlinx.serialization.json.Json
-import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
-import javax.inject.Named
-import javax.inject.Singleton
 
 private val json = Json {
   encodeDefaults = true
@@ -48,14 +47,22 @@ internal object NetworkModule {
 
   @Singleton
   @Provides
+  internal fun provideTokenInterceptor(
+    dataStoreProvider: DataStoreProvider,
+  ): TokenInterceptor {
+    return TokenInterceptor(dataStoreProvider)
+  }
+
+  @Singleton
+  @Provides
   @Named("AuthHttpClient")
   internal fun provideRetrofitAuthHttpClient(
     httpLoggingInterceptor: HttpLoggingInterceptor,
   ): Retrofit {
     val contentType = "application/json".toMediaType()
     val httpClient = OkHttpClient.Builder()
-      .connectTimeout(15, TimeUnit.SECONDS)
       .addInterceptor(httpLoggingInterceptor)
+      .connectTimeout(15, TimeUnit.SECONDS)
       .build()
 
     return Retrofit.Builder()
@@ -69,18 +76,13 @@ internal object NetworkModule {
   @Provides
   @Named("HttpClient")
   internal fun provideRetrofitHttpClient(
-    dataStoreProvider: DataStoreProvider,
     httpLoggingInterceptor: HttpLoggingInterceptor,
+    tokenInterceptor: TokenInterceptor,
   ): Retrofit {
     val contentType = "application/json".toMediaType()
     val httpClient = OkHttpClient.Builder()
-      .addInterceptor { chain: Interceptor.Chain ->
-        val request = chain.request().newBuilder()
-          .addHeader("token", runBlocking { dataStoreProvider.getLoginToken() })
-          .build()
-        chain.proceed(request)
-      }
       .addInterceptor(httpLoggingInterceptor)
+      .addInterceptor(tokenInterceptor)
       .connectTimeout(15, TimeUnit.SECONDS)
       .readTimeout(60, TimeUnit.SECONDS)
       .build()
