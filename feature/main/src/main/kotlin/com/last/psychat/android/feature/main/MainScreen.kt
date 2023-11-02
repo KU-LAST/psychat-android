@@ -11,11 +11,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavOptions
 import com.last.psychat.android.core.ui.components.PsyChatButton
+import com.last.psychat.android.feature.main.navigation.MAIN_NAVIGATION_ROUTE
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 
 @Composable
@@ -50,7 +52,14 @@ internal fun MainScreen(
   startChatSession: () -> Unit,
   navigateToChat: (NavOptions) -> Unit,
 ) {
-  val context = LocalContext.current
+  LaunchedEffect(key1 = uiState.isSessionIdCreated) {
+    if (uiState.isSessionIdCreated) {
+      val options = NavOptions.Builder()
+        .setPopUpTo(MAIN_NAVIGATION_ROUTE, inclusive = false)
+        .build()
+      navigateToChat(options)
+    }
+  }
 
   Surface(
     modifier = modifier.fillMaxSize(),
@@ -58,14 +67,8 @@ internal fun MainScreen(
   ) {
     Box {
       PsyChatButton(
-//        onClick = {
-//          val options = NavOptions.Builder()
-//            .setPopUpTo(MAIN_NAVIGATION_ROUTE, inclusive = true)
-//            .build()
-//          navigateToChat(options)
-//        },
         onClick = startChatSession,
-        text = context.getString(R.string.start_chat),
+        text = stringResource(id = R.string.start_chat),
         modifier = Modifier
           .align(Alignment.BottomCenter)
           .padding(bottom = 32.dp),

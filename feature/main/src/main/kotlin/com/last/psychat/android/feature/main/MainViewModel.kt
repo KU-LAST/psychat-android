@@ -2,6 +2,7 @@ package com.last.psychat.android.feature.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.last.psychat.android.core.domain.usecase.chat.SetSessionIdUseCase
 import com.last.psychat.android.core.domain.usecase.chat.StartChatSessionUseCase
 import com.last.psychat.android.core.domain.usecase.login.CreateLoginTokenUseCase
 import com.last.psychat.android.core.domain.usecase.login.GetLoginTokenUseCase
@@ -17,9 +18,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 data class MainUiState(
+  val isSessionIdCreated: Boolean = false,
   val isLoggedIn: Boolean = false,
   val isLoading: Boolean = false,
   val error: Throwable? = null,
@@ -35,6 +36,7 @@ class MainViewModel @Inject constructor(
   private val getLoginTokenUseCase: GetLoginTokenUseCase,
   private val setLoginTokenUseCase: SetLoginTokenUseCase,
   private val startChatSessionUseCase: StartChatSessionUseCase,
+  private val setSessionIdUseCase: SetSessionIdUseCase,
 ) : ViewModel() {
 
   private val _uiState = MutableStateFlow(MainUiState())
@@ -72,8 +74,13 @@ class MainViewModel @Inject constructor(
     viewModelScope.launch {
       val result = startChatSessionUseCase()
       when {
-        result.isSuccess && result.getOrNull() != null ->
-          Timber.d("${result.getOrNull()!!.sessionId}")
+        result.isSuccess && result.getOrNull() != null -> {
+          val sessionId = result.getOrNull()!!.sessionId
+          setSessionIdUseCase(sessionId)
+          _uiState.update {
+            it.copy(isSessionIdCreated = true)
+          }
+        }
 
         result.isFailure -> {
           val exception = result.exceptionOrNull()!!
@@ -81,5 +88,6 @@ class MainViewModel @Inject constructor(
         }
       }
     }
+    _uiState.update { it.copy(isLoading = false) }
   }
 }
