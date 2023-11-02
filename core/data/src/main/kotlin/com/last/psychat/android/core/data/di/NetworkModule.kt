@@ -19,8 +19,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
-private const val MaxTimeoutMillis = 15000L
-
 private val json = Json {
   encodeDefaults = true
   ignoreUnknownKeys = true
@@ -56,7 +54,7 @@ internal object NetworkModule {
   ): Retrofit {
     val contentType = "application/json".toMediaType()
     val httpClient = OkHttpClient.Builder()
-      .connectTimeout(MaxTimeoutMillis, TimeUnit.MILLISECONDS)
+      .connectTimeout(15, TimeUnit.SECONDS)
       .addInterceptor(httpLoggingInterceptor)
       .build()
 
@@ -76,14 +74,15 @@ internal object NetworkModule {
   ): Retrofit {
     val contentType = "application/json".toMediaType()
     val httpClient = OkHttpClient.Builder()
-      .connectTimeout(MaxTimeoutMillis, TimeUnit.MILLISECONDS)
       .addInterceptor { chain: Interceptor.Chain ->
         val request = chain.request().newBuilder()
-          .addHeader("X-GUEST-KEY", runBlocking { dataStoreProvider.getLoginToken() })
+          .addHeader("token", runBlocking { dataStoreProvider.getLoginToken() })
           .build()
         chain.proceed(request)
       }
       .addInterceptor(httpLoggingInterceptor)
+      .connectTimeout(15, TimeUnit.SECONDS)
+      .readTimeout(60, TimeUnit.SECONDS)
       .build()
 
     return Retrofit.Builder()
