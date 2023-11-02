@@ -22,17 +22,17 @@ internal suspend fun <T> safeRequest(request: suspend () -> Response<T>): T? {
       )
     }
   } catch (exception: HttpException) {
-    Timber.d(exception)
+    Timber.e(exception)
     throw ExceptionWrapper(
       statusCode = exception.code(),
       message = exception.response()?.errorBody()?.string() ?: exception.message(),
       cause = exception,
     )
   } catch (exception: UnknownHostException) {
-    Timber.d(exception)
+    Timber.e(exception)
     throw ExceptionWrapper(message = exception.toAlertMessage(), cause = exception)
   } catch (exception: Exception) {
-    Timber.d(exception)
+    Timber.e(exception)
     throw ExceptionWrapper(message = exception.toAlertMessage(), cause = exception)
   }
 }

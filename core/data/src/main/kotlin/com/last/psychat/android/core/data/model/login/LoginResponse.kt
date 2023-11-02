@@ -1,4 +1,4 @@
-package com.last.psychat.android.core.data.model
+package com.last.psychat.android.core.data.model.login
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

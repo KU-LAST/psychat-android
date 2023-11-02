@@ -1,6 +1,6 @@
-package com.last.psychat.android.core.data.datasource.remote
+package com.last.psychat.android.core.data.datasource.remote.login
 
-import com.last.psychat.android.core.data.model.LoginResponse
+import com.last.psychat.android.core.data.model.login.LoginResponse
 import com.last.psychat.android.core.data.service.LoginService
 import com.last.psychat.android.core.data.util.extension.safeRequest
 import javax.inject.Inject

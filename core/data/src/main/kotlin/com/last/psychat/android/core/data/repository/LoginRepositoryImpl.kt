@@ -1,25 +1,25 @@
 package com.last.psychat.android.core.data.repository
 
 import com.last.psychat.android.core.data.datasource.local.LoginLocalDataSource
-import com.last.psychat.android.core.data.datasource.remote.LoginRemoteDataSource
-import com.last.psychat.android.core.data.mapper.toEntity
-import com.last.psychat.android.core.domain.entity.LoginEntity
+import com.last.psychat.android.core.data.datasource.remote.login.LoginRemoteDataSource
+import com.last.psychat.android.core.data.mapper.login.toEntity
+import com.last.psychat.android.core.domain.entity.login.LoginEntity
 import com.last.psychat.android.core.domain.repository.LoginRepository
 import javax.inject.Inject
 
 internal class LoginRepositoryImpl @Inject constructor(
-  private val loginLocalDataSource: LoginLocalDataSource,
-  private val loginRemoteDataSource: LoginRemoteDataSource,
+  private val localDataSource: LoginLocalDataSource,
+  private val remoteDataSource: LoginRemoteDataSource,
 ) : LoginRepository {
   override suspend fun setLoginToken(loginToken: String) {
-    loginLocalDataSource.setLoginToken(loginToken)
+    localDataSource.setLoginToken(loginToken)
   }
 
   override suspend fun getLoginToken(): String {
-    return loginLocalDataSource.getLoginToken()
+    return localDataSource.getLoginToken()
   }
 
   override suspend fun createLoginToken(): LoginEntity? {
-    return loginRemoteDataSource.createLoginToken()?.toEntity()
+    return remoteDataSource.createLoginToken()?.toEntity()
   }
 }
