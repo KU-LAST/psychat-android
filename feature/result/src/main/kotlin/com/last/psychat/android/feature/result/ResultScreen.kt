@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -28,13 +29,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavOptions
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.last.psychat.android.core.domain.entity.recommend.RecommendedContentEntity
+import com.last.psychat.android.core.ui.Emotion
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.result.navigation.RESULT_NAVIGATION_ROUTE
 import com.last.pyschat.android.core.designsystem.theme.Gray200
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
-import com.last.pyschat.android.core.designsystem.theme.H1
+import com.last.pyschat.android.core.designsystem.theme.H3
+import com.last.pyschat.android.core.designsystem.theme.H4
 import com.last.pyschat.android.core.designsystem.theme.H5
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 
@@ -74,9 +79,9 @@ internal fun ResultScreen(
     ),
     RecommendedContentEntity(
       date = "2023.10.12",
-      title = "[PEOPLE in 세브란스] 몸이 보내는 우울증 신호 세 가지",
-      thumbnailUrl = "https://img.youtube.com/vi/jME5_dk3mkQ/default.jpg",
-      videoUrl = "https://www.youtube.com/watch?v=jME5_dk3mkQ",
+      title = "우울증에서 빠져나오는 가장 쉬운 방법",
+      thumbnailUrl = "https://img.youtube.com/vi/WYmnqBaWtW0/default.jpg",
+      videoUrl = "https://www.youtube.com/watch?v=WYmnqBaWtW0",
     ),
     RecommendedContentEntity(
       date = "2023.10.12",
@@ -119,7 +124,7 @@ internal fun ResultScreen(
 
   val pageCount = 10
   val pagerState = rememberPagerState(pageCount = { pageCount })
-  val pagerHeight = 320.dp
+  val pagerHeight = 280.dp
 
   Surface(
     modifier = modifier.fillMaxSize(),
@@ -132,25 +137,44 @@ internal fun ResultScreen(
       Spacer(modifier.height(32.dp))
       Text(
         text = "감정 판단 결과",
-        style = H5,
+        style = H4,
       )
       Spacer(modifier.height(32.dp))
       Text(
-        text = "우울",
-        style = H1,
+        text = "지금은 ”우울“한 감정이시네요",
+        style = H3,
+      )
+      Spacer(modifier.height(16.dp))
+      AsyncImage(
+        modifier = Modifier.size(84.dp),
+        model = ImageRequest.Builder(context)
+          .data(Emotion.values()[5].icon)
+          .crossfade(true)
+          .build(),
+        contentDescription = "Mood Image"
       )
       Spacer(modifier.weight(1f))
-      // TODO 3개의 아이템이 화면에 보이는 HoriziontalPager 로 구현
+      Spacer(modifier.height(32.dp))
       Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Start
       ) {
         Text(
-          text = "추천 콘텐츠",
+          text = "다음 콘텐츠를 즐기는 것이 어떨까요?",
           style = H5,
           modifier = Modifier.padding(horizontal = 16.dp)
         )
       }
+//      Row(
+//        modifier = Modifier.fillMaxWidth(),
+//        horizontalArrangement = Arrangement.Start
+//      ) {
+//        Text(
+//          text = "추천 콘텐츠",
+//          style = H5,
+//          modifier = Modifier.padding(horizontal = 16.dp)
+//        )
+//      }
       Spacer(modifier = Modifier.height(8.dp))
       Box(
         modifier = Modifier
@@ -158,6 +182,7 @@ internal fun ResultScreen(
           .height(pagerHeight),
         contentAlignment = Alignment.Center,
       ) {
+        // TODO 3개의 아이템이 화면에 보이는 HoriziontalPager 로 구현
         HorizontalPager(
           state = pagerState,
           modifier = Modifier.matchParentSize(),

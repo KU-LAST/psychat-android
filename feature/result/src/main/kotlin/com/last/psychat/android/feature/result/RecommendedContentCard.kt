@@ -2,9 +2,7 @@ package com.last.psychat.android.feature.result
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -35,11 +33,10 @@ fun RecommendedContentCard(
     modifier = modifier,
     verticalArrangement = Arrangement.Center,
   ) {
-    Spacer(modifier = Modifier.height(16.dp))
     AsyncImage(
       modifier = Modifier
         .fillMaxWidth()
-        .padding(16.dp)
+        .padding(vertical = 18.dp, horizontal = 16.dp)
         .weight(0.7f)
         .clip(RoundedCornerShape(16.dp)),
       model = ImageRequest.Builder(context)
