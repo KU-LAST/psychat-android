@@ -67,7 +67,7 @@ class ChatViewModel @Inject constructor(
       _uiState.update {
         it.copy(
           chatMessageList = it.chatMessageList + messageContent,
-          chatInputMessage = ""
+          // chatInputMessage = ""
         )
       }
       val result = sendChatMessageUseCase(
@@ -76,6 +76,11 @@ class ChatViewModel @Inject constructor(
           messageContent = uiState.value.chatInputMessage,
         )
       )
+      _uiState.update {
+        it.copy(
+          chatInputMessage = ""
+        )
+      }
       when {
         result.isSuccess && result.getOrNull() != null -> {
           val responseMessage = result.getOrNull()!!.toUiModel()
@@ -84,7 +89,7 @@ class ChatViewModel @Inject constructor(
               chatMessageList = it.chatMessageList + responseMessage,
             )
           }
-          endChatSession()
+          // endChatSession()
         }
         result.isFailure -> {
           val exception = result.exceptionOrNull()!!
