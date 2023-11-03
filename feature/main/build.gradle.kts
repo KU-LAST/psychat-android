@@ -28,5 +28,6 @@ dependencies {
     libs.timber,
     libs.bundles.androidx.compose,
     libs.bundles.androidx.lifecycle,
+    libs.bundles.coil,
   )
 }

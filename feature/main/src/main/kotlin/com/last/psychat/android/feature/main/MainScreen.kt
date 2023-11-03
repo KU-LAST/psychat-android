@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.last.psychat.android.core.domain.entity.chat.PreviousChatEntity
 import com.last.psychat.android.core.ui.components.PsyChatButton
+import com.last.psychat.android.feature.mapper.toUiModel
 import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 
@@ -134,7 +135,7 @@ internal fun MainScreen(
             key = { index -> previousChatList[index].sessionId },
           ) { index ->
             PreviousCard(
-              previousChat = previousChatList[index],
+              previousChat = previousChatList[index].toUiModel(),
               onClick = {},
             )
             HorizontalDivider(color = Gray300)
