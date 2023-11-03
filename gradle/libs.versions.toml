@@ -40,6 +40,7 @@ lottie-compose = "5.2.0"
 timber = "5.0.1"
 facebook-shimmer = "0.5.0"
 ksp = "1.9.0-1.0.13"
+coil = "2.4.0"
 
 [libraries]
 
@@ -91,6 +92,8 @@ javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "j
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie-compose" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 facebook-shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "facebook-shimmer" }
+coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+coil-kt-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 
 [plugins]
 
@@ -140,4 +143,9 @@ retrofit = [
 okhttp = [
     "okhttp",
     "okhttp-logging-interceptor",
+]
+
+coil = [
+    "coil-kt-compose",
+    "coil-kt-svg",
 ]
