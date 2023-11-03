@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.last.psychat.android.core.domain.entity.chat.ChatRequestEntity
+import com.last.psychat.android.core.domain.entity.chat.EndChatEntity
+import com.last.psychat.android.core.domain.usecase.chat.EndChatSessionUseCase
 import com.last.psychat.android.core.domain.usecase.chat.GetSessionIdUseCase
 import com.last.psychat.android.core.domain.usecase.chat.SendChatMessageUseCase
 import com.last.psychat.android.core.ui.UiText
@@ -21,6 +23,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import timber.log.Timber
 
 data class ChatUiState(
   val chatMessageList: List<ChatMessage> = listOf(),
@@ -38,6 +41,7 @@ sealed class ChatUiEvent {
 class ChatViewModel @Inject constructor(
   private val sendChatMessageUseCase: SendChatMessageUseCase,
   private val getSessionIdUseCase: GetSessionIdUseCase,
+  private val endChatSessionUseCase: EndChatSessionUseCase,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
   private val sessionId: Long =
@@ -80,6 +84,7 @@ class ChatViewModel @Inject constructor(
               chatMessageList = it.chatMessageList + responseMessage,
             )
           }
+          endChatSession()
         }
         result.isFailure -> {
           val exception = result.exceptionOrNull()!!
@@ -93,6 +98,22 @@ class ChatViewModel @Inject constructor(
   fun updateChatInputMessage(message: String) {
     _uiState.update {
       it.copy(chatInputMessage = message)
+    }
+  }
+
+  fun endChatSession() {
+    viewModelScope.launch {
+      val result = endChatSessionUseCase(EndChatEntity(sessionId = sessionId))
+      when {
+        result.isSuccess && result.getOrNull() != null -> {
+          val emotion = result.getOrNull()
+          Timber.d("$emotion")
+        }
+        result.isFailure -> {
+          val exception = result.exceptionOrNull()!!
+          _eventFlow.emit(ChatUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
+        }
+      }
     }
   }
 }
