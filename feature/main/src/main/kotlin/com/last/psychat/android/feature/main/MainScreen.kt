@@ -2,7 +2,11 @@ package com.last.psychat.android.feature.main
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
@@ -10,7 +14,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -59,46 +62,11 @@ internal fun MainScreen(
       navigateToChat(uiState.sessionId)
     }
   }
-
+  
   val previousChatList = listOf(
     PreviousChatEntity(
-      sessionId = 1,
-      startDate = "2023년 10월 27일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 2,
-      startDate = "2023년 10월 28일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 3,
-      startDate = "2023년 10월 29일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 4,
-      startDate = "2023년 10월 30일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 5,
-      startDate = "2023년 10월 31일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 6,
-      startDate = "2023년 11월 1일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 7,
-      startDate = "2023년 11월 2일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 8,
-      startDate = "2023년 11월 3일",
+      sessionId = 10,
+      startDate = "2023년 11월 25일",
       emotion = "우울"
     ),
     PreviousChatEntity(
@@ -107,8 +75,43 @@ internal fun MainScreen(
       emotion = "행복"
     ),
     PreviousChatEntity(
-      sessionId = 10,
-      startDate = "2023년 11월 25일",
+      sessionId = 8,
+      startDate = "2023년 11월 3일",
+      emotion = "우울"
+    ),
+    PreviousChatEntity(
+      sessionId = 7,
+      startDate = "2023년 11월 2일",
+      emotion = "행복"
+    ),
+    PreviousChatEntity(
+      sessionId = 6,
+      startDate = "2023년 11월 1일",
+      emotion = "우울"
+    ),
+    PreviousChatEntity(
+      sessionId = 5,
+      startDate = "2023년 10월 31일",
+      emotion = "행복"
+    ),
+    PreviousChatEntity(
+      sessionId = 4,
+      startDate = "2023년 10월 30일",
+      emotion = "우울"
+    ),
+    PreviousChatEntity(
+      sessionId = 3,
+      startDate = "2023년 10월 29일",
+      emotion = "행복"
+    ),
+    PreviousChatEntity(
+      sessionId = 2,
+      startDate = "2023년 10월 28일",
+      emotion = "행복"
+    ),
+    PreviousChatEntity(
+      sessionId = 1,
+      startDate = "2023년 10월 27일",
       emotion = "우울"
     ),
   )
@@ -117,26 +120,30 @@ internal fun MainScreen(
     modifier = modifier.fillMaxSize(),
     color = Gray50,
   ) {
-    Box {
-      LazyColumn {
-        items(
-          count = previousChatList.size,
-          key = { index -> previousChatList[index].sessionId },
-        ) { index ->
-          PreviousCard(
-            previousChat = previousChatList[index],
-            onClick = {},
-          )
-          HorizontalDivider(color = Gray300)
+    Column {
+      Box(
+        modifier = Modifier
+          .fillMaxHeight()
+          .weight(1f)
+          .padding(bottom = 56.dp)
+      ) {
+        LazyColumn {
+          items(
+            count = previousChatList.size,
+            key = { index -> previousChatList[index].sessionId },
+          ) { index ->
+            PreviousCard(
+              previousChat = previousChatList[index],
+              onClick = {},
+            )
+            HorizontalDivider(color = Gray300)
+          }
         }
       }
-
+      Spacer(modifier.height(16.dp))
       PsyChatButton(
         onClick = startChatSession,
         text = stringResource(id = R.string.start_chat),
-        modifier = Modifier
-          .align(Alignment.BottomCenter)
-          .padding(bottom = 32.dp),
       )
     }
   }
