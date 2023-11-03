@@ -5,7 +5,7 @@ data class RecommendedContentListEntity(
 )
 
 data class RecommendedContentEntity(
-  val data: String,
+  val date: String,
   val title: String,
   val thumbnailUrl: String,
   val videoUrl: String,

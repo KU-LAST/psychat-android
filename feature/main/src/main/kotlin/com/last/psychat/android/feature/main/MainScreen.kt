@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -62,11 +63,11 @@ internal fun MainScreen(
       navigateToChat(uiState.sessionId)
     }
   }
-  
+
   val previousChatList = listOf(
     PreviousChatEntity(
       sessionId = 10,
-      startDate = "2023년 11월 25일",
+      startDate = "2023년 11월 5일",
       emotion = "우울"
     ),
     PreviousChatEntity(
@@ -140,11 +141,18 @@ internal fun MainScreen(
           }
         }
       }
-      Spacer(modifier.height(16.dp))
       PsyChatButton(
-        onClick = startChatSession,
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(56.dp)
+          .padding(horizontal = 24.dp),
+        // onClick = startChatSession,
+        onClick = {
+          navigateToChat(uiState.sessionId)
+        },
         text = stringResource(id = R.string.start_chat),
       )
+      Spacer(modifier = Modifier.height(32.dp))
     }
   }
 }

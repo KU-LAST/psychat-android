@@ -19,7 +19,7 @@ internal fun RecommendedContentListResponse.toEntity() =
 
 internal fun RecommendedContent.toEntity() =
   RecommendedContentEntity(
-    data = data,
+    date = date,
     title = title,
     thumbnailUrl = thumbnailUrl,
     videoUrl = videoUrl,

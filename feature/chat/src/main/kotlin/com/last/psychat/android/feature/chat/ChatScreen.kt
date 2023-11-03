@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -24,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavOptions
+import com.last.psychat.android.feature.chat.model.ChatMessage
+import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 
 // TODO 뒤로 가기 버튼이 있어야 하는지 결정
@@ -54,6 +57,7 @@ internal fun ChatRoute(
     navigateToResult = navigateToResult,
     updateChatInputMessage = viewModel::updateChatInputMessage,
     sendChatMessage = viewModel::sendChatMessage,
+    endChatSession = viewModel::endChatSession,
   )
 }
 
@@ -65,7 +69,41 @@ internal fun ChatScreen(
   navigateToResult: (NavOptions) -> Unit,
   updateChatInputMessage: (String) -> Unit,
   sendChatMessage: () -> Unit,
+  endChatSession: () -> Unit,
 ) {
+  val chatMessageList = listOf(
+    ChatMessage(
+      message = "나 요즘 너무 힘들어",
+      timestamp = "오전 10시 12분",
+      isUser = true,
+    ),
+    ChatMessage(
+      message = "네 그렇군요, 듣고 있으니 계속 말씀하세요",
+      timestamp = "오전 10시 13분",
+      isUser = false,
+    ),
+    ChatMessage(
+      message = "학교 팀플에 취업 준비에 너무 할게 많아서 스트레스 받아. 그냥 좀 쉬고 싶어",
+      timestamp = "오전 10시 14분",
+      isUser = true,
+    ),
+    ChatMessage(
+      message = "그런 일이 있으셨군요. 정말 힘드시겠어요. 제가 옆에서 힘이 되어 드릴께요",
+      timestamp = "오전 10시 15분",
+      isUser = false,
+    ),
+    ChatMessage(
+      message = "어떻게 스트레스를 그나마 조금이라도 해소할 수 있을까?",
+      timestamp = "오전 10시 16분",
+      isUser = true,
+    ),
+    ChatMessage(
+      message = "쉬는 시간에 가볍게 산책을 다녀오시는 건 어떨까요?",
+      timestamp = "오전 10시 17분",
+      isUser = false,
+    ),
+  )
+
   Surface(
     modifier = modifier.fillMaxSize(),
     color = Gray50,
@@ -73,14 +111,20 @@ internal fun ChatScreen(
     Box {
       Column {
         Spacer(modifier = Modifier.height(16.dp))
-        ChatTopBar(onNavigateBack = onNavigateBack)
+        ChatTopBar(
+          modifier = Modifier.height(56.dp),
+          onNavigateBack = onNavigateBack,
+          navigateToResult = endChatSession,
+        )
+        HorizontalDivider(color = Gray300)
         Box(modifier = Modifier.fillMaxSize()) {
           LazyColumn {
             items(
-              count = uiState.chatMessageList.size,
-              key = { index -> uiState.chatMessageList[index].timestamp },
+              // count = uiState.chatMessageList.size,
+              count = chatMessageList.size,
+              key = { index -> chatMessageList[index].timestamp },
             ) { index ->
-              ChatBubble(chatMessage = uiState.chatMessageList[index])
+              ChatBubble(chatMessage = chatMessageList[index])
             }
           }
 

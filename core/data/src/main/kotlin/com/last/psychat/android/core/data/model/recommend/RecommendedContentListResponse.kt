@@ -11,8 +11,8 @@ data class RecommendedContentListResponse(
 
 @Serializable
 data class RecommendedContent(
-  @SerialName("data")
-  val data: String,
+  @SerialName("date")
+  val date: String,
 
   @SerialName("title")
   val title: String,
