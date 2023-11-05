@@ -143,7 +143,7 @@ internal fun ResultScreen(
 //        style = H4,
 //      )
       Spacer(modifier = Modifier.height(16.dp))
-      ResultTopBar(modifier = Modifier.height(56.dp),)
+      ResultTopBar(modifier = Modifier.height(56.dp))
       HorizontalDivider(color = Gray300)
       Spacer(modifier.height(32.dp))
       Text(
@@ -168,7 +168,8 @@ internal fun ResultScreen(
         Text(
           text = "다음 콘텐츠의 도움을 받아보는 것이 어떨까요?",
           style = Title,
-          modifier = Modifier.padding(horizontal = 16.dp)
+          modifier = Modifier.padding(horizontal = 16.dp),
+          maxLines = 2,
         )
       }
       Spacer(modifier.height(16.dp))
