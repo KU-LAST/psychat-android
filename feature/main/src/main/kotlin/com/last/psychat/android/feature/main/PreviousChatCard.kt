@@ -20,8 +20,8 @@ import coil.request.ImageRequest
 import com.last.psychat.android.core.ui.Emotion
 import com.last.psychat.android.feature.model.PreviousChat
 import com.last.pyschat.android.core.designsystem.theme.Gray900
-import com.last.pyschat.android.core.designsystem.theme.H5
 import com.last.pyschat.android.core.designsystem.theme.TextLMedium
+import com.last.pyschat.android.core.designsystem.theme.Title
 
 @Composable
 fun PreviousCard(
@@ -44,7 +44,7 @@ fun PreviousCard(
       ) {
         Text(
           text = previousChat.startDate,
-          style = H5,
+          style = Title,
           maxLines = 2,
           overflow = TextOverflow.Ellipsis,
           color = Gray900,
