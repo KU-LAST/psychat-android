@@ -1,4 +1,4 @@
-package com.last.psychat.android.feature.result.components
+package com.last.psychat.android.feature.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,7 +16,7 @@ import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.H5
 
 @Composable
-fun ResultTopBar(
+fun MainTopBar(
   modifier: Modifier = Modifier,
 ) {
   Box(
@@ -26,7 +26,7 @@ fun ResultTopBar(
     contentAlignment = Alignment.CenterStart,
   ) {
     Text(
-      text = "감정 판단 결과",
+      text = "채팅 목록",
       style = H5,
       color = Gray900
     )

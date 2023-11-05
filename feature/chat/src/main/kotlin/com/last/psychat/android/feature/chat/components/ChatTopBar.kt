@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.last.psychat.android.core.ui.components.ProfileImage
 import com.last.psychat.android.feature.chat.R
 import com.last.pyschat.android.core.designsystem.theme.Gray900
-import com.last.pyschat.android.core.designsystem.theme.TextMMedium
+import com.last.pyschat.android.core.designsystem.theme.H5
 
 @Composable
 fun ChatTopBar(
@@ -56,16 +56,9 @@ fun ChatTopBar(
           tint = Gray900,
         )
       }
-//      PsyChatButton(
-//        modifier = Modifier
-//          .wrapContentWidth()
-//          .height(36.dp),
-//        onClick = navigateToResult,
-//        text = "결과 보기",
-//      )
       Text(
         text = "결과 보기",
-        style = TextMMedium,
+        style = H5,
         color = Gray900,
         modifier = Modifier.clickable(
           onClick = navigateToResult,

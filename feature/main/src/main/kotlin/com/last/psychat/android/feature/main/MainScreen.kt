@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.last.psychat.android.core.domain.entity.chat.PreviousChatEntity
 import com.last.psychat.android.core.ui.components.PsyChatButton
+import com.last.psychat.android.feature.components.MainTopBar
 import com.last.psychat.android.feature.mapper.toUiModel
 import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray50
@@ -123,6 +124,9 @@ internal fun MainScreen(
     color = Gray50,
   ) {
     Column {
+      Spacer(modifier = Modifier.height(16.dp))
+      MainTopBar()
+      HorizontalDivider(color = Gray300)
       Box(
         modifier = Modifier
           .fillMaxHeight()
