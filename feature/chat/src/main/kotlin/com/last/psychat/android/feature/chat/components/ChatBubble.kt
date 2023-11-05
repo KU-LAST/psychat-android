@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.last.psychat.android.feature.chat.model.ChatMessage
 import com.last.pyschat.android.core.designsystem.theme.Gray200
+import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.InfoS
@@ -46,7 +47,10 @@ fun ChatBubble(
       // TimeText(time = chatMessage.timestamp.toKoreanTimeString())
       TimeText(time = chatMessage.timestamp)
       Spacer(modifier = Modifier.width(8.dp))
-      MessageBox(message = chatMessage.message, isUser = true)
+      MessageBox(
+        message = chatMessage.message,
+        isUser = true,
+      )
     } else {
       ProfileImage(
         modifier = Modifier
@@ -54,7 +58,10 @@ fun ChatBubble(
           .size(48.dp)
       )
       Spacer(modifier = Modifier.width(8.dp))
-      MessageBox(message = chatMessage.message, isUser = false)
+      MessageBox(
+        message = chatMessage.message,
+        isUser = false,
+      )
       Spacer(modifier = Modifier.width(8.dp))
       // TimeText(time = chatMessage.timestamp.toKoreanTimeString())
       TimeText(time = chatMessage.timestamp)
@@ -73,8 +80,8 @@ fun MessageBox(
   Box(
     modifier = modifier
       .widthIn(max = if (isUser) maxWidthDp else maxWidthDp - 56.dp)
-      .clip(RoundedCornerShape(16.dp))
-      .background(Gray200)
+      .clip(RoundedCornerShape(8.dp))
+      .background(if (isUser) Gray200 else Gray300)
       .padding(8.dp),
     contentAlignment = Alignment.Center,
   ) {

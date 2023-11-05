@@ -136,6 +136,7 @@ internal fun ChatScreen(
             modifier = Modifier
               .padding(bottom = 32.dp)
               .align(Alignment.BottomCenter),
+            verticalAlignment = Alignment.CenterVertically,
           ) {
             OutlinedTextField(
               modifier = Modifier
