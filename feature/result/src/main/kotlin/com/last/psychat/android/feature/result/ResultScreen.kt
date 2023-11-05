@@ -19,6 +19,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,14 +35,16 @@ import coil.request.ImageRequest
 import com.last.psychat.android.core.domain.entity.recommend.RecommendedContentEntity
 import com.last.psychat.android.core.ui.Emotion
 import com.last.psychat.android.core.ui.components.PsyChatButton
+import com.last.psychat.android.feature.result.components.ResultTopBar
 import com.last.psychat.android.feature.result.navigation.RESULT_NAVIGATION_ROUTE
 import com.last.pyschat.android.core.designsystem.theme.Gray200
+import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import com.last.pyschat.android.core.designsystem.theme.H3
-import com.last.pyschat.android.core.designsystem.theme.H4
 import com.last.pyschat.android.core.designsystem.theme.H5
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
+import com.last.pyschat.android.core.designsystem.theme.Title
 
 @Composable
 internal fun ResultRoute(
@@ -134,17 +137,20 @@ internal fun ResultScreen(
       modifier = Modifier.verticalScroll(scrollState),
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
-      Spacer(modifier.height(32.dp))
-      Text(
-        text = "감정 판단 결과",
-        style = H4,
-      )
+//      Spacer(modifier.height(32.dp))
+//      Text(
+//        text = "감정 판단 결과",
+//        style = H4,
+//      )
+      Spacer(modifier = Modifier.height(16.dp))
+      ResultTopBar(modifier = Modifier.height(56.dp),)
+      HorizontalDivider(color = Gray300)
       Spacer(modifier.height(32.dp))
       Text(
         text = "지금은 ”우울“한 감정이시네요",
         style = H3,
       )
-      Spacer(modifier.height(16.dp))
+      Spacer(modifier.height(32.dp))
       AsyncImage(
         modifier = Modifier.size(84.dp),
         model = ImageRequest.Builder(context)
@@ -160,21 +166,22 @@ internal fun ResultScreen(
         horizontalArrangement = Arrangement.Start
       ) {
         Text(
-          text = "다음 콘텐츠를 즐기는 것이 어떨까요?",
+          text = "다음 콘텐츠의 도움을 받아보는 것이 어떨까요?",
+          style = Title,
+          modifier = Modifier.padding(horizontal = 16.dp)
+        )
+      }
+      Spacer(modifier.height(16.dp))
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Start
+      ) {
+        Text(
+          text = "추천 콘텐츠",
           style = H5,
           modifier = Modifier.padding(horizontal = 16.dp)
         )
       }
-//      Row(
-//        modifier = Modifier.fillMaxWidth(),
-//        horizontalArrangement = Arrangement.Start
-//      ) {
-//        Text(
-//          text = "추천 콘텐츠",
-//          style = H5,
-//          modifier = Modifier.padding(horizontal = 16.dp)
-//        )
-//      }
       Spacer(modifier = Modifier.height(8.dp))
       Box(
         modifier = Modifier

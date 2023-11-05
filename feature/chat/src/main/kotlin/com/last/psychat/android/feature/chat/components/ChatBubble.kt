@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import com.last.psychat.android.core.ui.components.ProfileImage
 import com.last.psychat.android.feature.chat.model.ChatMessage
 import com.last.pyschat.android.core.designsystem.theme.Gray200
 import com.last.pyschat.android.core.designsystem.theme.Gray300

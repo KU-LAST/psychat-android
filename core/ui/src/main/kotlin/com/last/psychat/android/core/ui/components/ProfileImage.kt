@@ -1,4 +1,4 @@
-package com.last.psychat.android.feature.chat.components
+package com.last.psychat.android.core.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.shape.CircleShape
