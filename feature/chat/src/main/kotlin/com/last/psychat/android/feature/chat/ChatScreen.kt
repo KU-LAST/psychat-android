@@ -28,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavOptions
+import com.last.psychat.android.feature.chat.components.ChatBubble
+import com.last.psychat.android.feature.chat.components.ChatTopBar
 import com.last.psychat.android.feature.chat.model.ChatMessage
 import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray50

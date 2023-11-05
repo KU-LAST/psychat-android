@@ -1,6 +1,5 @@
-package com.last.psychat.android.feature.chat
+package com.last.psychat.android.feature.chat.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.last.psychat.android.feature.chat.model.ChatMessage
 import com.last.pyschat.android.core.designsystem.theme.Gray200
@@ -51,7 +48,11 @@ fun ChatBubble(
       Spacer(modifier = Modifier.width(8.dp))
       MessageBox(message = chatMessage.message, isUser = true)
     } else {
-      ProfileImage(modifier = Modifier.align(Alignment.Top))
+      ProfileImage(
+        modifier = Modifier
+          .align(Alignment.Top)
+          .size(48.dp)
+      )
       Spacer(modifier = Modifier.width(8.dp))
       MessageBox(message = chatMessage.message, isUser = false)
       Spacer(modifier = Modifier.width(8.dp))
@@ -71,7 +72,7 @@ fun MessageBox(
 
   Box(
     modifier = modifier
-      .widthIn(max = if(isUser) maxWidthDp else maxWidthDp - 56.dp)
+      .widthIn(max = if (isUser) maxWidthDp else maxWidthDp - 56.dp)
       .clip(RoundedCornerShape(16.dp))
       .background(Gray200)
       .padding(8.dp),
@@ -95,15 +96,3 @@ fun TimeText(time: String) {
   )
 }
 
-@Composable
-fun ProfileImage(
-  modifier: Modifier = Modifier,
-) {
-  Image(
-    painter = painterResource(id = com.last.psychat.android.core.designsystem.R.drawable.chat_bot_profile_image), // 여기에 프로필 이미지 리소스 아이디를 넣어주세요.
-    contentDescription = "Profile Image",
-    modifier = modifier
-      .size(48.dp)
-      .clip(CircleShape)
-  )
-}
