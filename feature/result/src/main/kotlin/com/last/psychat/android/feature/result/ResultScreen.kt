@@ -38,7 +38,6 @@ import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.result.components.ResultTopBar
 import com.last.psychat.android.feature.result.navigation.RESULT_NAVIGATION_ROUTE
 import com.last.pyschat.android.core.designsystem.theme.Gray200
-import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import com.last.pyschat.android.core.designsystem.theme.H3
@@ -144,7 +143,7 @@ internal fun ResultScreen(
 //      )
       Spacer(modifier = Modifier.height(16.dp))
       ResultTopBar(modifier = Modifier.height(56.dp))
-      HorizontalDivider(color = Gray300)
+      HorizontalDivider(color = Gray500)
       Spacer(modifier.height(32.dp))
       Text(
         text = "지금은 ”우울“한 감정이시네요",

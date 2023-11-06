@@ -31,12 +31,13 @@ import androidx.navigation.NavOptions
 import com.last.psychat.android.feature.chat.components.ChatBubble
 import com.last.psychat.android.feature.chat.components.ChatTopBar
 import com.last.psychat.android.feature.chat.model.ChatMessage
-import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray50
+import com.last.pyschat.android.core.designsystem.theme.Gray500
 
 // TODO 뒤로 가기 버튼이 있어야 하는지 결정
 // 종료된 세션이 아니면 다시 돌아와서 이어가야 할 것 같은데
 // TODO 키보드가 올라오면 이전 채팅 내역이 보이지 않는 문제
+// 스크롤을 항상 최하단으로 내려야 함
 @Composable
 internal fun ChatRoute(
   onNavigateBack: () -> Unit,
@@ -121,7 +122,7 @@ internal fun ChatScreen(
           onNavigateBack = onNavigateBack,
           navigateToResult = endChatSession,
         )
-        HorizontalDivider(color = Gray300)
+        HorizontalDivider(color = Gray500)
         Box(modifier = Modifier.fillMaxSize()) {
           LazyColumn {
             items(

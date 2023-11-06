@@ -27,6 +27,7 @@ import com.last.psychat.android.feature.components.MainTopBar
 import com.last.psychat.android.feature.mapper.toUiModel
 import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray50
+import com.last.pyschat.android.core.designsystem.theme.Gray500
 
 @Composable
 internal fun MainRoute(
@@ -126,7 +127,7 @@ internal fun MainScreen(
     Column {
       Spacer(modifier = Modifier.height(16.dp))
       MainTopBar()
-      HorizontalDivider(color = Gray300)
+      HorizontalDivider(color = Gray500)
       Box(
         modifier = Modifier
           .fillMaxHeight()
