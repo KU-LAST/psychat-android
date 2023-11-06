@@ -2,11 +2,12 @@
 
 package com.last.psychat.android.feature.result
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,13 +20,14 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -40,6 +42,7 @@ import com.last.psychat.android.feature.result.navigation.RESULT_NAVIGATION_ROUT
 import com.last.pyschat.android.core.designsystem.theme.Gray200
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
+import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.H3
 import com.last.pyschat.android.core.designsystem.theme.H5
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
@@ -123,7 +126,6 @@ internal fun ResultScreen(
     ),
   )
 
-
   val pageCount = 10
   val pagerState = rememberPagerState(pageCount = { pageCount })
   val pagerHeight = 280.dp
@@ -136,11 +138,6 @@ internal fun ResultScreen(
       modifier = Modifier.verticalScroll(scrollState),
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
-//      Spacer(modifier.height(32.dp))
-//      Text(
-//        text = "감정 판단 결과",
-//        style = H4,
-//      )
       Spacer(modifier = Modifier.height(16.dp))
       ResultTopBar(modifier = Modifier.height(56.dp))
       HorizontalDivider(color = Gray500)
@@ -149,6 +146,7 @@ internal fun ResultScreen(
         text = "지금은 ”우울“한 감정이시네요",
         style = H3,
       )
+      Spacer(Modifier.weight(1f))
       Spacer(modifier.height(32.dp))
       AsyncImage(
         modifier = Modifier.size(84.dp),
@@ -171,7 +169,9 @@ internal fun ResultScreen(
           maxLines = 2,
         )
       }
-      Spacer(modifier.height(16.dp))
+      Spacer(modifier.height(8.dp))
+      HorizontalDivider(color = Gray500)
+      Spacer(modifier.height(8.dp))
       Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Start
@@ -189,29 +189,37 @@ internal fun ResultScreen(
           .height(pagerHeight),
         contentAlignment = Alignment.Center,
       ) {
-        // TODO 3개의 아이템이 화면에 보이는 HoriziontalPager 로 구현
         HorizontalPager(
           state = pagerState,
-          modifier = Modifier.matchParentSize(),
-        ) { page ->
-          RecommendedContentCard(
+          contentPadding = PaddingValues(horizontal = 32.dp),
+        ) { index ->
+          Card(
             modifier = Modifier
               .fillMaxWidth()
-              .padding(horizontal = 16.dp)
-              .clip(RoundedCornerShape(16.dp))
-              .background(Gray200),
-            date = recommendedContentList[page].date,
-            title = recommendedContentList[page].title,
-            thumbnailUrl = recommendedContentList[page].thumbnailUrl,
-            videoUrl = recommendedContentList[page].videoUrl,
-          )
+              .padding(16.dp),
+            shape = RoundedCornerShape(16.dp),
+            border = BorderStroke(0.5.dp, Gray900),
+            colors = CardDefaults.cardColors(containerColor = Gray200),
+          ) {
+            RecommendedContentCard(
+              modifier = Modifier.fillMaxSize(),
+              thumbnailUrl = recommendedContentList[index].thumbnailUrl,
+              title = recommendedContentList[index].title,
+              date = recommendedContentList[index].date,
+              videoUrl = recommendedContentList[index].videoUrl,
+            )
+          }
         }
       }
-      Spacer(modifier = Modifier.height(16.dp))
-      PagerIndicator(
+      HorizontalPagerIndicator(
         pageCount = pageCount,
-        pagerState = pagerState,
+        currentPage = pagerState.currentPage,
+        targetPage = pagerState.targetPage,
+        currentPageOffsetFraction = pagerState.currentPageOffsetFraction
       )
+      Spacer(modifier = Modifier.height(8.dp))
+      HorizontalDivider(color = Gray500)
+      Spacer(modifier = Modifier.height(16.dp))
       Text(
         text = stringResource(id = R.string.info_message),
         style = TextXsRegular,

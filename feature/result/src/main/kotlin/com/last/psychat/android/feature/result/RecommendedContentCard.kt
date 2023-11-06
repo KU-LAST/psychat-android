@@ -5,11 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -19,15 +18,15 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import com.last.pyschat.android.core.designsystem.theme.Gray900
-import com.last.pyschat.android.core.designsystem.theme.TextLSemiBold
-import com.last.pyschat.android.core.designsystem.theme.TextMMedium
+import com.last.pyschat.android.core.designsystem.theme.TextMSemiBold
+import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 
 @Composable
 fun RecommendedContentCard(
   modifier: Modifier = Modifier,
-  date: String,
-  title: String,
   thumbnailUrl: String,
+  title: String,
+  date: String,
   videoUrl: String,
 ) {
   val context = LocalContext.current
@@ -39,9 +38,8 @@ fun RecommendedContentCard(
     AsyncImage(
       modifier = Modifier
         .fillMaxWidth()
-        .padding(vertical = 18.dp, horizontal = 16.dp)
         .weight(0.7f)
-        .clip(RoundedCornerShape(16.dp)),
+        .clipToBounds(),
       model = ImageRequest.Builder(context)
         .data(thumbnailUrl)
         .build(),
@@ -50,27 +48,25 @@ fun RecommendedContentCard(
     )
     Text(
       text = title,
-      style = TextLSemiBold,
+      style = TextMSemiBold,
       color = Gray900,
       modifier = Modifier
-        .padding(horizontal = 16.dp)
+        .padding(start = 16.dp, end = 16.dp, top = 8.dp)
         .weight(0.2f),
       maxLines = 2,
       overflow = TextOverflow.Ellipsis,
     )
     Row(
-      modifier
+      modifier = Modifier
         .fillMaxWidth()
         .weight(0.1f),
       horizontalArrangement = Arrangement.End,
     ) {
       Text(
         text = date,
-        style = TextMMedium,
+        style = TextXsRegular,
         color = Gray500,
         modifier = Modifier.padding(horizontal = 16.dp),
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
       )
     }
   }
