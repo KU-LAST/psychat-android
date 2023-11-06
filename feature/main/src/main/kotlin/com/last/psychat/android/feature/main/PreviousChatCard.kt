@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Message
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,10 +41,15 @@ fun PreviousCard(
     Row(
       verticalAlignment = Alignment.CenterVertically
     ) {
+      Spacer(modifier = Modifier.width(12.dp))
+      Icon(
+        imageVector = Icons.AutoMirrored.Outlined.Message,
+        contentDescription = "Previous Message",
+      )
       Column(
         modifier = Modifier
           .weight(1f)
-          .padding(start = 12.dp, top = 16.dp),
+          .padding(start = 16.dp, top = 12.dp),
       ) {
         Text(
           text = previousChat.startDate,
@@ -57,18 +66,18 @@ fun PreviousCard(
           overflow = TextOverflow.Ellipsis,
           color = Gray900,
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(12.dp))
       }
-      AsyncImage(
-        modifier = Modifier
-          .size(60.dp)
-          .padding(end = 12.dp),
-        model = ImageRequest.Builder(LocalContext.current)
-          .data(Emotion.values()[previousChat.emotionIndex].icon)
-          .crossfade(true)
-          .build(),
-        contentDescription = "Mood Image"
-      )
     }
+    AsyncImage(
+      modifier = Modifier
+        .size(60.dp)
+        .padding(end = 12.dp),
+      model = ImageRequest.Builder(LocalContext.current)
+        .data(Emotion.values()[previousChat.emotionIndex].icon)
+        .crossfade(true)
+        .build(),
+      contentDescription = "Mood Image"
+    )
   }
 }
