@@ -2,6 +2,7 @@ package com.last.psychat.android.feature.result
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +17,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.last.pyschat.android.core.designsystem.theme.Gray500
+import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.TextLSemiBold
 import com.last.pyschat.android.core.designsystem.theme.TextMMedium
 
@@ -48,20 +51,27 @@ fun RecommendedContentCard(
     Text(
       text = title,
       style = TextLSemiBold,
+      color = Gray900,
       modifier = Modifier
         .padding(horizontal = 16.dp)
         .weight(0.2f),
       maxLines = 2,
       overflow = TextOverflow.Ellipsis,
     )
-    Text(
-      text = date,
-      style = TextMMedium,
-      modifier = Modifier
-        .padding(horizontal = 16.dp)
+    Row(
+      modifier
+        .fillMaxWidth()
         .weight(0.1f),
-      maxLines = 1,
-      overflow = TextOverflow.Ellipsis,
-    )
+      horizontalArrangement = Arrangement.End,
+    ) {
+      Text(
+        text = date,
+        style = TextMMedium,
+        color = Gray500,
+        modifier = Modifier.padding(horizontal = 16.dp),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+      )
+    }
   }
 }
