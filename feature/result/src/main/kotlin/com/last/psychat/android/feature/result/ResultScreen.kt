@@ -149,7 +149,7 @@ internal fun ResultScreen(
       Spacer(Modifier.weight(1f))
       Spacer(modifier.height(32.dp))
       AsyncImage(
-        modifier = Modifier.size(84.dp),
+        modifier = Modifier.size(96.dp),
         model = ImageRequest.Builder(context)
           .data(Emotion.values()[5].icon)
           .crossfade(true)
