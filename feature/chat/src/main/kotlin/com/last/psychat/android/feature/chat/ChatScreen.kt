@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Send
@@ -20,6 +22,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,11 +34,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavOptions
+import com.last.psychat.android.core.ui.keyboardAsState
 import com.last.psychat.android.feature.chat.components.ChatBubble
 import com.last.psychat.android.feature.chat.components.ChatTopBar
 import com.last.psychat.android.feature.chat.model.ChatMessage
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
+import kotlinx.coroutines.launch
 
 // TODO 뒤로 가기 버튼이 있어야 하는지 결정
 // 종료된 세션이 아니면 다시 돌아와서 이어가야 할 것 같은데
@@ -77,38 +85,10 @@ internal fun ChatScreen(
   sendChatMessage: () -> Unit,
   endChatSession: () -> Unit,
 ) {
-  val chatMessageList = listOf(
-    ChatMessage(
-      message = "나 요즘 너무 힘들어",
-      timestamp = "오전 10시 12분",
-      isUser = true,
-    ),
-    ChatMessage(
-      message = "네 그렇군요, 듣고 있으니 계속 말씀하세요",
-      timestamp = "오전 10시 13분",
-      isUser = false,
-    ),
-    ChatMessage(
-      message = "학교 팀플에 취업 준비에 너무 할게 많아서 스트레스 받아. 그냥 좀 쉬고 싶어",
-      timestamp = "오전 10시 14분",
-      isUser = true,
-    ),
-    ChatMessage(
-      message = "그런 일이 있으셨군요. 정말 힘드시겠어요. 제가 옆에서 힘이 되어 드릴께요",
-      timestamp = "오전 10시 15분",
-      isUser = false,
-    ),
-    ChatMessage(
-      message = "어떻게 스트레스를 그나마 조금이라도 해소할 수 있을까?",
-      timestamp = "오전 10시 16분",
-      isUser = true,
-    ),
-    ChatMessage(
-      message = "쉬는 시간에 가볍게 산책을 다녀오시는 건 어떨까요?",
-      timestamp = "오전 10시 17분",
-      isUser = false,
-    ),
-  )
+  val listState = rememberLazyListState()
+  val scope = rememberCoroutineScope()
+  val isKeyboardOpen by keyboardAsState()
+  var previousChat by remember { mutableStateOf(listOf<ChatMessage>()) }
 
   Surface(
     modifier = modifier.fillMaxSize(),
@@ -124,14 +104,24 @@ internal fun ChatScreen(
         )
         HorizontalDivider(color = Gray500)
         Box(modifier = Modifier.fillMaxSize()) {
-          LazyColumn {
-            items(
-              // count = uiState.chatMessageList.size,
-              count = chatMessageList.size,
-              key = { index -> chatMessageList[index].timestamp },
-            ) { index ->
-              ChatBubble(chatMessage = chatMessageList[index])
+          uiState.chatMessageList?.let {
+            LazyColumn(
+              state = listState
+            ) {
+              items(
+                items = uiState.chatMessageList,
+                key = { it.timestamp },
+              ) { chatMessage ->
+                ChatBubble(chatMessage = chatMessage)
+              }
+
+              if (isKeyboardOpen || previousChat.size != it.size) {
+                scope.launch {
+                  listState.scrollToItem(it.size - 1)
+                }
+              }
             }
+            previousChat = it
           }
           Row(
             modifier = Modifier
