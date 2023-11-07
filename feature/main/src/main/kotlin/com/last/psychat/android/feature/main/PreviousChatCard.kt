@@ -36,38 +36,35 @@ fun PreviousCard(
     Modifier
       .fillMaxWidth()
       .padding(8.dp)
-      .clickable { },
+      .clickable {},
+    verticalAlignment = Alignment.CenterVertically
   ) {
-    Row(
-      verticalAlignment = Alignment.CenterVertically
+    Spacer(modifier = Modifier.width(12.dp))
+    Icon(
+      imageVector = Icons.AutoMirrored.Outlined.Message,
+      contentDescription = "Previous Message",
+    )
+    Column(
+      modifier = Modifier
+        .weight(1f)
+        .padding(start = 16.dp, top = 12.dp),
     ) {
-      Spacer(modifier = Modifier.width(12.dp))
-      Icon(
-        imageVector = Icons.AutoMirrored.Outlined.Message,
-        contentDescription = "Previous Message",
+      Text(
+        text = previousChat.startDate,
+        style = Title,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+        color = Gray900,
       )
-      Column(
-        modifier = Modifier
-          .weight(1f)
-          .padding(start = 16.dp, top = 12.dp),
-      ) {
-        Text(
-          text = previousChat.startDate,
-          style = Title,
-          maxLines = 2,
-          overflow = TextOverflow.Ellipsis,
-          color = Gray900,
-        )
-        Spacer(Modifier.height(8.dp))
-        Text(
-          text = previousChat.emotion,
-          style = TextLMedium,
-          maxLines = 2,
-          overflow = TextOverflow.Ellipsis,
-          color = Gray900,
-        )
-        Spacer(Modifier.height(12.dp))
-      }
+      Spacer(Modifier.height(8.dp))
+      Text(
+        text = previousChat.emotion,
+        style = TextLMedium,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+        color = Gray900,
+      )
+      Spacer(Modifier.height(12.dp))
     }
     AsyncImage(
       modifier = Modifier
