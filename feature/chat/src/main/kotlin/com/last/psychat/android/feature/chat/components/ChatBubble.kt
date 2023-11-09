@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.last.psychat.android.core.ui.components.ProfileImage
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
-import com.last.psychat.core.util.formatDateTime
+import com.last.psychat.core.util.extension.formatDateTime
 import com.last.pyschat.android.core.designsystem.theme.Gray200
 import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray500

@@ -13,6 +13,7 @@ import com.last.psychat.android.core.ui.UiText
 import com.last.psychat.android.feature.chat.mapper.toUiModel
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
 import com.last.psychat.android.feature.chat.navigation.CHAT_SESSION_ID
+import com.last.psychat.core.util.getCurrentTimeFormatted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,7 +24,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import timber.log.Timber
 
 data class ChatUiState(
@@ -129,7 +129,7 @@ class ChatViewModel @Inject constructor(
       // val sessionId = getSessionIdUseCase()
       val messageContent = ChatMessageUiModel(
         message = _uiState.value.chatInputMessage,
-        timestamp = Clock.System.now().toString(),
+        timestamp = getCurrentTimeFormatted(),
         isUser = true,
       )
       _uiState.update {

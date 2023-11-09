@@ -1,16 +1,16 @@
 package com.last.psychat.android.feature.chat.mapper
 
 import com.last.psychat.android.core.domain.entity.chat.BotMessageEntity
-import com.last.psychat.android.core.domain.entity.chat.MessageEntity
 import com.last.psychat.android.core.domain.entity.chat.ChatResponseEntity
+import com.last.psychat.android.core.domain.entity.chat.MessageEntity
 import com.last.psychat.android.core.domain.entity.chat.UserMessageEntity
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
-import kotlinx.datetime.Clock
+import com.last.psychat.core.util.getCurrentTimeFormatted
 
 internal fun ChatResponseEntity.toUiModel() =
   ChatMessageUiModel(
     message = responseContent,
-    timestamp = Clock.System.now().toString(),
+    timestamp = getCurrentTimeFormatted(),
     isUser = false,
   )
 

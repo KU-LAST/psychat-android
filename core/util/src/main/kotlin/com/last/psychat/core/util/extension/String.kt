@@ -1,4 +1,4 @@
-package com.last.psychat.core.util
+package com.last.psychat.core.util.extension
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
