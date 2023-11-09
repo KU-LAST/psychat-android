@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -109,54 +110,57 @@ internal fun ChatScreen(
           navigateToResult = endChatSession,
         )
         HorizontalDivider(color = Gray500)
-        Box(modifier = Modifier.fillMaxSize()) {
-          uiState.chatMessageList?.let {
-            LazyColumn(state = listState) {
-              items(
-                items = uiState.chatMessageList,
-                key = { (it.message + " " + it.timestamp) },
-              ) { chatMessage ->
-                ChatBubble(chatMessage = chatMessage)
-              }
-
-              if (isKeyboardOpen || previousChat.size != it.size) {
-                scope.launch {
-                  listState.scrollToItem(it.size - 1)
-                }
-              }
-            }
-            previousChat = it
-          }
-          Row(
+        uiState.chatMessageList?.let {
+          LazyColumn(
             modifier = Modifier
-              .padding(bottom = 32.dp)
-              .align(Alignment.BottomCenter),
-            verticalAlignment = Alignment.CenterVertically,
+              .fillMaxHeight()
+              .padding(bottom = 92.dp),
+            state = listState
           ) {
-            OutlinedTextField(
-              modifier = Modifier
-                .padding(start = 16.dp)
-                .weight(1f),
-              value = uiState.chatInputMessage,
-              singleLine = false,
-              onValueChange = updateChatInputMessage,
-              keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-              ),
-            )
-            IconButton(
-              onClick = {
-                if (uiState.chatInputMessage.isNotEmpty()) {
-                  sendChatMessage()
-                }
-              },
-            ) {
-              Icon(
-                imageVector = Icons.AutoMirrored.Outlined.Send,
-                contentDescription = "Send Message",
-              )
+            items(
+              items = uiState.chatMessageList,
+              key = { (it.message + " " + it.timestamp) },
+            ) { chatMessage ->
+              ChatBubble(chatMessage = chatMessage)
+            }
+
+            if (isKeyboardOpen || previousChat.size != it.size) {
+              scope.launch {
+                listState.scrollToItem(it.size - 1)
+              }
             }
           }
+          previousChat = it
+        }
+      }
+      Row(
+        modifier = Modifier
+          .padding(bottom = 32.dp)
+          .align(Alignment.BottomCenter),
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        OutlinedTextField(
+          modifier = Modifier
+            .padding(start = 16.dp)
+            .weight(1f),
+          value = uiState.chatInputMessage,
+          singleLine = false,
+          onValueChange = updateChatInputMessage,
+          keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Text,
+          ),
+        )
+        IconButton(
+          onClick = {
+            if (uiState.chatInputMessage.isNotEmpty()) {
+              sendChatMessage()
+            }
+          },
+        ) {
+          Icon(
+            imageVector = Icons.AutoMirrored.Outlined.Send,
+            contentDescription = "Send Message",
+          )
         }
       }
     }
