@@ -5,12 +5,16 @@ data class PreviousChatDetailEntity(
   val botMessages: List<BotMessageEntity>,
 )
 
+interface MessageEntity {
+  val timestamp: String
+}
+
 data class UserMessageEntity(
+  override val timestamp: String,
   val messageContent: String,
-  val timestamp: String,
-)
+): MessageEntity
 
 data class BotMessageEntity(
+  override val timestamp: String,
   val responseContent: String,
-  val timestamp: String,
-)
+): MessageEntity

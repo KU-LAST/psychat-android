@@ -11,7 +11,7 @@ import com.last.psychat.android.core.domain.usecase.chat.GetSessionIdUseCase
 import com.last.psychat.android.core.domain.usecase.chat.SendChatMessageUseCase
 import com.last.psychat.android.core.ui.UiText
 import com.last.psychat.android.feature.chat.mapper.toUiModel
-import com.last.psychat.android.feature.chat.model.ChatMessage
+import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
 import com.last.psychat.android.feature.chat.navigation.CHAT_SESSION_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -28,7 +28,7 @@ import timber.log.Timber
 
 data class ChatUiState(
   // 반드시 null 로 초기값을 설정 해야 하는지 고민
-  val chatMessageList: List<ChatMessage>? = null,
+  val chatMessageList: List<ChatMessageUiModel>? = null,
   val chatInputMessage: String = "",
   val isSessionEnd: Boolean = false,
   val isLoading: Boolean = false,
@@ -105,12 +105,12 @@ class ChatViewModel @Inject constructor(
       val result = getPreviousChatDetailUseCase(sessionId)
       when {
         result.isSuccess && result.getOrNull() != null -> {
-          // TODO 정렬 필요
-          val userMessages = result.getOrNull()!!.userMessages
-          val botMessages = result.getOrNull()!!.botMessages
+          val previousChatMessageList = result.getOrNull()!!
           _uiState.update {
             it.copy(
-              chatMessageList = userMessages.map { userMsg -> userMsg.toUiModel() } + botMessages.map { botMsg -> botMsg.toUiModel() }
+              chatMessageList = previousChatMessageList.map { prevChatMsg ->
+                prevChatMsg.toUiModel()
+              }
             )
           }
         }
@@ -129,7 +129,7 @@ class ChatViewModel @Inject constructor(
     _uiState.update { it.copy(isLoading = true) }
     viewModelScope.launch {
       // val sessionId = getSessionIdUseCase()
-      val messageContent = ChatMessage(
+      val messageContent = ChatMessageUiModel(
         message = _uiState.value.chatInputMessage,
         timestamp = Clock.System.now().toString(),
         isUser = true

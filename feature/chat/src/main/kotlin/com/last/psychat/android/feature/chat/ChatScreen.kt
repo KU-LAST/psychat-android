@@ -36,7 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.last.psychat.android.core.ui.keyboardAsState
 import com.last.psychat.android.feature.chat.components.ChatBubble
 import com.last.psychat.android.feature.chat.components.ChatTopBar
-import com.last.psychat.android.feature.chat.model.ChatMessage
+import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import kotlinx.coroutines.launch
@@ -87,10 +87,10 @@ internal fun ChatScreen(
   val listState = rememberLazyListState()
   val scope = rememberCoroutineScope()
   val isKeyboardOpen by keyboardAsState()
-  var previousChat by remember { mutableStateOf(listOf<ChatMessage>()) }
+  var previousChat by remember { mutableStateOf(listOf<ChatMessageUiModel>()) }
 
   LaunchedEffect(key1 = uiState.isSessionEnd) {
-    if(uiState.isSessionEnd) {
+    if (uiState.isSessionEnd) {
       navigateToResult()
     }
   }
