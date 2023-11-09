@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -21,7 +22,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.last.psychat.android.core.domain.entity.chat.PreviousChatEntity
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.components.MainTopBar
 import com.last.psychat.android.feature.mapper.toUiModel
@@ -49,6 +49,7 @@ internal fun MainRoute(
 
   MainScreen(
     uiState = uiState,
+    getPreviousChatList = viewModel::getPreviousChatList,
     startChatSession = viewModel::startChatSession,
     navigateToChat = navigateToChat,
   )
@@ -58,67 +59,19 @@ internal fun MainRoute(
 internal fun MainScreen(
   modifier: Modifier = Modifier,
   uiState: MainUiState,
+  getPreviousChatList: () -> Unit,
   startChatSession: () -> Unit,
   navigateToChat: (Long) -> Unit,
 ) {
+  LaunchedEffect(key1 = Unit) {
+    getPreviousChatList()
+  }
+
   LaunchedEffect(key1 = uiState.isSessionIdCreated) {
     if (uiState.isSessionIdCreated) {
       navigateToChat(uiState.sessionId)
     }
   }
-
-  val previousChatList = listOf(
-    PreviousChatEntity(
-      sessionId = 10,
-      startDate = "2023년 11월 5일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 9,
-      startDate = "2023년 11월 4일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 8,
-      startDate = "2023년 11월 3일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 7,
-      startDate = "2023년 11월 2일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 6,
-      startDate = "2023년 11월 1일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 5,
-      startDate = "2023년 10월 31일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 4,
-      startDate = "2023년 10월 30일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 3,
-      startDate = "2023년 10월 29일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 2,
-      startDate = "2023년 10월 28일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 1,
-      startDate = "2023년 10월 27일",
-      emotion = "우울"
-    ),
-  )
 
   Surface(
     modifier = modifier.fillMaxSize(),
@@ -136,11 +89,11 @@ internal fun MainScreen(
       ) {
         LazyColumn {
           items(
-            count = previousChatList.size,
-            key = { index -> previousChatList[index].sessionId },
-          ) { index ->
+            items = uiState.previousChatList,
+            key = { it.sessionId },
+          ) { previousChat ->
             PreviousCard(
-              previousChat = previousChatList[index].toUiModel(),
+              previousChat = previousChat.toUiModel(),
               onClick = {},
             )
             HorizontalDivider(color = Gray300)
