@@ -51,6 +51,7 @@ internal fun MainRoute(
     uiState = uiState,
     getPreviousChatList = viewModel::getPreviousChatList,
     startChatSession = viewModel::startChatSession,
+    resumeChatSession = viewModel::resumeChatSession,
     navigateToChat = navigateToChat,
   )
 }
@@ -61,8 +62,10 @@ internal fun MainScreen(
   uiState: MainUiState,
   getPreviousChatList: () -> Unit,
   startChatSession: () -> Unit,
+  resumeChatSession: (Long) -> Unit,
   navigateToChat: (Long) -> Unit,
 ) {
+  // TODO 토큰을 받아온 이후에 진행되어야 함
   LaunchedEffect(key1 = Unit) {
     getPreviousChatList()
   }
@@ -94,7 +97,10 @@ internal fun MainScreen(
           ) { previousChat ->
             PreviousCard(
               previousChat = previousChat.toUiModel(),
-              onClick = {},
+              onClick = { sessionId ->
+                // navigateToChat(sessionId)
+                resumeChatSession(sessionId)
+              },
             )
             HorizontalDivider(color = Gray300)
           }
@@ -105,10 +111,10 @@ internal fun MainScreen(
           .fillMaxWidth()
           .height(56.dp)
           .padding(horizontal = 24.dp),
-        // onClick = startChatSession,
-        onClick = {
-          navigateToChat(uiState.sessionId)
-        },
+        onClick = startChatSession,
+//        onClick = {
+//          navigateToChat(uiState.sessionId)
+//        },
         text = stringResource(id = R.string.start_chat),
       )
       Spacer(modifier = Modifier.height(32.dp))

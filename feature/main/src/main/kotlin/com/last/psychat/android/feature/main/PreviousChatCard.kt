@@ -1,6 +1,5 @@
 package com.last.psychat.android.feature.main
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.last.psychat.android.core.ui.Emotion
+import com.last.psychat.android.core.ui.extension.clickableSingle
 import com.last.psychat.android.feature.model.PreviousChat
 import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.TextLMedium
@@ -30,13 +30,13 @@ import com.last.pyschat.android.core.designsystem.theme.Title
 @Composable
 fun PreviousCard(
   previousChat: PreviousChat,
-  onClick: (String) -> Unit,
+  onClick: (Long) -> Unit,
 ) {
   Row(
     Modifier
       .fillMaxWidth()
       .padding(8.dp)
-      .clickable {},
+      .clickableSingle(onClick = { onClick(previousChat.sessionId) }),
     verticalAlignment = Alignment.CenterVertically
   ) {
     Spacer(modifier = Modifier.width(12.dp))

@@ -12,7 +12,6 @@ import com.last.psychat.android.core.domain.usecase.login.SetLoginTokenUseCase
 import com.last.psychat.android.core.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,7 +25,7 @@ import kotlinx.coroutines.launch
 
 data class MainUiState(
   val sessionId: Long = -1,
-  val previousChatList: ImmutableList<PreviousChatEntity> = persistentListOf(),
+  val previousChatList: List<PreviousChatEntity> = persistentListOf(),
   val isSessionIdCreated: Boolean = false,
   val isLoggedIn: Boolean = false,
   val isLoading: Boolean = false,
@@ -53,58 +52,58 @@ class MainViewModel @Inject constructor(
   private val _eventFlow = MutableSharedFlow<MainUiEvent>()
   val eventFlow: SharedFlow<MainUiEvent> = _eventFlow.asSharedFlow()
 
-  val previousChatList = listOf(
-    PreviousChatEntity(
-      sessionId = 10,
-      startDate = "2023년 11월 5일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 9,
-      startDate = "2023년 11월 4일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 8,
-      startDate = "2023년 11월 3일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 7,
-      startDate = "2023년 11월 2일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 6,
-      startDate = "2023년 11월 1일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 5,
-      startDate = "2023년 10월 31일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 4,
-      startDate = "2023년 10월 30일",
-      emotion = "우울"
-    ),
-    PreviousChatEntity(
-      sessionId = 3,
-      startDate = "2023년 10월 29일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 2,
-      startDate = "2023년 10월 28일",
-      emotion = "행복"
-    ),
-    PreviousChatEntity(
-      sessionId = 1,
-      startDate = "2023년 10월 27일",
-      emotion = "우울"
-    ),
-  )
+//  val previousChatList = listOf(
+//    PreviousChatEntity(
+//      sessionId = 10,
+//      startDate = "2023년 11월 5일",
+//      emotion = "우울"
+//    ),
+//    PreviousChatEntity(
+//      sessionId = 9,
+//      startDate = "2023년 11월 4일",
+//      emotion = "행복"
+//    ),
+//    PreviousChatEntity(
+//      sessionId = 8,
+//      startDate = "2023년 11월 3일",
+//      emotion = "우울"
+//    ),
+//    PreviousChatEntity(
+//      sessionId = 7,
+//      startDate = "2023년 11월 2일",
+//      emotion = "행복"
+//    ),
+//    PreviousChatEntity(
+//      sessionId = 6,
+//      startDate = "2023년 11월 1일",
+//      emotion = "우울"
+//    ),
+//    PreviousChatEntity(
+//      sessionId = 5,
+//      startDate = "2023년 10월 31일",
+//      emotion = "행복"
+//    ),
+//    PreviousChatEntity(
+//      sessionId = 4,
+//      startDate = "2023년 10월 30일",
+//      emotion = "우울"
+//    ),
+//    PreviousChatEntity(
+//      sessionId = 3,
+//      startDate = "2023년 10월 29일",
+//      emotion = "행복"
+//    ),
+//    PreviousChatEntity(
+//      sessionId = 2,
+//      startDate = "2023년 10월 28일",
+//      emotion = "행복"
+//    ),
+//    PreviousChatEntity(
+//      sessionId = 1,
+//      startDate = "2023년 10월 27일",
+//      emotion = "우울"
+//    ),
+//  )
 
   init {
     checkLoginToken()
@@ -174,5 +173,14 @@ class MainViewModel @Inject constructor(
       }
     }
     _uiState.update { it.copy(isLoading = false) }
+  }
+
+  fun resumeChatSession(sessionId: Long) {
+    _uiState.update {
+      it.copy(
+        sessionId = sessionId,
+        isSessionIdCreated = true,
+      )
+    }
   }
 }

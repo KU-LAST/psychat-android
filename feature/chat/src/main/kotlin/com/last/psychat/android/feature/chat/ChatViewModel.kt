@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.last.psychat.android.core.domain.entity.chat.ChatRequestEntity
 import com.last.psychat.android.core.domain.entity.chat.EndChatEntity
 import com.last.psychat.android.core.domain.usecase.chat.EndChatSessionUseCase
+import com.last.psychat.android.core.domain.usecase.chat.GetPreviousChatDetailUseCase
 import com.last.psychat.android.core.domain.usecase.chat.GetSessionIdUseCase
 import com.last.psychat.android.core.domain.usecase.chat.SendChatMessageUseCase
 import com.last.psychat.android.core.ui.UiText
@@ -42,6 +43,7 @@ sealed class ChatUiEvent {
 class ChatViewModel @Inject constructor(
   private val sendChatMessageUseCase: SendChatMessageUseCase,
   private val getSessionIdUseCase: GetSessionIdUseCase,
+  private val getPreviousChatDetailUseCase: GetPreviousChatDetailUseCase,
   private val endChatSessionUseCase: EndChatSessionUseCase,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -54,41 +56,69 @@ class ChatViewModel @Inject constructor(
   private val _eventFlow = MutableSharedFlow<ChatUiEvent>()
   val eventFlow: SharedFlow<ChatUiEvent> = _eventFlow.asSharedFlow()
 
+//  init {
+//    viewModelScope.launch {
+//      _uiState.update {
+//        it.copy(chatMessageList = listOf(
+//          ChatMessage(
+//            message = "나 요즘 너무 힘들어",
+//            timestamp = "오전 10시 12분",
+//            isUser = true,
+//          ),
+//          ChatMessage(
+//            message = "네 그렇군요, 듣고 있으니 계속 말씀하세요",
+//            timestamp = "오전 10시 13분",
+//            isUser = false,
+//          ),
+//          ChatMessage(
+//            message = "학교 팀플에 취업 준비에 너무 할게 많아서 스트레스 받아. 그냥 좀 쉬고 싶어",
+//            timestamp = "오전 10시 14분",
+//            isUser = true,
+//          ),
+//          ChatMessage(
+//            message = "그런 일이 있으셨군요. 정말 힘드시겠어요. 제가 옆에서 힘이 되어 드릴께요",
+//            timestamp = "오전 10시 15분",
+//            isUser = false,
+//          ),
+//          ChatMessage(
+//            message = "어떻게 스트레스를 그나마 조금이라도 해소할 수 있을까?",
+//            timestamp = "오전 10시 16분",
+//            isUser = true,
+//          ),
+//          ChatMessage(
+//            message = "쉬는 시간에 가볍게 산책을 다녀오시는 건 어떨까요?",
+//            timestamp = "오전 10시 17분",
+//            isUser = false,
+//          ),
+//        ))
+//      }
+//    }
+//  }
+
   init {
+    getPreviousChatDetail(sessionId)
+  }
+
+  // TODO 세션이 처음 시작된 경우가 아닐 경우 호출
+  private fun getPreviousChatDetail(sessionId: Long) {
     viewModelScope.launch {
-      _uiState.update {
-        it.copy(chatMessageList = listOf(
-          ChatMessage(
-            message = "나 요즘 너무 힘들어",
-            timestamp = "오전 10시 12분",
-            isUser = true,
-          ),
-          ChatMessage(
-            message = "네 그렇군요, 듣고 있으니 계속 말씀하세요",
-            timestamp = "오전 10시 13분",
-            isUser = false,
-          ),
-          ChatMessage(
-            message = "학교 팀플에 취업 준비에 너무 할게 많아서 스트레스 받아. 그냥 좀 쉬고 싶어",
-            timestamp = "오전 10시 14분",
-            isUser = true,
-          ),
-          ChatMessage(
-            message = "그런 일이 있으셨군요. 정말 힘드시겠어요. 제가 옆에서 힘이 되어 드릴께요",
-            timestamp = "오전 10시 15분",
-            isUser = false,
-          ),
-          ChatMessage(
-            message = "어떻게 스트레스를 그나마 조금이라도 해소할 수 있을까?",
-            timestamp = "오전 10시 16분",
-            isUser = true,
-          ),
-          ChatMessage(
-            message = "쉬는 시간에 가볍게 산책을 다녀오시는 건 어떨까요?",
-            timestamp = "오전 10시 17분",
-            isUser = false,
-          ),
-        ))
+      val result = getPreviousChatDetailUseCase(sessionId)
+      when {
+        result.isSuccess && result.getOrNull() != null -> {
+          // TODO 정렬 필요
+          val userMessages = result.getOrNull()!!.userMessages
+          val botMessages = result.getOrNull()!!.botMessages
+          _uiState.update {
+            it.copy(
+              chatMessageList = userMessages.map { userMsg -> userMsg.toUiModel() } + botMessages.map { botMsg -> botMsg.toUiModel() }
+            )
+          }
+        }
+
+        result.isFailure -> {
+          val exception = result.exceptionOrNull()!!
+          _eventFlow.emit(ChatUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
+        }
       }
     }
   }
