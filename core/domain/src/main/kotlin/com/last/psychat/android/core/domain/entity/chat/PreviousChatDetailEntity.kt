@@ -1,10 +1,6 @@
 package com.last.psychat.android.core.domain.entity.chat
 
 data class PreviousChatDetailEntity(
-  val chattingList: ChattingListEntity,
-)
-
-data class ChattingListEntity(
   val userMessages: List<UserMessageEntity>,
   val botMessages: List<BotMessageEntity>,
 )

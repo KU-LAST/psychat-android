@@ -5,16 +5,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PreviousChatDetailResponse(
-  @SerialName("chattingList")
-  val chattingList: ChattingList,
-)
-
-@Serializable
-data class ChattingList(
-  @SerialName("userMessage")
+  @SerialName("userMessages")
   val userMessages: List<UserMessage>,
 
-  @SerialName("botMessage")
+  @SerialName("botMessages")
   val botMessages: List<BotMessage>,
 )
 
