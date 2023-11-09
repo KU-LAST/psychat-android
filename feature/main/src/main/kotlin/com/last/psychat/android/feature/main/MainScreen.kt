@@ -88,7 +88,7 @@ internal fun MainScreen(
         modifier = Modifier
           .fillMaxHeight()
           .weight(1f)
-          .padding(bottom = 32.dp)
+          .padding(bottom = 32.dp),
       ) {
         LazyColumn {
           items(

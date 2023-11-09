@@ -136,7 +136,7 @@ internal fun ResultScreen(
   ) {
     Column(
       modifier = Modifier.verticalScroll(scrollState),
-      horizontalAlignment = Alignment.CenterHorizontally
+      horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       Spacer(modifier = Modifier.height(16.dp))
       ResultTopBar(modifier = Modifier.height(56.dp))
@@ -154,13 +154,13 @@ internal fun ResultScreen(
           .data(Emotion.values()[5].icon)
           .crossfade(true)
           .build(),
-        contentDescription = "Mood Image"
+        contentDescription = "Mood Image",
       )
       Spacer(modifier.weight(1f))
       Spacer(modifier.height(32.dp))
       Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start
+        horizontalArrangement = Arrangement.Start,
       ) {
         Text(
           text = "다음 콘텐츠의 도움을 받아보는 것이 어떨까요?",
@@ -174,12 +174,12 @@ internal fun ResultScreen(
       Spacer(modifier.height(8.dp))
       Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start
+        horizontalArrangement = Arrangement.Start,
       ) {
         Text(
           text = "추천 콘텐츠",
           style = H5,
-          modifier = Modifier.padding(horizontal = 16.dp)
+          modifier = Modifier.padding(horizontal = 16.dp),
         )
       }
       Spacer(modifier = Modifier.height(8.dp))
@@ -215,7 +215,7 @@ internal fun ResultScreen(
         pageCount = pageCount,
         currentPage = pagerState.currentPage,
         targetPage = pagerState.targetPage,
-        currentPageOffsetFraction = pagerState.currentPageOffsetFraction
+        currentPageOffsetFraction = pagerState.currentPageOffsetFraction,
       )
       Spacer(modifier = Modifier.height(8.dp))
       HorizontalDivider(color = Gray500)

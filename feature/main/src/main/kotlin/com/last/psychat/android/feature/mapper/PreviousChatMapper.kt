@@ -9,5 +9,5 @@ internal fun PreviousChatEntity.toUiModel() =
     sessionId = sessionId,
     startDate = startDate,
     emotion = emotion,
-    emotionIndex = if (emotion == "행복") 1 else 5
+    emotionIndex = if (emotion == "행복") 1 else 5,
   )

@@ -1,6 +1,6 @@
 package com.last.psychat.android.feature.model
 
-data class PreviousChat (
+data class PreviousChat(
   val sessionId: Long,
   val startDate: String,
   val emotion: String,

@@ -37,7 +37,7 @@ fun PreviousCard(
       .fillMaxWidth()
       .padding(8.dp)
       .clickableSingle(onClick = { onClick(previousChat.sessionId) }),
-    verticalAlignment = Alignment.CenterVertically
+    verticalAlignment = Alignment.CenterVertically,
   ) {
     Spacer(modifier = Modifier.width(12.dp))
     Icon(
@@ -74,7 +74,7 @@ fun PreviousCard(
         .data(Emotion.values()[previousChat.emotionIndex].icon)
         .crossfade(true)
         .build(),
-      contentDescription = "Mood Image"
+      contentDescription = "Mood Image",
     )
   }
 }

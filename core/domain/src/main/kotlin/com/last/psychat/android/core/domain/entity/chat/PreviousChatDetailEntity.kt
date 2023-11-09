@@ -12,9 +12,9 @@ interface MessageEntity {
 data class UserMessageEntity(
   override val timestamp: String,
   val messageContent: String,
-): MessageEntity
+) : MessageEntity
 
 data class BotMessageEntity(
   override val timestamp: String,
   val responseContent: String,
-): MessageEntity
+) : MessageEntity

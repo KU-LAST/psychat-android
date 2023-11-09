@@ -108,9 +108,7 @@ class ChatViewModel @Inject constructor(
           val previousChatMessageList = result.getOrNull()!!
           _uiState.update {
             it.copy(
-              chatMessageList = previousChatMessageList.map { prevChatMsg ->
-                prevChatMsg.toUiModel()
-              }
+              chatMessageList = previousChatMessageList.map { prevChatMsg -> prevChatMsg.toUiModel() },
             )
           }
         }
@@ -132,7 +130,7 @@ class ChatViewModel @Inject constructor(
       val messageContent = ChatMessageUiModel(
         message = _uiState.value.chatInputMessage,
         timestamp = Clock.System.now().toString(),
-        isUser = true
+        isUser = true,
       )
       _uiState.update {
         it.copy(
@@ -144,20 +142,14 @@ class ChatViewModel @Inject constructor(
         ChatRequestEntity(
           sessionId = sessionId,
           messageContent = uiState.value.chatInputMessage,
-        )
+        ),
       )
-      _uiState.update {
-        it.copy(
-          chatInputMessage = ""
-        )
-      }
+      _uiState.update { it.copy(chatInputMessage = "") }
       when {
         result.isSuccess && result.getOrNull() != null -> {
           val responseMessage = result.getOrNull()!!.toUiModel()
           _uiState.update {
-            it.copy(
-              chatMessageList = it.chatMessageList?.plus(responseMessage),
-            )
+            it.copy(chatMessageList = it.chatMessageList?.plus(responseMessage))
           }
           // endChatSession()
         }

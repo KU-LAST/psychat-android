@@ -9,5 +9,3 @@ data class PreviousChatEntity(
   val startDate: String,
   val emotion: String,
 )
-
-

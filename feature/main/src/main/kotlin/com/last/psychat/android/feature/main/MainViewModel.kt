@@ -116,9 +116,7 @@ class MainViewModel @Inject constructor(
         result.isSuccess && result.getOrNull() != null -> {
           val previousChatList = result.getOrNull()!!.previousChatList
           _uiState.update {
-            it.copy(
-              previousChatList = previousChatList.toImmutableList()
-            )
+            it.copy(previousChatList = previousChatList.toImmutableList())
           }
         }
 

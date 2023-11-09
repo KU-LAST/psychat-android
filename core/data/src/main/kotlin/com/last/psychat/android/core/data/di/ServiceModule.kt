@@ -19,7 +19,7 @@ internal object ServiceModule {
   @Provides
   internal fun provideLoginService(
     @Named("AuthHttpClient")
-    retrofit: Retrofit
+    retrofit: Retrofit,
   ): LoginService {
     return retrofit.create(LoginService::class.java)
   }
@@ -28,7 +28,7 @@ internal object ServiceModule {
   @Provides
   internal fun provideChatService(
     @Named("HttpClient")
-    retrofit: Retrofit
+    retrofit: Retrofit,
   ): ChatService {
     return retrofit.create(ChatService::class.java)
   }
@@ -37,7 +37,7 @@ internal object ServiceModule {
   @Provides
   internal fun provideRecommendService(
     @Named("HttpClient")
-    retrofit: Retrofit
+    retrofit: Retrofit,
   ): RecommendService {
     return retrofit.create(RecommendService::class.java)
   }

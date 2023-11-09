@@ -10,6 +10,4 @@ import javax.inject.Inject
 class ResultViewModel @Inject constructor(
   private val getRecommendedContentListUseCase: GetRecommendedContentListUseCase,
   savedStateHandle: SavedStateHandle,
-) : ViewModel() {
-
-}
+) : ViewModel()

@@ -22,86 +22,86 @@ import com.last.psychat.android.core.designsystem.R
 enum class Emotion(
   val icon: Int,
   val contentColor: Color,
-  val containerColor: Color
+  val containerColor: Color,
 ) {
   Neutral(
     icon = R.drawable.neutral,
     contentColor = Color.Black,
-    containerColor = NeutralColor
+    containerColor = NeutralColor,
   ),
   Happy(
     icon = R.drawable.happy,
     contentColor = Color.Black,
-    containerColor = HappyColor
+    containerColor = HappyColor,
   ),
   Angry(
     icon = R.drawable.angry,
     contentColor = Color.White,
-    containerColor = AngryColor
+    containerColor = AngryColor,
   ),
   Bored(
     icon = R.drawable.bored,
     contentColor = Color.Black,
-    containerColor = BoredColor
+    containerColor = BoredColor,
   ),
   Calm(
     icon = R.drawable.calm,
     contentColor = Color.Black,
-    containerColor = CalmColor
+    containerColor = CalmColor,
   ),
   Depressed(
     icon = R.drawable.depressed,
     contentColor = Color.Black,
-    containerColor = DepressedColor
+    containerColor = DepressedColor,
   ),
   Disappointed(
     icon = R.drawable.disappointed,
     contentColor = Color.White,
-    containerColor = DisappointedColor
+    containerColor = DisappointedColor,
   ),
   Humorous(
     icon = R.drawable.humorous,
     contentColor = Color.Black,
-    containerColor = HumorousColor
+    containerColor = HumorousColor,
   ),
   Lonely(
     icon = R.drawable.lonely,
     contentColor = Color.White,
-    containerColor = LonelyColor
+    containerColor = LonelyColor,
   ),
   Mysterious(
     icon = R.drawable.mysterious,
     contentColor = Color.Black,
-    containerColor = MysteriousColor
+    containerColor = MysteriousColor,
   ),
   Romantic(
     icon = R.drawable.romantic,
     contentColor = Color.White,
-    containerColor = RomanticColor
+    containerColor = RomanticColor,
   ),
   Shameful(
     icon = R.drawable.shameful,
     contentColor = Color.White,
-    containerColor = ShamefulColor
+    containerColor = ShamefulColor,
   ),
   Awful(
     icon = R.drawable.awful,
     contentColor = Color.Black,
-    containerColor = AwfulColor
+    containerColor = AwfulColor,
   ),
   Surprised(
     icon = R.drawable.surprised,
     contentColor = Color.Black,
-    containerColor = SurprisedColor
+    containerColor = SurprisedColor,
   ),
   Suspicious(
     icon = R.drawable.suspicious,
     contentColor = Color.Black,
-    containerColor = SuspiciousColor
+    containerColor = SuspiciousColor,
   ),
   Tense(
     icon = R.drawable.tense,
     contentColor = Color.Black,
-    containerColor = TenseColor
-  )
+    containerColor = TenseColor,
+  ),
 }

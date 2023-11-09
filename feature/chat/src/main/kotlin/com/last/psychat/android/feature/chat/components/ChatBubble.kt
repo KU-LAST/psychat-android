@@ -42,9 +42,8 @@ fun ChatBubble(
       .wrapContentHeight()
       .fillMaxWidth(),
     horizontalArrangement = messageArrangement,
-    verticalAlignment = Alignment.Bottom
+    verticalAlignment = Alignment.Bottom,
   ) {
-
     if (chatMessage.isUser) {
       TimeText(time = chatMessage.timestamp.toKoreanTimeString())
       // TimeText(time = chatMessage.timestamp)
@@ -57,7 +56,7 @@ fun ChatBubble(
       ProfileImage(
         modifier = Modifier
           .align(Alignment.Top)
-          .size(48.dp)
+          .size(48.dp),
       )
       Spacer(modifier = Modifier.width(8.dp))
       MessageBox(
@@ -91,7 +90,7 @@ fun MessageBox(
       text = message,
       color = Gray900,
       modifier = Modifier.padding(all = 4.dp),
-      style = TextSRegular
+      style = TextSRegular,
     )
   }
 }
@@ -104,4 +103,3 @@ fun TimeText(time: String) {
     style = InfoS,
   )
 }
-

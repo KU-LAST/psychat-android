@@ -35,14 +35,14 @@ fun ChatTopBar(
     modifier = modifier
       .fillMaxWidth()
       .padding(horizontal = 16.dp),
-    contentAlignment = Alignment.Center
+    contentAlignment = Alignment.Center,
   ) {
     ProfileImage(modifier = Modifier.size(56.dp))
 
     Row(
       modifier = Modifier.fillMaxWidth(),
       horizontalArrangement = Arrangement.SpaceBetween,
-      verticalAlignment = Alignment.CenterVertically
+      verticalAlignment = Alignment.CenterVertically,
     ) {
       IconButton(
         onClick = onNavigateBack,
@@ -62,7 +62,7 @@ fun ChatTopBar(
         color = Gray900,
         modifier = Modifier.clickable(
           onClick = navigateToResult,
-        )
+        ),
       )
     }
   }

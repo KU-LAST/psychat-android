@@ -6,4 +6,3 @@ data class EmotionRequest(
   @SerialName("emotion")
   val emotion: String,
 )
-

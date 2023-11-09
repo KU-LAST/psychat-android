@@ -11,9 +11,7 @@ import com.last.pyschat.android.core.designsystem.theme.Gray50
 fun PsyChatApp(
   appState: PsyChatAppState = rememberPsyChatAppState(),
 ) {
-  Scaffold(
-    containerColor = Gray50
-  ) { innerPadding ->
+  Scaffold(containerColor = Gray50) { innerPadding ->
     PsyChatNavHost(
       modifier = Modifier.padding(innerPadding),
       appState = appState,

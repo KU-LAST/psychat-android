@@ -50,4 +50,3 @@ internal abstract class DataSourceModule {
     recommendDataSourceImpl: RecommendDataSourceImpl,
   ): RecommendDataSource
 }
-

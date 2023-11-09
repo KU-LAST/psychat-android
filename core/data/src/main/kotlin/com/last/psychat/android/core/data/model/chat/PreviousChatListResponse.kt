@@ -20,4 +20,3 @@ data class PreviousChat(
   @SerialName("emotion")
   val emotion: String,
 )
-

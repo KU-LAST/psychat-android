@@ -28,12 +28,12 @@ fun MainTopBar(
     Text(
       text = "채팅 목록",
       style = H5,
-      color = Gray900
+      color = Gray900,
     )
     Row(
       modifier = Modifier.fillMaxWidth(),
       horizontalArrangement = Arrangement.End,
-      verticalAlignment = Alignment.CenterVertically
+      verticalAlignment = Alignment.CenterVertically,
     ) {
       ProfileImage(modifier = Modifier.size(56.dp))
     }

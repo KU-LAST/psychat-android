@@ -28,14 +28,10 @@ internal fun ChatRequestEntity.toModel() =
   )
 
 internal fun ChatResponse.toEntity() =
-  ChatResponseEntity(
-    responseContent = responseContent,
-  )
+  ChatResponseEntity(responseContent = responseContent)
 
 internal fun EndChatEntity.toModel() =
-  EndChatRequest(
-    sessionId = sessionId,
-  )
+  EndChatRequest(sessionId = sessionId)
 
 internal fun PreviousChatDetailResponse.toEntity() =
   PreviousChatDetailEntity(
@@ -45,7 +41,7 @@ internal fun PreviousChatDetailResponse.toEntity() =
 
 internal fun PreviousChatListResponse.toEntity() =
   PreviousChatListEntity(
-    previousChatList = previousChatList.map { it.toEntity() }
+    previousChatList = previousChatList.map { it.toEntity() },
   )
 
 internal fun PreviousChat.toEntity() =
@@ -58,7 +54,7 @@ internal fun PreviousChat.toEntity() =
 internal fun UserMessage.toEntity() =
   UserMessageEntity(
     messageContent = messageContent,
-    timestamp = timestamp
+    timestamp = timestamp,
   )
 
 internal fun BotMessage.toEntity() =
@@ -73,6 +69,4 @@ internal fun SessionResponse.toEntity() =
   )
 
 internal fun EmotionResponse.toEntity() =
-  EmotionResponseEntity(
-    emotion = emotion,
-  )
+  EmotionResponseEntity(emotion = emotion)

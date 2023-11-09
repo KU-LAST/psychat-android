@@ -111,9 +111,7 @@ internal fun ChatScreen(
         HorizontalDivider(color = Gray500)
         Box(modifier = Modifier.fillMaxSize()) {
           uiState.chatMessageList?.let {
-            LazyColumn(
-              state = listState
-            ) {
+            LazyColumn(state = listState) {
               items(
                 items = uiState.chatMessageList,
                 key = { it.timestamp },
@@ -143,7 +141,7 @@ internal fun ChatScreen(
               singleLine = false,
               onValueChange = updateChatInputMessage,
               keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text
+                keyboardType = KeyboardType.Text,
               ),
             )
             IconButton(
@@ -151,7 +149,7 @@ internal fun ChatScreen(
                 if (uiState.chatInputMessage.isNotEmpty()) {
                   sendChatMessage()
                 }
-              }
+              },
             ) {
               Icon(
                 imageVector = Icons.AutoMirrored.Outlined.Send,
