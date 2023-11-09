@@ -81,8 +81,8 @@ internal object NetworkModule {
   ): Retrofit {
     val contentType = "application/json".toMediaType()
     val httpClient = OkHttpClient.Builder()
-      .addInterceptor(httpLoggingInterceptor)
       .addInterceptor(tokenInterceptor)
+      .addInterceptor(httpLoggingInterceptor)
       .connectTimeout(15, TimeUnit.SECONDS)
       .readTimeout(60, TimeUnit.SECONDS)
       .build()
