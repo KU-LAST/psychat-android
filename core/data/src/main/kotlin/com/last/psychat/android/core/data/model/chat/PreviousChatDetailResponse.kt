@@ -23,8 +23,8 @@ data class UserMessage(
 
 @Serializable
 data class BotMessage(
-  @SerialName("responseContent")
-  val responseContent: String,
+  @SerialName("messageContent")
+  val messageContent: String,
 
   @SerialName("timestamp")
   val timestamp: String,

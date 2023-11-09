@@ -1,10 +1,11 @@
 package com.last.psychat.core.util
 
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 // ISO 8601 형식의 날짜와 시간 문자열을 "~년 월 일" 형태로 변환
 // "2023-08-02T18:27:25.862Z" -> "~23년 8월 2일"
@@ -36,3 +37,20 @@ fun String.toKoreanTimeString(): String {
   val period = if (hour < 12) "오전" else "오후"
   return "$period ${hour % 12}시 ${minute}분"
 }
+
+fun String.formatDateTime(): String {
+  val inputFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss")
+  val dateTime = LocalDateTime.parse(this, inputFormatter)
+  val outputFormatter = DateTimeFormatter.ofPattern("a h:mm", Locale.KOREAN)
+  return dateTime.format(outputFormatter)
+}
+
+//fun String.formatDateTime(): String {
+//  val instant = Instant.parse(this.replace(" ", "T") + ":00Z") // "2023.11.09 13:38:45" -> "2023-11-09T13:38:45Z"
+//  val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+//
+//  val hour = if (dateTime.hour > 12) dateTime.hour - 12 else dateTime.hour
+//  val period = if (dateTime.hour < 12) "오전" else "오후"
+//
+//  return "$period ${hour}시 ${dateTime.minute}분 ${dateTime.second}초"
+//}

@@ -19,15 +19,15 @@ internal fun MessageEntity.toUiModel(): ChatMessageUiModel {
     is UserMessageEntity -> {
       ChatMessageUiModel(
         message = messageContent,
-        timestamp = Clock.System.now().toString(),
-        isUser = false,
+        timestamp = timestamp,
+        isUser = true,
       )
     }
 
     is BotMessageEntity -> {
       ChatMessageUiModel(
-        message = responseContent,
-        timestamp = Clock.System.now().toString(),
+        message = messageContent,
+        timestamp = timestamp,
         isUser = false,
       )
     }
@@ -45,7 +45,7 @@ internal fun UserMessageEntity.toUiModel() =
 
 internal fun BotMessageEntity.toUiModel() =
   ChatMessageUiModel(
-    message = responseContent,
+    message = messageContent,
     timestamp = timestamp,
     isUser = false,
   )

@@ -59,7 +59,7 @@ internal fun UserMessage.toEntity() =
 
 internal fun BotMessage.toEntity() =
   BotMessageEntity(
-    responseContent = responseContent,
+    messageContent = messageContent,
     timestamp = timestamp,
   )
 

@@ -114,7 +114,7 @@ internal fun ChatScreen(
             LazyColumn(state = listState) {
               items(
                 items = uiState.chatMessageList,
-                key = { it.timestamp },
+                key = { (it.message + " " + it.timestamp) },
               ) { chatMessage ->
                 ChatBubble(chatMessage = chatMessage)
               }
