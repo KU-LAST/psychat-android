@@ -53,6 +53,7 @@ internal fun MainRoute(
     startChatSession = viewModel::startChatSession,
     resumeChatSession = viewModel::resumeChatSession,
     navigateToChat = navigateToChat,
+    onNavigateToChat = viewModel::onNavigateToChat,
   )
 }
 
@@ -64,6 +65,7 @@ internal fun MainScreen(
   startChatSession: () -> Unit,
   resumeChatSession: (Long) -> Unit,
   navigateToChat: (Long) -> Unit,
+  onNavigateToChat: () -> Unit,
 ) {
   // TODO 토큰을 받아온 이후에 진행되어야 함
   LaunchedEffect(key1 = Unit) {
@@ -73,6 +75,7 @@ internal fun MainScreen(
   LaunchedEffect(key1 = uiState.isSessionIdCreated) {
     if (uiState.isSessionIdCreated) {
       navigateToChat(uiState.sessionId)
+      onNavigateToChat()
     }
   }
 

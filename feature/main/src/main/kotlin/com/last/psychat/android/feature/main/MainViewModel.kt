@@ -181,4 +181,12 @@ class MainViewModel @Inject constructor(
       )
     }
   }
+
+  fun onNavigateToChat() {
+    _uiState.update {
+      it.copy(
+        isSessionIdCreated = false,
+      )
+    }
+  }
 }
