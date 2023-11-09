@@ -1,6 +1,5 @@
 package com.last.psychat.android.feature.chat.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -20,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.last.psychat.android.core.ui.components.ProfileImage
+import com.last.psychat.android.core.ui.extension.clickableSingle
 import com.last.psychat.android.feature.chat.R
 import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.H5
@@ -60,7 +60,7 @@ fun ChatTopBar(
         text = "결과 보기",
         style = H5,
         color = Gray900,
-        modifier = Modifier.clickable(
+        modifier = Modifier.clickableSingle(
           onClick = navigateToResult,
         ),
       )
