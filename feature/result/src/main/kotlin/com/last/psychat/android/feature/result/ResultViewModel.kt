@@ -10,7 +10,9 @@ import com.last.psychat.android.core.ui.UiText
 import com.last.psychat.android.feature.result.navigation.EMOTION
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -21,7 +23,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class ResultUiState(
-  val recommendedContentList: List<RecommendedContentEntity> = persistentListOf(),
+  val recommendedContentList: ImmutableList<RecommendedContentEntity> = persistentListOf(),
   val isLoading: Boolean = false,
   val error: Throwable? = null,
 )
@@ -57,7 +59,7 @@ class ResultViewModel @Inject constructor(
           val recommendedContentList = result.getOrNull()!!.contentsList
           _uiState.update {
             it.copy(
-              recommendedContentList = recommendedContentList
+              recommendedContentList = recommendedContentList.toImmutableList()
             )
           }
         }
