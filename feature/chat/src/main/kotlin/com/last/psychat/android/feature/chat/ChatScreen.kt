@@ -106,7 +106,6 @@ internal fun ChatScreen(
     Box {
       Column {
         Spacer(modifier = Modifier.height(16.dp))
-        // TODO 뒤로 이동 했다가 다시 바로 채팅 화면으로 이동되지 않도록
         ChatTopBar(
           modifier = Modifier.height(56.dp),
           onNavigateBack = onNavigateBack,
@@ -117,7 +116,9 @@ internal fun ChatScreen(
           LazyColumn(
             modifier = Modifier
               .fillMaxHeight()
-              .padding(bottom = 92.dp),
+              // TODO 이러한 임시 방편으론 여러 줄의 임력에 대한 대처할 수 없다
+              // 2줄 이상일 땐 텍스트 필드내에서 스크롤이 되도록
+              .padding(bottom = 120.dp),
             state = listState
           ) {
             items(
