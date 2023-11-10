@@ -12,6 +12,7 @@ import com.last.psychat.android.core.domain.usecase.login.SetLoginTokenUseCase
 import com.last.psychat.android.core.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 
 data class MainUiState(
   val sessionId: Long = -1,
-  val previousChatList: List<PreviousChatEntity> = persistentListOf(),
+  val previousChatList: ImmutableList<PreviousChatEntity> = persistentListOf(),
   val isLoggedIn: Boolean = false,
   val isLoading: Boolean = false,
   val error: Throwable? = null,
