@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -116,8 +117,6 @@ internal fun ChatScreen(
           LazyColumn(
             modifier = Modifier
               .fillMaxHeight()
-              // TODO 이러한 임시 방편으론 여러 줄의 임력에 대한 대처할 수 없다
-              // 2줄 이상일 땐 텍스트 필드내에서 스크롤이 되도록
               .padding(bottom = 120.dp),
             state = listState
           ) {
@@ -146,7 +145,8 @@ internal fun ChatScreen(
         OutlinedTextField(
           modifier = Modifier
             .padding(start = 16.dp)
-            .weight(1f),
+            .weight(1f)
+            .heightIn(min = 56.dp, max = 84.dp),
           value = uiState.chatInputMessage,
           singleLine = false,
           onValueChange = updateChatInputMessage,
