@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.last.psychat.android.core.ui.ObserveAsEvents
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.components.MainTopBar
 import com.last.psychat.android.feature.mapper.toUiModel
@@ -37,12 +38,13 @@ internal fun MainRoute(
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   val context = LocalContext.current
 
-  LaunchedEffect(viewModel) {
-    viewModel.eventFlow.collect { event ->
-      when (event) {
-        is MainUiEvent.ShowToast -> {
-          Toast.makeText(context, event.message.asString(context), Toast.LENGTH_SHORT).show()
-        }
+  ObserveAsEvents(viewModel.eventFlow) { event ->
+    when(event) {
+      is MainUiEvent.NavigateToChat -> {
+        navigateToChat(uiState.sessionId)
+      }
+      is MainUiEvent.ShowToast -> {
+        Toast.makeText(context, event.message.asString(context), Toast.LENGTH_SHORT).show()
       }
     }
   }
@@ -52,8 +54,6 @@ internal fun MainRoute(
     getPreviousChatList = viewModel::getPreviousChatList,
     startChatSession = viewModel::startChatSession,
     resumeChatSession = viewModel::resumeChatSession,
-    navigateToChat = navigateToChat,
-    onNavigateToChat = viewModel::onNavigateToChat,
   )
 }
 
@@ -64,19 +64,10 @@ internal fun MainScreen(
   getPreviousChatList: () -> Unit,
   startChatSession: () -> Unit,
   resumeChatSession: (Long) -> Unit,
-  navigateToChat: (Long) -> Unit,
-  onNavigateToChat: () -> Unit,
 ) {
   // TODO 토큰을 받아온 이후에 진행되어야 함
   LaunchedEffect(key1 = Unit) {
     getPreviousChatList()
-  }
-
-  LaunchedEffect(key1 = uiState.isSessionIdCreated) {
-    if (uiState.isSessionIdCreated) {
-      navigateToChat(uiState.sessionId)
-      onNavigateToChat()
-    }
   }
 
   Surface(
@@ -101,7 +92,6 @@ internal fun MainScreen(
             PreviousCard(
               previousChat = previousChat.toUiModel(),
               onClick = { sessionId ->
-                // navigateToChat(sessionId)
                 resumeChatSession(sessionId)
               },
             )
@@ -115,9 +105,6 @@ internal fun MainScreen(
           .height(56.dp)
           .padding(horizontal = 24.dp),
         onClick = startChatSession,
-//        onClick = {
-//          navigateToChat(uiState.sessionId)
-//        },
         text = stringResource(id = R.string.start_chat),
       )
       Spacer(modifier = Modifier.height(32.dp))

@@ -26,14 +26,14 @@ import kotlinx.coroutines.launch
 data class MainUiState(
   val sessionId: Long = -1,
   val previousChatList: List<PreviousChatEntity> = persistentListOf(),
-  val isSessionIdCreated: Boolean = false,
   val isLoggedIn: Boolean = false,
   val isLoading: Boolean = false,
   val error: Throwable? = null,
 )
 
-sealed class MainUiEvent {
-  data class ShowToast(val message: UiText) : MainUiEvent()
+sealed interface MainUiEvent {
+  data object NavigateToChat: MainUiEvent
+  data class ShowToast(val message: UiText) : MainUiEvent
 }
 
 @HiltViewModel
@@ -159,9 +159,9 @@ class MainViewModel @Inject constructor(
           _uiState.update {
             it.copy(
               sessionId = sessionId,
-              isSessionIdCreated = true,
             )
           }
+          _eventFlow.emit(MainUiEvent.NavigateToChat)
         }
 
         result.isFailure -> {
@@ -171,22 +171,20 @@ class MainViewModel @Inject constructor(
       }
     }
     _uiState.update { it.copy(isLoading = false) }
+
+//    viewModelScope.launch {
+//      _eventFlow.emit(MainUiEvent.NavigateToChat)
+//    }
   }
 
   fun resumeChatSession(sessionId: Long) {
-    _uiState.update {
-      it.copy(
-        sessionId = sessionId,
-        isSessionIdCreated = true,
-      )
-    }
-  }
-
-  fun onNavigateToChat() {
-    _uiState.update {
-      it.copy(
-        isSessionIdCreated = false,
-      )
+    viewModelScope.launch {
+      _uiState.update {
+        it.copy(
+          sessionId = sessionId,
+        )
+      }
+      _eventFlow.emit(MainUiEvent.NavigateToChat)
     }
   }
 }
