@@ -31,6 +31,7 @@ data class ChatUiState(
   val chatMessageList: List<ChatMessageUiModel>? = null,
   val chatInputMessage: String = "",
   val isSessionEnd: Boolean = false,
+  val emotion: String = "",
   val isLoading: Boolean = false,
   val error: Throwable? = null,
 )
@@ -173,14 +174,22 @@ class ChatViewModel @Inject constructor(
       val result = endChatSessionUseCase(EndChatEntity(sessionId = sessionId))
       when {
         result.isSuccess && result.getOrNull() != null -> {
-          val emotion = result.getOrNull()
-          Timber.d("$emotion")
+          val emotion = result.getOrNull()!!.emotion
+          Timber.d(emotion)
         }
         result.isFailure -> {
           val exception = result.exceptionOrNull()!!
           _eventFlow.emit(ChatUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
         }
       }
+    }
+  }
+
+  fun onNavigateToResult() {
+    _uiState.update {
+      it.copy(
+        isSessionEnd = false,
+      )
     }
   }
 }

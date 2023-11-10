@@ -20,7 +20,7 @@ fun NavController.navigateToChat(
 
 fun NavGraphBuilder.chatScreen(
   onNavigateBack: () -> Unit,
-  navigateToResult: () -> Unit,
+  navigateToResult: (String) -> Unit,
 ) {
   composable(
     route = CHAT_NAVIGATION_ROUTE,

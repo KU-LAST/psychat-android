@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun ChatRoute(
   onNavigateBack: () -> Unit,
-  navigateToResult: () -> Unit,
+  navigateToResult: (String) -> Unit,
   viewModel: ChatViewModel = hiltViewModel(),
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -72,6 +72,7 @@ internal fun ChatRoute(
     updateChatInputMessage = viewModel::updateChatInputMessage,
     sendChatMessage = viewModel::sendChatMessage,
     endChatSession = viewModel::endChatSession,
+    onNavigateToResult = viewModel::onNavigateToResult,
   )
 }
 
@@ -80,10 +81,11 @@ internal fun ChatScreen(
   modifier: Modifier = Modifier,
   uiState: ChatUiState,
   onNavigateBack: () -> Unit,
-  navigateToResult: () -> Unit,
+  navigateToResult: (String) -> Unit,
   updateChatInputMessage: (String) -> Unit,
   sendChatMessage: () -> Unit,
   endChatSession: () -> Unit,
+  onNavigateToResult: () -> Unit,
 ) {
   val listState = rememberLazyListState()
   val scope = rememberCoroutineScope()
@@ -92,7 +94,8 @@ internal fun ChatScreen(
 
   LaunchedEffect(key1 = uiState.isSessionEnd) {
     if (uiState.isSessionEnd) {
-      navigateToResult()
+      navigateToResult(uiState.emotion)
+      onNavigateToResult()
     }
   }
 
