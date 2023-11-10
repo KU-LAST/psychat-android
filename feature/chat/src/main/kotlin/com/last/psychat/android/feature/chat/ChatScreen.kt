@@ -22,7 +22,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.last.psychat.android.core.ui.ObserveAsEvents
 import com.last.psychat.android.core.ui.keyboardAsState
 import com.last.psychat.android.feature.chat.components.ChatBubble
 import com.last.psychat.android.feature.chat.components.ChatTopBar
@@ -43,8 +43,6 @@ import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import kotlinx.coroutines.launch
 
-// TODO 뒤로 가기 버튼이 있어야 하는지 결정
-// 종료된 세션이 아니면 다시 돌아와서 이어가야 할 것 같은데
 // TODO 키보드가 올라오면 이전 채팅 내역이 보이지 않는 문제
 // 스크롤을 항상 최하단으로 내려야 함
 @Composable
@@ -56,12 +54,13 @@ internal fun ChatRoute(
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   val context = LocalContext.current
 
-  LaunchedEffect(viewModel) {
-    viewModel.eventFlow.collect { event ->
-      when (event) {
-        is ChatUiEvent.ShowToast -> {
-          Toast.makeText(context, event.message.asString(context), Toast.LENGTH_SHORT).show()
-        }
+  ObserveAsEvents(viewModel.eventFlow) { event ->
+    when(event) {
+      is ChatUiEvent.NavigateToResult -> {
+        navigateToResult(uiState.emotion)
+      }
+      is ChatUiEvent.ShowToast -> {
+        Toast.makeText(context, event.message.asString(context), Toast.LENGTH_SHORT).show()
       }
     }
   }
@@ -69,11 +68,9 @@ internal fun ChatRoute(
   ChatScreen(
     uiState = uiState,
     onNavigateBack = onNavigateBack,
-    navigateToResult = navigateToResult,
     updateChatInputMessage = viewModel::updateChatInputMessage,
     sendChatMessage = viewModel::sendChatMessage,
     endChatSession = viewModel::endChatSession,
-    onNavigateToResult = viewModel::onNavigateToResult,
   )
 }
 
@@ -82,23 +79,14 @@ internal fun ChatScreen(
   modifier: Modifier = Modifier,
   uiState: ChatUiState,
   onNavigateBack: () -> Unit,
-  navigateToResult: (String) -> Unit,
   updateChatInputMessage: (String) -> Unit,
   sendChatMessage: () -> Unit,
   endChatSession: () -> Unit,
-  onNavigateToResult: () -> Unit,
 ) {
   val listState = rememberLazyListState()
   val scope = rememberCoroutineScope()
   val isKeyboardOpen by keyboardAsState()
   var previousChat by remember { mutableStateOf(listOf<ChatMessageUiModel>()) }
-
-  LaunchedEffect(key1 = uiState.isSessionEnd) {
-    if (uiState.isSessionEnd) {
-      navigateToResult(uiState.emotion)
-      onNavigateToResult()
-    }
-  }
 
   Surface(
     modifier = modifier.fillMaxSize(),

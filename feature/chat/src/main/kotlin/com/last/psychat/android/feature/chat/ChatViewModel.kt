@@ -24,20 +24,19 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 data class ChatUiState(
   // 반드시 null 로 초기값을 설정 해야 하는지 고민
   val chatMessageList: List<ChatMessageUiModel>? = null,
   val chatInputMessage: String = "",
-  val isSessionEnd: Boolean = false,
   val emotion: String = "",
   val isLoading: Boolean = false,
   val error: Throwable? = null,
 )
 
-sealed class ChatUiEvent {
-  data class ShowToast(val message: UiText) : ChatUiEvent()
+sealed interface ChatUiEvent {
+  data object NavigateToResult: ChatUiEvent
+  data class ShowToast(val message: UiText) : ChatUiEvent
 }
 
 @HiltViewModel
@@ -152,7 +151,6 @@ class ChatViewModel @Inject constructor(
           _uiState.update {
             it.copy(chatMessageList = it.chatMessageList?.plus(responseMessage))
           }
-          // endChatSession()
         }
         result.isFailure -> {
           val exception = result.exceptionOrNull()!!
@@ -175,21 +173,18 @@ class ChatViewModel @Inject constructor(
       when {
         result.isSuccess && result.getOrNull() != null -> {
           val emotion = result.getOrNull()!!.emotion
-          Timber.d(emotion)
+          _uiState.update {
+            it.copy(
+              emotion = emotion,
+            )
+          }
+          _eventFlow.emit(ChatUiEvent.NavigateToResult)
         }
         result.isFailure -> {
           val exception = result.exceptionOrNull()!!
           _eventFlow.emit(ChatUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
         }
       }
-    }
-  }
-
-  fun onNavigateToResult() {
-    _uiState.update {
-      it.copy(
-        isSessionEnd = false,
-      )
     }
   }
 }
