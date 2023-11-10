@@ -2,6 +2,7 @@
 
 package com.last.psychat.android.feature.result
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -26,16 +27,20 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavOptions
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.last.psychat.android.core.domain.entity.recommend.RecommendedContentEntity
 import com.last.psychat.android.core.ui.Emotion
+import com.last.psychat.android.core.ui.ObserveAsEvents
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.result.components.ResultTopBar
 import com.last.psychat.android.feature.result.navigation.RESULT_NAVIGATION_ROUTE
@@ -51,14 +56,34 @@ import com.last.pyschat.android.core.designsystem.theme.Title
 @Composable
 internal fun ResultRoute(
   navigateToMain: (NavOptions) -> Unit,
+  viewModel: ResultViewModel = hiltViewModel(),
 ) {
-  ResultScreen(navigateToMain = navigateToMain)
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val context = LocalContext.current
+
+  ObserveAsEvents(viewModel.eventFlow) { event ->
+    when (event) {
+      is ResultUiEvent.NavigateToChat -> {
+        val options = NavOptions.Builder()
+          .setPopUpTo(RESULT_NAVIGATION_ROUTE, inclusive = true)
+          .build()
+        navigateToMain(options)
+      }
+      is ResultUiEvent.ShowToast -> {
+        Toast.makeText(context, event.message.asString(context), Toast.LENGTH_SHORT).show()
+      }
+    }
+  }
+
+  ResultScreen(
+    uiState = uiState,
+  )
 }
 
 @Composable
 internal fun ResultScreen(
   modifier: Modifier = Modifier,
-  navigateToMain: (NavOptions) -> Unit,
+  uiState: ResultUiState,
 ) {
   val context = LocalContext.current
   val scrollState = rememberScrollState()
@@ -231,12 +256,7 @@ internal fun ResultScreen(
           .fillMaxWidth()
           .height(56.dp)
           .padding(horizontal = 24.dp),
-        onClick = {
-          val options = NavOptions.Builder()
-            .setPopUpTo(RESULT_NAVIGATION_ROUTE, inclusive = true)
-            .build()
-          navigateToMain(options)
-        },
+        onClick = {},
         text = context.getString(R.string.go_back),
       )
       Spacer(Modifier.height(32.dp))
