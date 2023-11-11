@@ -19,6 +19,7 @@ import com.last.pyschat.android.core.designsystem.theme.SuspiciousColor
 import com.last.pyschat.android.core.designsystem.theme.TenseColor
 import com.last.psychat.android.core.designsystem.R
 
+// TODO 감정 판단 결과와 Emoji 매핑
 enum class Emotion(
   val icon: Int,
   val contentColor: Color,
