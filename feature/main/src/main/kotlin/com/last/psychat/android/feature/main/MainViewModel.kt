@@ -33,7 +33,7 @@ data class MainUiState(
 )
 
 sealed interface MainUiEvent {
-  data object NavigateToChat: MainUiEvent
+  data class NavigateToChat(val sessionId: Long): MainUiEvent
   data class ShowToast(val message: UiText) : MainUiEvent
 }
 
@@ -137,12 +137,15 @@ class MainViewModel @Inject constructor(
           result.isSuccess && result.getOrNull() != null -> {
             val loginToken = result.getOrNull()!!.token
             setLoginTokenUseCase(loginToken)
+            getPreviousChatList()
           }
           result.isFailure -> {
             val exception = result.exceptionOrNull()!!
             _eventFlow.emit(MainUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
           }
         }
+      } else {
+        getPreviousChatList()
       }
     }
   }
@@ -162,7 +165,7 @@ class MainViewModel @Inject constructor(
               sessionId = sessionId,
             )
           }
-          _eventFlow.emit(MainUiEvent.NavigateToChat)
+          _eventFlow.emit(MainUiEvent.NavigateToChat(sessionId))
         }
 
         result.isFailure -> {
@@ -185,7 +188,7 @@ class MainViewModel @Inject constructor(
           sessionId = sessionId,
         )
       }
-      _eventFlow.emit(MainUiEvent.NavigateToChat)
+      _eventFlow.emit(MainUiEvent.NavigateToChat(sessionId))
     }
   }
 }

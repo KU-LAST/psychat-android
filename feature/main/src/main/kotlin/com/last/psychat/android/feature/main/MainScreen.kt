@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -41,7 +40,7 @@ internal fun MainRoute(
   ObserveAsEvents(viewModel.eventFlow) { event ->
     when(event) {
       is MainUiEvent.NavigateToChat -> {
-        navigateToChat(uiState.sessionId)
+        navigateToChat(event.sessionId)
       }
       is MainUiEvent.ShowToast -> {
         Toast.makeText(context, event.message.asString(context), Toast.LENGTH_SHORT).show()
@@ -57,6 +56,7 @@ internal fun MainRoute(
   )
 }
 
+// TODO 스켈레톤 UI 구성
 @Composable
 internal fun MainScreen(
   modifier: Modifier = Modifier,
@@ -65,10 +65,11 @@ internal fun MainScreen(
   startChatSession: () -> Unit,
   resumeChatSession: (Long) -> Unit,
 ) {
-  // TODO 토큰을 받아온 이후에 진행되어야 함
-  LaunchedEffect(key1 = Unit) {
-    getPreviousChatList()
-  }
+
+//  // TODO 토큰을 받아온 이후에 진행되어야 함
+//  LaunchedEffect(key1 = Unit) {
+//    getPreviousChatList()
+//  }
 
   Surface(
     modifier = modifier.fillMaxSize(),

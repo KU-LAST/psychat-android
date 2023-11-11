@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class ResultUiState(
+  val emotion: String = "",
   val recommendedContentList: ImmutableList<RecommendedContentEntity> = persistentListOf(),
   val isLoading: Boolean = false,
   val error: Throwable? = null,
@@ -48,6 +49,11 @@ class ResultViewModel @Inject constructor(
   val eventFlow: SharedFlow<ResultUiEvent> = _eventFlow.asSharedFlow()
 
   init {
+    _uiState.update {
+      it.copy(
+        emotion = emotion,
+      )
+    }
     getRecommendedContentList()
   }
 

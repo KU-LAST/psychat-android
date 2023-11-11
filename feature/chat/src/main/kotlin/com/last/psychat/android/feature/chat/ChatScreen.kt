@@ -57,7 +57,7 @@ internal fun ChatRoute(
   ObserveAsEvents(viewModel.eventFlow) { event ->
     when(event) {
       is ChatUiEvent.NavigateToResult -> {
-        navigateToResult(uiState.emotion)
+        navigateToResult(event.emotion)
       }
       is ChatUiEvent.ShowToast -> {
         Toast.makeText(context, event.message.asString(context), Toast.LENGTH_SHORT).show()

@@ -167,7 +167,7 @@ internal fun ResultScreen(
       HorizontalDivider(color = Gray500)
       Spacer(modifier.height(32.dp))
       Text(
-        text = "지금은 ”우울“한 감정이시네요",
+        text = "지금은 ”${uiState.emotion}“한 감정이시네요",
         style = H3,
       )
       Spacer(Modifier.weight(1f))
