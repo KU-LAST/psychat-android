@@ -106,30 +106,11 @@ class MainViewModel @Inject constructor(
 //    ),
 //  )
 
-  init {
-    checkLoginToken()
-  }
+//  init {
+//    checkLoginToken()
+//  }
 
-  fun getPreviousChatList() {
-    viewModelScope.launch {
-      val result = getPreviousChatListUseCase()
-      when {
-        result.isSuccess && result.getOrNull() != null -> {
-          val previousChatList = result.getOrNull()!!.previousChatList
-          _uiState.update {
-            it.copy(previousChatList = previousChatList.toImmutableList())
-          }
-        }
-
-        result.isFailure -> {
-          val exception = result.exceptionOrNull()!!
-          _eventFlow.emit(MainUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
-        }
-      }
-    }
-  }
-
-  private fun checkLoginToken() {
+  fun checkLoginToken() {
     viewModelScope.launch {
       if (getLoginTokenUseCase().isEmpty()) {
         val result = createLoginTokenUseCase()
@@ -146,6 +127,24 @@ class MainViewModel @Inject constructor(
         }
       } else {
         getPreviousChatList()
+      }
+    }
+  }
+
+  fun getPreviousChatList() {
+    viewModelScope.launch {
+      val result = getPreviousChatListUseCase()
+      when {
+        result.isSuccess && result.getOrNull() != null -> {
+          val previousChatList = result.getOrNull()!!.previousChatList
+          _uiState.update {
+            it.copy(previousChatList = previousChatList.toImmutableList())
+          }
+        }
+        result.isFailure -> {
+          val exception = result.exceptionOrNull()!!
+          _eventFlow.emit(MainUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
+        }
       }
     }
   }
