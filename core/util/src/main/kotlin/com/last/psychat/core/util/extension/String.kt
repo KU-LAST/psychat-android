@@ -38,6 +38,13 @@ fun String.toKoreanTimeString(): String {
   return "$period ${hour % 12}시 ${minute}분"
 }
 
+fun String.formatDate(): String {
+  val inputFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
+  val dateTime = LocalDateTime.parse(this, inputFormatter)
+  val outputFormatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일", Locale.KOREAN)
+  return dateTime.format(outputFormatter)
+}
+
 fun String.formatDateTime(): String {
   val inputFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss")
   val dateTime = LocalDateTime.parse(this, inputFormatter)

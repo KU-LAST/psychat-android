@@ -1,15 +1,18 @@
 package com.last.psychat.android.feature.chat
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -21,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,8 +44,12 @@ import com.last.psychat.android.core.ui.keyboardAsState
 import com.last.psychat.android.feature.chat.components.ChatBubble
 import com.last.psychat.android.feature.chat.components.ChatTopBar
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
+import com.last.psychat.core.util.extension.formatDate
+import com.last.psychat.core.util.getCurrentTime
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
+import com.last.pyschat.android.core.designsystem.theme.TextMRegular
+import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import kotlinx.coroutines.launch
 
 // TODO 키보드가 올라오면 이전 채팅 내역이 보이지 않는 문제
@@ -101,6 +110,48 @@ internal fun ChatScreen(
           navigateToResult = endChatSession,
         )
         HorizontalDivider(color = Gray500)
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+          modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+          horizontalArrangement = Arrangement.Center,
+          verticalAlignment = Alignment.CenterVertically,
+        ) {
+          Text(
+            text = getCurrentTime().formatDate(),
+            style = TextMRegular,
+            color = Gray500,
+          )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+          modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+          horizontalArrangement = Arrangement.Center,
+          verticalAlignment = Alignment.CenterVertically,
+        ) {
+          Text(
+            text = stringResource(R.string.start_chat_info),
+            style = TextXsRegular,
+            color = Gray500,
+          )
+        }
+        Row(
+          modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+          horizontalArrangement = Arrangement.Center,
+          verticalAlignment = Alignment.CenterVertically,
+        ) {
+          Text(
+            text = stringResource(R.string.chat_convention_info),
+            style = TextXsRegular,
+            color = Gray500,
+          )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
         uiState.chatMessageList?.let {
           LazyColumn(
             modifier = Modifier
@@ -158,3 +209,4 @@ internal fun ChatScreen(
     }
   }
 }
+
