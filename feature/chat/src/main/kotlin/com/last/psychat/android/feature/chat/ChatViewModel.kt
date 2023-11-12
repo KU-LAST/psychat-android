@@ -15,7 +15,10 @@ import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
 import com.last.psychat.android.feature.chat.navigation.CHAT_SESSION_ID
 import com.last.psychat.core.util.getCurrentTimeFormatted
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -24,6 +27,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 data class ChatUiState(
   // 반드시 null 로 초기값을 설정 해야 하는지 고민
@@ -35,7 +39,7 @@ data class ChatUiState(
 )
 
 sealed interface ChatUiEvent {
-  data class NavigateToResult(val emotion: String): ChatUiEvent
+  data class NavigateToResult(val emotion: String) : ChatUiEvent
   data class ShowToast(val message: UiText) : ChatUiEvent
 }
 
@@ -178,7 +182,16 @@ class ChatViewModel @Inject constructor(
               emotion = emotion,
             )
           }
-          _eventFlow.emit(ChatUiEvent.NavigateToResult(emotion))
+          _eventFlow.emit(
+            ChatUiEvent.NavigateToResult(
+              emotion = withContext(Dispatchers.IO) {
+                URLEncoder.encode(
+                  emotion,
+                  StandardCharsets.UTF_8.toString()
+                )
+              }
+            )
+          )
         }
         result.isFailure -> {
           val exception = result.exceptionOrNull()!!

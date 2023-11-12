@@ -2,6 +2,8 @@
 
 package com.last.psychat.android.feature.result
 
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -62,11 +64,15 @@ internal fun ResultRoute(
 
   ObserveAsEvents(viewModel.eventFlow) { event ->
     when (event) {
-      is ResultUiEvent.NavigateToChat -> {
+      is ResultUiEvent.NavigateToMain -> {
         val options = NavOptions.Builder()
           .setPopUpTo(RESULT_NAVIGATION_ROUTE, inclusive = true)
           .build()
         navigateToMain(options)
+      }
+      is ResultUiEvent.NavigateToYoutube -> {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(event.videoUrl))
+        context.startActivity(browserIntent)
       }
       is ResultUiEvent.ShowToast -> {
         Toast.makeText(context, event.message.asString(context), Toast.LENGTH_SHORT).show()
@@ -76,6 +82,8 @@ internal fun ResultRoute(
 
   ResultScreen(
     uiState = uiState,
+    navigateToYoutube = viewModel::navigateToYoutube,
+    navigateToMain = viewModel::navigateToMain,
   )
 }
 
@@ -83,6 +91,8 @@ internal fun ResultRoute(
 internal fun ResultScreen(
   modifier: Modifier = Modifier,
   uiState: ResultUiState,
+  navigateToYoutube: (String) -> Unit,
+  navigateToMain: () -> Unit,
 ) {
   val context = LocalContext.current
   val scrollState = rememberScrollState()
@@ -235,6 +245,7 @@ internal fun ResultScreen(
               title = uiState.recommendedContentList[index].title,
               date = uiState.recommendedContentList[index].date,
               videoUrl = uiState.recommendedContentList[index].videoUrl,
+              onClick = navigateToYoutube,
             )
           }
         }
@@ -259,7 +270,7 @@ internal fun ResultScreen(
           .fillMaxWidth()
           .height(56.dp)
           .padding(horizontal = 24.dp),
-        onClick = {},
+        onClick = navigateToMain,
         text = context.getString(R.string.go_back),
       )
       Spacer(Modifier.height(32.dp))

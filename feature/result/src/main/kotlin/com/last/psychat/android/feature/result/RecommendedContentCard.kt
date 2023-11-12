@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.last.psychat.android.core.ui.extension.clickableSingle
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.TextMSemiBold
@@ -28,11 +29,12 @@ fun RecommendedContentCard(
   title: String,
   date: String,
   videoUrl: String,
+  onClick: (String) -> Unit,
 ) {
   val context = LocalContext.current
 
   Column(
-    modifier = modifier,
+    modifier = modifier.clickableSingle(onClick = { onClick(videoUrl) }),
     verticalArrangement = Arrangement.Center,
   ) {
     AsyncImage(

@@ -30,7 +30,9 @@ data class ResultUiState(
 )
 
 sealed interface ResultUiEvent {
-  data object NavigateToChat : ResultUiEvent
+  data object NavigateToMain : ResultUiEvent
+
+  data class NavigateToYoutube(val videoUrl: String) : ResultUiEvent
   data class ShowToast(val message: UiText) : ResultUiEvent
 }
 
@@ -74,6 +76,17 @@ class ResultViewModel @Inject constructor(
           _eventFlow.emit(ResultUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
         }
       }
+    }
+  }
+  fun navigateToYoutube(videoUrl: String) {
+    viewModelScope.launch {
+      _eventFlow.emit(ResultUiEvent.NavigateToYoutube(videoUrl))
+    }
+  }
+
+  fun navigateToMain() {
+    viewModelScope.launch {
+      _eventFlow.emit(ResultUiEvent.NavigateToMain)
     }
   }
 }
