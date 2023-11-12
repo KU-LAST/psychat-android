@@ -57,7 +57,7 @@ import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import com.last.pyschat.android.core.designsystem.theme.Title
 
 // TODO emoji 매핑
-// TODO 데이터 받아오는 부분 비동기 이슈
+// TODO 시스템 백버튼 누르면 채팅 화면으로 이동하는 문제
 @Composable
 internal fun ResultRoute(
   navigateToMain: (NavOptions) -> Unit,
@@ -101,7 +101,7 @@ internal fun ResultScreen(
   val context = LocalContext.current
   val scrollState = rememberScrollState()
 
-  val pageCount = 10
+  val pageCount = uiState.recommendedContentList.size
   val pagerState = rememberPagerState(pageCount = { pageCount })
   val pagerHeight = 280.dp
 
@@ -190,7 +190,7 @@ internal fun ResultScreen(
             HorizontalPager(
               state = pagerState,
               contentPadding = PaddingValues(horizontal = 32.dp),
-            ) { index ->
+            ) { page ->
               Card(
                 modifier = Modifier
                   .fillMaxWidth()
@@ -205,10 +205,10 @@ internal fun ResultScreen(
 //              title = recommendedContentList[index].title,
 //              date = recommendedContentList[index].date,
 //              videoUrl = recommendedContentList[index].videoUrl,
-                  thumbnailUrl = uiState.recommendedContentList[index].thumbnailUrl,
-                  title = uiState.recommendedContentList[index].title,
-                  date = uiState.recommendedContentList[index].date,
-                  videoUrl = uiState.recommendedContentList[index].videoUrl,
+                  thumbnailUrl = uiState.recommendedContentList[page].thumbnailUrl,
+                  title = uiState.recommendedContentList[page].title,
+                  date = uiState.recommendedContentList[page].date,
+                  videoUrl = uiState.recommendedContentList[page].videoUrl,
                   onClick = navigateToYoutube,
                 )
               }

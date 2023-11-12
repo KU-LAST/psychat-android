@@ -24,8 +24,7 @@ import kotlinx.coroutines.launch
 
 data class ResultUiState(
   val emotion: String = "",
-  // val recommendedContentList: ImmutableList<RecommendedContentEntity> = persistentListOf(),
-  val recommendedContentList: List<RecommendedContentEntity> = emptyList(),
+  val recommendedContentList: ImmutableList<RecommendedContentEntity> = persistentListOf(),
   val isLoading: Boolean = false,
   val error: Throwable? = null,
 )
@@ -118,10 +117,10 @@ class ResultViewModel @Inject constructor(
     _uiState.update {
       it.copy(
         emotion = emotion,
-        recommendedContentList = recommendedContentList,
+        // recommendedContentList = recommendedContentList,
       )
     }
-    // getRecommendedContentList()
+    getRecommendedContentList()
   }
 
   private fun getRecommendedContentList() {
@@ -137,8 +136,7 @@ class ResultViewModel @Inject constructor(
           val recommendedContentList = result.getOrNull()!!.contentsList
           _uiState.update {
             it.copy(
-              // recommendedContentList = recommendedContentList.toImmutableList(),
-              recommendedContentList = recommendedContentList,
+              recommendedContentList = recommendedContentList.toImmutableList(),
             )
           }
         }
@@ -154,6 +152,7 @@ class ResultViewModel @Inject constructor(
       }
     }
   }
+
   fun navigateToYoutube(videoUrl: String) {
     viewModelScope.launch {
       _eventFlow.emit(ResultUiEvent.NavigateToYoutube(videoUrl))
