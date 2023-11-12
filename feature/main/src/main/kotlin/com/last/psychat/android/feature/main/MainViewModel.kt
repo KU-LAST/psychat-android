@@ -33,7 +33,7 @@ data class MainUiState(
 )
 
 sealed interface MainUiEvent {
-  data class NavigateToChat(val sessionId: Long): MainUiEvent
+  data class NavigateToChat(val sessionId: Long) : MainUiEvent
   data class ShowToast(val message: UiText) : MainUiEvent
 }
 
@@ -131,8 +131,13 @@ class MainViewModel @Inject constructor(
     }
   }
 
-  fun getPreviousChatList() {
+  private fun getPreviousChatList() {
     viewModelScope.launch {
+      _uiState.update {
+        it.copy(
+          isLoading = true,
+        )
+      }
       val result = getPreviousChatListUseCase()
       when {
         result.isSuccess && result.getOrNull() != null -> {
@@ -145,6 +150,11 @@ class MainViewModel @Inject constructor(
           val exception = result.exceptionOrNull()!!
           _eventFlow.emit(MainUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
         }
+      }
+      _uiState.update {
+        it.copy(
+          isLoading = false,
+        )
       }
     }
   }

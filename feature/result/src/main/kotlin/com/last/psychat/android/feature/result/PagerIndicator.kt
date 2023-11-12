@@ -24,11 +24,11 @@ import kotlin.math.absoluteValue
 // https://medium.com/@domen.lanisnik/exploring-the-official-pager-in-compose-8c2698c49a98
 @Composable
 fun HorizontalPagerIndicator(
+  modifier: Modifier = Modifier,
   pageCount: Int,
   currentPage: Int,
   targetPage: Int,
   currentPageOffsetFraction: Float,
-  modifier: Modifier = Modifier,
   indicatorColor: Color = Color.DarkGray,
   unselectedIndicatorSize: Dp = 8.dp,
   selectedIndicatorSize: Dp = 10.dp,

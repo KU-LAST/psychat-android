@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -42,6 +43,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.last.psychat.android.core.ui.Emotion
 import com.last.psychat.android.core.ui.ObserveAsEvents
+import com.last.psychat.android.core.ui.components.LoadingScreen
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.result.components.ResultTopBar
 import com.last.psychat.android.feature.result.navigation.RESULT_NAVIGATION_ROUTE
@@ -54,6 +56,8 @@ import com.last.pyschat.android.core.designsystem.theme.H5
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import com.last.pyschat.android.core.designsystem.theme.Title
 
+// TODO emoji 매핑
+// TODO 데이터 받아오는 부분 비동기 이슈
 @Composable
 internal fun ResultRoute(
   navigateToMain: (NavOptions) -> Unit,
@@ -97,69 +101,6 @@ internal fun ResultScreen(
   val context = LocalContext.current
   val scrollState = rememberScrollState()
 
-//  val recommendedContentList = listOf(
-//    RecommendedContentEntity(
-//      date = "2023.10.12",
-//      title = "우울증으로 죽고 싶은 마음이 들 때, 우리는 어떡하면 좋을까요?",
-//      thumbnailUrl = "https://img.youtube.com/vi/BJUPDKoGnZo/default.jpg",
-//      videoUrl = "https://www.youtube.com/watch?v=BJUPDKoGnZo",
-//    ),
-//    RecommendedContentEntity(
-//      date = "2023.10.12",
-//      title = "[PEOPLE in 세브란스] 우울증이 잘 오는 사람의 유형 네 가지!",
-//      thumbnailUrl = "https://img.youtube.com/vi/UcicbfYeSp4/default.jpg",
-//      videoUrl = "https://www.youtube.com/watch?v=UcicbfYeSp4",
-//    ),
-//    RecommendedContentEntity(
-//      date = "2023.10.12",
-//      title = "[PEOPLE in 세브란스] 몸이 보내는 우울증 신호 세 가지",
-//      thumbnailUrl = "https://img.youtube.com/vi/jME5_dk3mkQ/default.jpg",
-//      videoUrl = "https://www.youtube.com/watch?v=jME5_dk3mkQ",
-//    ),
-//    RecommendedContentEntity(
-//      date = "2023.10.12",
-//      title = "우울증에서 빠져나오는 가장 쉬운 방법",
-//      thumbnailUrl = "https://img.youtube.com/vi/WYmnqBaWtW0/default.jpg",
-//      videoUrl = "https://www.youtube.com/watch?v=WYmnqBaWtW0",
-//    ),
-//    RecommendedContentEntity(
-//      date = "2023.10.12",
-//      title = "[PEOPLE in 세브란스] 몸이 보내는 우울증 신호 세 가지",
-//      thumbnailUrl = "https://img.youtube.com/vi/jME5_dk3mkQ/default.jpg",
-//      videoUrl = "https://www.youtube.com/watch?v=jME5_dk3mkQ",
-//    ),
-//    RecommendedContentEntity(
-//      date = "2023.10.12",
-//      title = "[PEOPLE in 세브란스] 몸이 보내는 우울증 신호 세 가지",
-//      thumbnailUrl = "https://img.youtube.com/vi/jME5_dk3mkQ/default.jpg",
-//      videoUrl = "https://www.youtube.com/watch?v=jME5_dk3mkQ",
-//    ),
-//    RecommendedContentEntity(
-//      date = "2023.10.12",
-//      title = "[PEOPLE in 세브란스] 몸이 보내는 우울증 신호 세 가지",
-//      thumbnailUrl = "https://img.youtube.com/vi/jME5_dk3mkQ/default.jpg",
-//      videoUrl = "https://www.youtube.com/watch?v=jME5_dk3mkQ",
-//    ),
-//    RecommendedContentEntity(
-//      date = "2023.10.12",
-//      title = "[PEOPLE in 세브란스] 몸이 보내는 우울증 신호 세 가지",
-//      thumbnailUrl = "https://img.youtube.com/vi/jME5_dk3mkQ/default.jpg",
-//      videoUrl = "https://www.youtube.com/watch?v=jME5_dk3mkQ",
-//    ),
-//    RecommendedContentEntity(
-//      date = "2023.10.12",
-//      title = "[PEOPLE in 세브란스] 몸이 보내는 우울증 신호 세 가지",
-//      thumbnailUrl = "https://img.youtube.com/vi/jME5_dk3mkQ/default.jpg",
-//      videoUrl = "https://www.youtube.com/watch?v=jME5_dk3mkQ",
-//    ),
-//    RecommendedContentEntity(
-//      date = "2023.10.12",
-//      title = "[PEOPLE in 세브란스] 몸이 보내는 우울증 신호 세 가지",
-//      thumbnailUrl = "https://img.youtube.com/vi/jME5_dk3mkQ/default.jpg",
-//      videoUrl = "https://www.youtube.com/watch?v=jME5_dk3mkQ",
-//    ),
-//  )
-
   val pageCount = 10
   val pagerState = rememberPagerState(pageCount = { pageCount })
   val pagerHeight = 280.dp
@@ -176,104 +117,129 @@ internal fun ResultScreen(
       ResultTopBar(modifier = Modifier.height(56.dp))
       HorizontalDivider(color = Gray500)
       Spacer(modifier.height(32.dp))
-      Text(
-        text = "지금은 ”${uiState.emotion}“한 감정이시네요",
-        style = H3,
-      )
-      Spacer(Modifier.weight(1f))
-      Spacer(modifier.height(32.dp))
-      AsyncImage(
-        modifier = Modifier.size(96.dp),
-        model = ImageRequest.Builder(context)
-          .data(Emotion.values()[5].icon)
-          .crossfade(true)
-          .build(),
-        contentDescription = "Mood Image",
-      )
-      Spacer(modifier.weight(1f))
-      Spacer(modifier.height(32.dp))
-      Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start,
-      ) {
-        Text(
-          text = "다음 콘텐츠의 도움을 받아보는 것이 어떨까요?",
-          style = Title,
-          modifier = Modifier.padding(horizontal = 16.dp),
-          maxLines = 2,
-        )
-      }
-      Spacer(modifier.height(8.dp))
-      HorizontalDivider(color = Gray500)
-      Spacer(modifier.height(8.dp))
-      Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start,
-      ) {
-        Text(
-          text = "추천 콘텐츠",
-          style = H5,
-          modifier = Modifier.padding(horizontal = 16.dp),
-        )
-      }
-      Spacer(modifier = Modifier.height(8.dp))
       Box(
-        modifier = Modifier
-          .fillMaxWidth()
-          .height(pagerHeight),
-        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
       ) {
-        HorizontalPager(
-          state = pagerState,
-          contentPadding = PaddingValues(horizontal = 32.dp),
-        ) { index ->
-          Card(
+        if (uiState.isLoading) {
+          LoadingScreen(
+            modifier = Modifier
+              .fillMaxSize()
+              .align(Alignment.Center)
+          )
+        }
+        Column(
+          modifier = Modifier.fillMaxSize(),
+          horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+          Row(
             modifier = Modifier
               .fillMaxWidth()
-              .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
-            border = BorderStroke(0.5.dp, Gray900),
-            colors = CardDefaults.cardColors(containerColor = Gray200),
+              .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
           ) {
-            RecommendedContentCard(
-              modifier = Modifier.fillMaxSize(),
+            Text(
+              text = "지금은 ”${uiState.emotion}“한 감정이시네요",
+              style = H3,
+              textAlign = TextAlign.Center,
+            )
+          }
+          Spacer(Modifier.weight(1f))
+          Spacer(modifier.height(32.dp))
+          AsyncImage(
+            modifier = Modifier.size(96.dp),
+            model = ImageRequest.Builder(context)
+              .data(Emotion.values()[5].icon)
+              .crossfade(true)
+              .build(),
+            contentDescription = "Mood Image",
+          )
+          Spacer(modifier.weight(1f))
+          Spacer(modifier.height(32.dp))
+          Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
+          ) {
+            Text(
+              text = "다음 콘텐츠의 도움을 받아보는 것이 어떨까요?",
+              style = Title,
+              modifier = Modifier.padding(horizontal = 16.dp),
+              maxLines = 2,
+            )
+          }
+          Spacer(modifier.height(8.dp))
+          HorizontalDivider(color = Gray500)
+          Spacer(modifier.height(8.dp))
+          Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
+          ) {
+            Text(
+              text = "추천 콘텐츠",
+              style = H5,
+              modifier = Modifier.padding(horizontal = 16.dp),
+            )
+          }
+          Spacer(modifier = Modifier.height(8.dp))
+          Box(
+            modifier = Modifier
+              .fillMaxWidth()
+              .height(pagerHeight),
+            contentAlignment = Alignment.Center,
+          ) {
+            HorizontalPager(
+              state = pagerState,
+              contentPadding = PaddingValues(horizontal = 32.dp),
+            ) { index ->
+              Card(
+                modifier = Modifier
+                  .fillMaxWidth()
+                  .padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+                border = BorderStroke(0.5.dp, Gray900),
+                colors = CardDefaults.cardColors(containerColor = Gray200),
+              ) {
+                RecommendedContentCard(
+                  modifier = Modifier.fillMaxSize(),
 //              thumbnailUrl = recommendedContentList[index].thumbnailUrl,
 //              title = recommendedContentList[index].title,
 //              date = recommendedContentList[index].date,
 //              videoUrl = recommendedContentList[index].videoUrl,
-              thumbnailUrl = uiState.recommendedContentList[index].thumbnailUrl,
-              title = uiState.recommendedContentList[index].title,
-              date = uiState.recommendedContentList[index].date,
-              videoUrl = uiState.recommendedContentList[index].videoUrl,
-              onClick = navigateToYoutube,
-            )
+                  thumbnailUrl = uiState.recommendedContentList[index].thumbnailUrl,
+                  title = uiState.recommendedContentList[index].title,
+                  date = uiState.recommendedContentList[index].date,
+                  videoUrl = uiState.recommendedContentList[index].videoUrl,
+                  onClick = navigateToYoutube,
+                )
+              }
+            }
           }
+          HorizontalPagerIndicator(
+            pageCount = pageCount,
+            currentPage = pagerState.currentPage,
+            targetPage = pagerState.targetPage,
+            currentPageOffsetFraction = pagerState.currentPageOffsetFraction,
+          )
+          Spacer(modifier = Modifier.height(8.dp))
+          HorizontalDivider(color = Gray500)
+          Spacer(modifier = Modifier.height(16.dp))
+          Text(
+            text = stringResource(id = R.string.info_message),
+            style = TextXsRegular,
+            color = Gray500,
+            modifier = Modifier.padding(bottom = 24.dp),
+          )
+          PsyChatButton(
+            modifier = Modifier
+              .fillMaxWidth()
+              .height(56.dp)
+              .padding(horizontal = 24.dp),
+            onClick = navigateToMain,
+            text = context.getString(R.string.go_back),
+          )
+          Spacer(Modifier.height(32.dp))
         }
       }
-      HorizontalPagerIndicator(
-        pageCount = pageCount,
-        currentPage = pagerState.currentPage,
-        targetPage = pagerState.targetPage,
-        currentPageOffsetFraction = pagerState.currentPageOffsetFraction,
-      )
-      Spacer(modifier = Modifier.height(8.dp))
-      HorizontalDivider(color = Gray500)
-      Spacer(modifier = Modifier.height(16.dp))
-      Text(
-        text = stringResource(id = R.string.info_message),
-        style = TextXsRegular,
-        color = Gray500,
-        modifier = Modifier.padding(bottom = 24.dp),
-      )
-      PsyChatButton(
-        modifier = Modifier
-          .fillMaxWidth()
-          .height(56.dp)
-          .padding(horizontal = 24.dp),
-        onClick = navigateToMain,
-        text = context.getString(R.string.go_back),
-      )
-      Spacer(Modifier.height(32.dp))
     }
   }
 }

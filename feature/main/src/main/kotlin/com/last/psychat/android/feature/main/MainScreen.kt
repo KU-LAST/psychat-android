@@ -16,6 +16,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.last.psychat.android.core.ui.ObserveAsEvents
+import com.last.psychat.android.core.ui.components.LoadingScreen
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.components.MainTopBar
 import com.last.psychat.android.feature.mapper.toUiModel
@@ -86,6 +88,12 @@ internal fun MainScreen(
           .weight(1f)
           .padding(bottom = 32.dp),
       ) {
+        if (uiState.isLoading) {
+          LoadingScreen(modifier = Modifier
+            .fillMaxSize()
+            .align(Alignment.Center)
+          )
+        }
         LazyColumn {
           items(
             items = uiState.previousChatList,
