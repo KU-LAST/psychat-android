@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -52,8 +53,9 @@ import com.last.pyschat.android.core.designsystem.theme.TextMRegular
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import kotlinx.coroutines.launch
 
-// TODO 키보드가 올라오면 이전 채팅 내역이 보이지 않는 문제
-// 스크롤을 항상 최하단으로 내려야 함
+// TODO 키보드가 올라오면 이전 채팅 내역이 보이지 않는 문제, adjustSize 로 해결 했으나, 깜빡거림 현상 존재
+// TODO 채팅을 보내면 텍스트 필드가 바로 비워지게?
+// 404 로 내려올 때 안내 메세지 변경
 @Composable
 internal fun ChatRoute(
   onNavigateBack: () -> Unit,
@@ -136,19 +138,7 @@ internal fun ChatScreen(
             text = stringResource(R.string.start_chat_info),
             style = TextXsRegular,
             color = Gray500,
-          )
-        }
-        Row(
-          modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
-          horizontalArrangement = Arrangement.Center,
-          verticalAlignment = Alignment.CenterVertically,
-        ) {
-          Text(
-            text = stringResource(R.string.chat_convention_info),
-            style = TextXsRegular,
-            color = Gray500,
+            textAlign = TextAlign.Center,
           )
         }
         Spacer(modifier = Modifier.height(8.dp))
