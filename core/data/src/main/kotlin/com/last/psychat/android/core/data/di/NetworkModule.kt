@@ -18,14 +18,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import timber.log.Timber
 
-private val json = Json {
+private val jsonRule = Json {
   encodeDefaults = true
   ignoreUnknownKeys = true
   prettyPrint = true
   isLenient = true
 }
-
-private val jsonRule = Json { json }
 
 @Module
 @InstallIn(SingletonComponent::class)

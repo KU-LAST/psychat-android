@@ -7,7 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface RecommendService {
-  @POST("recommend-contents")
+  @POST("recommended-contents")
   suspend fun getRecommendContents(
     @Body emotionRequest: EmotionRequest,
   ): Response<RecommendedContentListResponse>

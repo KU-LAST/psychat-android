@@ -36,7 +36,7 @@ internal object ServiceModule {
   @Singleton
   @Provides
   internal fun provideRecommendService(
-    @Named("HttpClient")
+    @Named("AuthHttpClient")
     retrofit: Retrofit,
   ): RecommendService {
     return retrofit.create(RecommendService::class.java)
