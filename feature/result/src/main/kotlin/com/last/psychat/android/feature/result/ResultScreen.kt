@@ -47,6 +47,7 @@ import com.last.psychat.android.core.ui.components.LoadingScreen
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.result.components.ResultTopBar
 import com.last.psychat.android.feature.result.navigation.RESULT_NAVIGATION_ROUTE
+import com.last.psychat.core.util.getEmotionIndex
 import com.last.pyschat.android.core.designsystem.theme.Gray200
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
@@ -242,17 +243,5 @@ internal fun ResultScreen(
         }
       }
     }
-  }
-}
-
-fun getEmotionIndex(emotion: String): Int {
-  return when (emotion.split("/").first()) {
-    "분노" -> 0
-    "기쁨" -> 1
-    "불안" -> 2
-    "당황" -> 3
-    "슬픔" -> 4
-    "상처" -> 5
-    else -> -1
   }
 }
