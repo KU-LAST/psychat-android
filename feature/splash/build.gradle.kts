@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-  namespace = "com.last.psychat.android.feature.main"
+  namespace = "com.last.psychat.android.feature.splash"
 
   buildFeatures {
     buildConfig = true

@@ -6,9 +6,6 @@ import com.last.psychat.android.core.domain.entity.chat.PreviousChatEntity
 import com.last.psychat.android.core.domain.usecase.chat.GetPreviousChatListUseCase
 import com.last.psychat.android.core.domain.usecase.chat.SetSessionIdUseCase
 import com.last.psychat.android.core.domain.usecase.chat.StartChatSessionUseCase
-import com.last.psychat.android.core.domain.usecase.login.CreateLoginTokenUseCase
-import com.last.psychat.android.core.domain.usecase.login.GetLoginTokenUseCase
-import com.last.psychat.android.core.domain.usecase.login.SetLoginTokenUseCase
 import com.last.psychat.android.core.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -39,9 +36,6 @@ sealed interface MainUiEvent {
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-  private val createLoginTokenUseCase: CreateLoginTokenUseCase,
-  private val getLoginTokenUseCase: GetLoginTokenUseCase,
-  private val setLoginTokenUseCase: SetLoginTokenUseCase,
   private val getPreviousChatListUseCase: GetPreviousChatListUseCase,
   private val startChatSessionUseCase: StartChatSessionUseCase,
   private val setSessionIdUseCase: SetSessionIdUseCase,
@@ -53,85 +47,7 @@ class MainViewModel @Inject constructor(
   private val _eventFlow = MutableSharedFlow<MainUiEvent>()
   val eventFlow: SharedFlow<MainUiEvent> = _eventFlow.asSharedFlow()
 
-//  val previousChatList = listOf(
-//    PreviousChatEntity(
-//      sessionId = 10,
-//      startDate = "2023년 11월 5일",
-//      emotion = "우울"
-//    ),
-//    PreviousChatEntity(
-//      sessionId = 9,
-//      startDate = "2023년 11월 4일",
-//      emotion = "행복"
-//    ),
-//    PreviousChatEntity(
-//      sessionId = 8,
-//      startDate = "2023년 11월 3일",
-//      emotion = "우울"
-//    ),
-//    PreviousChatEntity(
-//      sessionId = 7,
-//      startDate = "2023년 11월 2일",
-//      emotion = "행복"
-//    ),
-//    PreviousChatEntity(
-//      sessionId = 6,
-//      startDate = "2023년 11월 1일",
-//      emotion = "우울"
-//    ),
-//    PreviousChatEntity(
-//      sessionId = 5,
-//      startDate = "2023년 10월 31일",
-//      emotion = "행복"
-//    ),
-//    PreviousChatEntity(
-//      sessionId = 4,
-//      startDate = "2023년 10월 30일",
-//      emotion = "우울"
-//    ),
-//    PreviousChatEntity(
-//      sessionId = 3,
-//      startDate = "2023년 10월 29일",
-//      emotion = "행복"
-//    ),
-//    PreviousChatEntity(
-//      sessionId = 2,
-//      startDate = "2023년 10월 28일",
-//      emotion = "행복"
-//    ),
-//    PreviousChatEntity(
-//      sessionId = 1,
-//      startDate = "2023년 10월 27일",
-//      emotion = "우울"
-//    ),
-//  )
-
-//  init {
-//    checkLoginToken()
-//  }
-
-  fun checkLoginToken() {
-    viewModelScope.launch {
-      if (getLoginTokenUseCase().isEmpty()) {
-        val result = createLoginTokenUseCase()
-        when {
-          result.isSuccess && result.getOrNull() != null -> {
-            val loginToken = result.getOrNull()!!.token
-            setLoginTokenUseCase(loginToken)
-            getPreviousChatList()
-          }
-          result.isFailure -> {
-            val exception = result.exceptionOrNull()!!
-            _eventFlow.emit(MainUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
-          }
-        }
-      } else {
-        getPreviousChatList()
-      }
-    }
-  }
-
-  private fun getPreviousChatList() {
+  fun getPreviousChatList() {
     viewModelScope.launch {
       _uiState.update {
         it.copy(

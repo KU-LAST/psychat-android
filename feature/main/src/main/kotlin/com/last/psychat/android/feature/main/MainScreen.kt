@@ -53,8 +53,7 @@ internal fun MainRoute(
 
   MainScreen(
     uiState = uiState,
-    checkLoginToken = viewModel::checkLoginToken,
-    // getPreviousChatList = viewModel::getPreviousChatList,
+    getPreviousChatList = viewModel::getPreviousChatList,
     startChatSession = viewModel::startChatSession,
     resumeChatSession = viewModel::resumeChatSession,
   )
@@ -65,13 +64,12 @@ internal fun MainRoute(
 internal fun MainScreen(
   modifier: Modifier = Modifier,
   uiState: MainUiState,
-  checkLoginToken: () -> Unit,
-  // getPreviousChatList: () -> Unit,
+  getPreviousChatList: () -> Unit,
   startChatSession: () -> Unit,
   resumeChatSession: (Long) -> Unit,
 ) {
   LaunchedEffect(key1 = Unit) {
-    checkLoginToken()
+    getPreviousChatList()
   }
 
   Surface(

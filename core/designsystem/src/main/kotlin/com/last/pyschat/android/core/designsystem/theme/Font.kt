@@ -121,3 +121,7 @@ val InfoS = TextStyle(
   fontSize = 10.sp,
   textAlign = TextAlign.Center,
 )
+
+val koronaOneRegular = FontFamily(
+  Font(R.font.krona_one_regular, FontWeight.Normal, FontStyle.Normal),
+)
