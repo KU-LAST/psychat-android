@@ -29,5 +29,6 @@ include(
   ":core:util",
   ":feature:main",
   ":feature:chat",
-  ":feature:result"
+  ":feature:result",
+  ":feature:splash",
 )
