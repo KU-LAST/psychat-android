@@ -29,7 +29,7 @@ enum class Emotion(
   ),
   // 1.기쁨
   Happy(
-    icon = R.drawable.happy,
+    icon = R.drawable.humorous,
     contentColor = Color.Black,
     containerColor = HappyColor,
   ),
