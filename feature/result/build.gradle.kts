@@ -30,4 +30,5 @@ dependencies {
     libs.bundles.androidx.lifecycle,
     libs.bundles.coil,
   )
+  compileOnly(libs.compose.stable.marker)
 }
