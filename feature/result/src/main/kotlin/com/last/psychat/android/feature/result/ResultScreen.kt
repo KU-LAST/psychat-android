@@ -57,6 +57,7 @@ import com.last.pyschat.android.core.designsystem.theme.H5
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import com.last.pyschat.android.core.designsystem.theme.Title
 
+// TODO 네트워크 에러 다이얼로그
 // TODO 시스템 백버튼 누르면 채팅 화면으로 이동하는 문제
 @Composable
 internal fun ResultRoute(
