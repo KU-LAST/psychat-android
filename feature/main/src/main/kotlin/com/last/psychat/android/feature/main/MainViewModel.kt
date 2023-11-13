@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 data class MainUiState(
   val sessionId: Long = -1,
   val previousChatList: ImmutableList<PreviousChatEntity> = persistentListOf(),
-  val isLoggedIn: Boolean = false,
+  val isNetworkError: Boolean = false,
   val isLoading: Boolean = false,
   val error: Throwable? = null,
 )
@@ -63,8 +63,11 @@ class MainViewModel @Inject constructor(
           }
         }
         result.isFailure -> {
-          val exception = result.exceptionOrNull()!!
-          _eventFlow.emit(MainUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
+          _uiState.update {
+            it.copy(
+              isNetworkError = true,
+            )
+          }
         }
       }
       _uiState.update {
@@ -114,6 +117,14 @@ class MainViewModel @Inject constructor(
         )
       }
       _eventFlow.emit(MainUiEvent.NavigateToChat(sessionId))
+    }
+  }
+
+  fun closeNetworkErrorDialog() {
+    _uiState.update {
+      it.copy(
+        isNetworkError = false,
+      )
     }
   }
 }

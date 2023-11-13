@@ -19,14 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.last.psychat.android.core.ui.R
 import com.last.pyschat.android.core.designsystem.theme.Gray400
 import com.last.pyschat.android.core.designsystem.theme.Gray900
-import com.last.pyschat.android.core.designsystem.theme.H5
 import com.last.pyschat.android.core.designsystem.theme.TextLMedium
 import com.last.pyschat.android.core.designsystem.theme.TextSMedium
+import com.last.pyschat.android.core.designsystem.theme.Title
 
 @Composable
 fun NetworkErrorAlertDialog(
@@ -56,16 +57,17 @@ fun NetworkErrorAlertDialog(
           modifier = Modifier.align(Alignment.CenterHorizontally),
           text = title,
           color = Gray900,
-          style = H5,
+          style = Title,
+          textAlign = TextAlign.Center,
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
           modifier = Modifier.align(Alignment.CenterHorizontally),
           text = message,
           color = Gray400,
           style = TextSMedium
         )
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         Row(
           modifier = Modifier
             .fillMaxWidth()
@@ -88,7 +90,7 @@ fun NetworkErrorAlertDialog(
             )
           }
         }
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(24.dp))
       }
     }
   }

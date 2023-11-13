@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 data class ResultUiState(
   val emotion: String = "",
   val recommendedContentList: ImmutableList<RecommendedContentEntity> = persistentListOf(),
+  val isNetworkError: Boolean =  false,
   val isLoading: Boolean = false,
   val error: Throwable? = null,
 )
@@ -57,10 +58,9 @@ class ResultViewModel @Inject constructor(
         // recommendedContentList = recommendedContentList,
       )
     }
-    getRecommendedContentList()
   }
 
-  private fun getRecommendedContentList() {
+  fun getRecommendedContentList() {
     viewModelScope.launch {
       _uiState.update {
         it.copy(
@@ -99,6 +99,14 @@ class ResultViewModel @Inject constructor(
   fun navigateToMain() {
     viewModelScope.launch {
       _eventFlow.emit(ResultUiEvent.NavigateToMain)
+    }
+  }
+
+  fun closeNetworkErrorDialog() {
+    _uiState.update {
+      it.copy(
+        isNetworkError = false,
+      )
     }
   }
 }

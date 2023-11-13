@@ -1,5 +1,5 @@
 <resources >
   <string name="psychat">PsyChat</string>
-  <string name="network_error_retry_message">다시 시도\n</string>
+  <string name="network_error_retry_message">다시 시도</string>
   <string name="circle_cross_descrption">Circle Cross Icon\n</string>
 </resources>

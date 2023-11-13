@@ -29,6 +29,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +45,7 @@ import coil.request.ImageRequest
 import com.last.psychat.android.core.ui.Emotion
 import com.last.psychat.android.core.ui.ObserveAsEvents
 import com.last.psychat.android.core.ui.components.LoadingScreen
+import com.last.psychat.android.core.ui.components.NetworkErrorAlertDialog
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.result.components.ResultTopBar
 import com.last.psychat.android.feature.result.navigation.RESULT_NAVIGATION_ROUTE
@@ -87,8 +89,10 @@ internal fun ResultRoute(
 
   ResultScreen(
     uiState = uiState,
+    getRecommendedContentList = viewModel::getRecommendedContentList,
     navigateToYoutube = viewModel::navigateToYoutube,
     navigateToMain = viewModel::navigateToMain,
+    closeNetworkErrorDialog = viewModel::closeNetworkErrorDialog,
   )
 }
 
@@ -96,8 +100,10 @@ internal fun ResultRoute(
 internal fun ResultScreen(
   modifier: Modifier = Modifier,
   uiState: ResultUiState,
+  getRecommendedContentList: () -> Unit,
   navigateToYoutube: (String) -> Unit,
   navigateToMain: () -> Unit,
+  closeNetworkErrorDialog: () -> Unit,
 ) {
   val context = LocalContext.current
   val scrollState = rememberScrollState()
@@ -105,6 +111,21 @@ internal fun ResultScreen(
   val pageCount = uiState.recommendedContentList.size
   val pagerState = rememberPagerState(pageCount = { pageCount })
   val pagerHeight = 320.dp
+
+  LaunchedEffect(key1 = Unit) {
+    getRecommendedContentList()
+  }
+
+  if (uiState.isNetworkError) {
+    NetworkErrorAlertDialog(
+      title = "네트워크 문제로 이전 대화 목록을 불러오지 못했어요",
+      message = "다시 시도 해주시기 바랍니다.",
+      onConfirmClick = {
+        closeNetworkErrorDialog()
+          getRecommendedContentList()
+      },
+    )
+  }
 
   Surface(
     modifier = modifier.fillMaxSize(),

@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.last.psychat.android.core.ui.ObserveAsEvents
 import com.last.psychat.android.core.ui.components.EmptyScreen
 import com.last.psychat.android.core.ui.components.LoadingScreen
+import com.last.psychat.android.core.ui.components.NetworkErrorAlertDialog
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.components.MainTopBar
 import com.last.psychat.android.feature.mapper.toUiModel
@@ -42,7 +43,7 @@ internal fun MainRoute(
   val context = LocalContext.current
 
   ObserveAsEvents(viewModel.eventFlow) { event ->
-    when(event) {
+    when (event) {
       is MainUiEvent.NavigateToChat -> {
         navigateToChat(event.sessionId)
       }
@@ -57,6 +58,7 @@ internal fun MainRoute(
     getPreviousChatList = viewModel::getPreviousChatList,
     startChatSession = viewModel::startChatSession,
     resumeChatSession = viewModel::resumeChatSession,
+    closeNetworkErrorDialog = viewModel::closeNetworkErrorDialog,
   )
 }
 
@@ -68,9 +70,21 @@ internal fun MainScreen(
   getPreviousChatList: () -> Unit,
   startChatSession: () -> Unit,
   resumeChatSession: (Long) -> Unit,
+  closeNetworkErrorDialog: () -> Unit,
 ) {
   LaunchedEffect(key1 = Unit) {
     getPreviousChatList()
+  }
+
+  if (uiState.isNetworkError) {
+    NetworkErrorAlertDialog(
+      title = "네트워크 문제로 이전 대화 목록을 불러오지 못했어요",
+      message = "다시 시도 해주시기 바랍니다.",
+      onConfirmClick = {
+        closeNetworkErrorDialog()
+        getPreviousChatList()
+      },
+    )
   }
 
   Surface(
@@ -88,15 +102,14 @@ internal fun MainScreen(
           .padding(bottom = 32.dp),
       ) {
         if (uiState.isLoading) {
-          LoadingScreen(modifier = Modifier
-            .fillMaxSize()
-            .align(Alignment.Center)
+          LoadingScreen(
+            modifier = Modifier
+              .fillMaxSize()
+              .align(Alignment.Center)
           )
-        }
-        else if (uiState.previousChatList.isEmpty()) {
+        } else if (uiState.previousChatList.isEmpty()) {
           EmptyScreen(modifier = Modifier.fillMaxSize())
-        }
-        else {
+        } else {
           LazyColumn {
             items(
               items = uiState.previousChatList,
