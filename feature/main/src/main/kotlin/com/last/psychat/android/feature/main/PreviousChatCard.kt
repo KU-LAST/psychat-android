@@ -66,15 +66,17 @@ fun PreviousCard(
       )
       Spacer(Modifier.height(12.dp))
     }
-    AsyncImage(
-      modifier = Modifier
-        .size(60.dp)
-        .padding(end = 12.dp),
-      model = ImageRequest.Builder(LocalContext.current)
-        .data(Emotion.values()[previousChat.emotionIndex].icon)
-        .crossfade(true)
-        .build(),
-      contentDescription = "Mood Image",
-    )
+    if (previousChat.emotionIndex in 0..5) {
+      AsyncImage(
+        modifier = Modifier
+          .size(60.dp)
+          .padding(end = 12.dp),
+        model = ImageRequest.Builder(LocalContext.current)
+          .data(Emotion.values()[previousChat.emotionIndex].icon)
+          .crossfade(true)
+          .build(),
+        contentDescription = "Mood Image",
+      )
+    }
   }
 }

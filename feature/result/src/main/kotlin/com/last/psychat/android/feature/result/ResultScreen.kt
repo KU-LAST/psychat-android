@@ -56,7 +56,6 @@ import com.last.pyschat.android.core.designsystem.theme.H5
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import com.last.pyschat.android.core.designsystem.theme.Title
 
-// TODO emoji 매핑
 // TODO 시스템 백버튼 누르면 채팅 화면으로 이동하는 문제
 @Composable
 internal fun ResultRoute(
@@ -139,21 +138,23 @@ internal fun ResultScreen(
             verticalAlignment = Alignment.CenterVertically,
           ) {
             Text(
-              text = "지금은 ”${uiState.emotion}“한 감정이시네요",
+              text = stringResource(R.string.emotion_judgment_result, uiState.emotion),
               style = H3,
               textAlign = TextAlign.Center,
             )
           }
           Spacer(Modifier.weight(1f))
           Spacer(modifier.height(32.dp))
-          AsyncImage(
-            modifier = Modifier.size(96.dp),
-            model = ImageRequest.Builder(context)
-              .data(Emotion.values()[5].icon)
-              .crossfade(true)
-              .build(),
-            contentDescription = "Mood Image",
-          )
+          if (getEmotionIndex(uiState.emotion) in 0..5) {
+            AsyncImage(
+              modifier = Modifier.size(96.dp),
+              model = ImageRequest.Builder(context)
+                .data(Emotion.values()[getEmotionIndex(uiState.emotion)].icon)
+                .crossfade(true)
+                .build(),
+              contentDescription = stringResource(R.string.emotion_image_description),
+            )
+          }
           Spacer(modifier.weight(1f))
           Spacer(modifier.height(32.dp))
           Row(
@@ -161,7 +162,7 @@ internal fun ResultScreen(
             horizontalArrangement = Arrangement.Start,
           ) {
             Text(
-              text = "다음 콘텐츠의 도움을 받아보는 것이 어떨까요?",
+              text = if (getEmotionIndex(uiState.emotion) == 1) stringResource(R.string.positive_content_suggestion) else stringResource(R.string.negative_content_suggestion),
               style = Title,
               modifier = Modifier.padding(horizontal = 16.dp),
               maxLines = 2,
@@ -175,7 +176,7 @@ internal fun ResultScreen(
             horizontalArrangement = Arrangement.Start,
           ) {
             Text(
-              text = "추천 콘텐츠",
+              text = stringResource(R.string.recommended_content),
               style = H5,
               modifier = Modifier.padding(horizontal = 16.dp),
             )
@@ -241,5 +242,17 @@ internal fun ResultScreen(
         }
       }
     }
+  }
+}
+
+fun getEmotionIndex(emotion: String): Int {
+  return when (emotion.split("/").first()) {
+    "분노" -> 0
+    "기쁨" -> 1
+    "불안" -> 2
+    "당황" -> 3
+    "슬픔" -> 4
+    "상처" -> 5
+    else -> -1
   }
 }

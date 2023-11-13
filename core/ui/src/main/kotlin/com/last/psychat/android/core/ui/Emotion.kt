@@ -1,108 +1,60 @@
 package com.last.psychat.android.core.ui
 
 import androidx.compose.ui.graphics.Color
+import com.last.psychat.android.core.designsystem.R
 import com.last.pyschat.android.core.designsystem.theme.AngryColor
-import com.last.pyschat.android.core.designsystem.theme.AwfulColor
-import com.last.pyschat.android.core.designsystem.theme.BoredColor
-import com.last.pyschat.android.core.designsystem.theme.CalmColor
 import com.last.pyschat.android.core.designsystem.theme.DepressedColor
 import com.last.pyschat.android.core.designsystem.theme.DisappointedColor
 import com.last.pyschat.android.core.designsystem.theme.HappyColor
-import com.last.pyschat.android.core.designsystem.theme.HumorousColor
-import com.last.pyschat.android.core.designsystem.theme.LonelyColor
-import com.last.pyschat.android.core.designsystem.theme.MysteriousColor
-import com.last.pyschat.android.core.designsystem.theme.NeutralColor
-import com.last.pyschat.android.core.designsystem.theme.RomanticColor
-import com.last.pyschat.android.core.designsystem.theme.ShamefulColor
 import com.last.pyschat.android.core.designsystem.theme.SurprisedColor
-import com.last.pyschat.android.core.designsystem.theme.SuspiciousColor
 import com.last.pyschat.android.core.designsystem.theme.TenseColor
-import com.last.psychat.android.core.designsystem.R
 
-// TODO 감정 판단 결과와 Emoji 매핑
+// 감정의 대분류는 총 6개 (분노, 기쁨, 불안, 당황, 슬픔, 상처)
+// 분노 <-> Angry
+// 기쁨 <-> Happy
+// 불안 <-> Tense
+// 당황 <-> Surprised
+// 슬픔 <-> Depressed
+// 상처 <-> Disappointed
 enum class Emotion(
   val icon: Int,
   val contentColor: Color,
   val containerColor: Color,
 ) {
-  Neutral(
-    icon = R.drawable.neutral,
-    contentColor = Color.Black,
-    containerColor = NeutralColor,
-  ),
-  Happy(
-    icon = R.drawable.happy,
-    contentColor = Color.Black,
-    containerColor = HappyColor,
-  ),
+  // 0.분노
   Angry(
     icon = R.drawable.angry,
     contentColor = Color.White,
     containerColor = AngryColor,
   ),
-  Bored(
-    icon = R.drawable.bored,
+  // 1.기쁨
+  Happy(
+    icon = R.drawable.happy,
     contentColor = Color.Black,
-    containerColor = BoredColor,
+    containerColor = HappyColor,
   ),
-  Calm(
-    icon = R.drawable.calm,
+  // 2.불안
+  Tense(
+    icon = R.drawable.tense,
     contentColor = Color.Black,
-    containerColor = CalmColor,
+    containerColor = TenseColor,
   ),
-  Depressed(
-    icon = R.drawable.depressed,
-    contentColor = Color.Black,
-    containerColor = DepressedColor,
-  ),
-  Disappointed(
-    icon = R.drawable.disappointed,
-    contentColor = Color.White,
-    containerColor = DisappointedColor,
-  ),
-  Humorous(
-    icon = R.drawable.humorous,
-    contentColor = Color.Black,
-    containerColor = HumorousColor,
-  ),
-  Lonely(
-    icon = R.drawable.lonely,
-    contentColor = Color.White,
-    containerColor = LonelyColor,
-  ),
-  Mysterious(
-    icon = R.drawable.mysterious,
-    contentColor = Color.Black,
-    containerColor = MysteriousColor,
-  ),
-  Romantic(
-    icon = R.drawable.romantic,
-    contentColor = Color.White,
-    containerColor = RomanticColor,
-  ),
-  Shameful(
-    icon = R.drawable.shameful,
-    contentColor = Color.White,
-    containerColor = ShamefulColor,
-  ),
-  Awful(
-    icon = R.drawable.awful,
-    contentColor = Color.Black,
-    containerColor = AwfulColor,
-  ),
+  // 3.당황
   Surprised(
     icon = R.drawable.surprised,
     contentColor = Color.Black,
     containerColor = SurprisedColor,
   ),
-  Suspicious(
-    icon = R.drawable.suspicious,
+  // 4.슬픔
+  Depressed(
+    icon = R.drawable.depressed,
     contentColor = Color.Black,
-    containerColor = SuspiciousColor,
+    containerColor = DepressedColor,
   ),
-  Tense(
-    icon = R.drawable.tense,
-    contentColor = Color.Black,
-    containerColor = TenseColor,
+  // 5.상처
+  Disappointed(
+    icon = R.drawable.disappointed,
+    contentColor = Color.White,
+    containerColor = DisappointedColor,
   ),
 }

@@ -3,4 +3,9 @@
   <string name="go_back">돌아가기</string>
   <string name="info_message">※ 본 앱에서 제공하는 측정 결과는 참고용입니다.\n의학적 판단을 내리기 전에 전문가와 상담해 주세요.</string>
   <string name="thumbnail">Thumbnail</string>
+  <string name="recommended_content">추천 콘텐츠</string>
+  <string name="emotion_image_description">Emotion Image</string>
+  <string name="emotion_judgment_result">지금은 ”%1$s“한 감정이시네요</string>
+  <string name="negative_content_suggestion">다음 콘텐츠의 도움을 받아보는 것이 어떨까요?</string>
+  <string name="positive_content_suggestion">다음 콘텐츠를 즐기는 것이 어떨까요?</string>
 </resources>

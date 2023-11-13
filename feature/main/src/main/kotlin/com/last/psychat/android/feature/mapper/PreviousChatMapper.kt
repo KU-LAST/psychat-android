@@ -3,11 +3,18 @@ package com.last.psychat.android.feature.mapper
 import com.last.psychat.android.core.domain.entity.chat.PreviousChatEntity
 import com.last.psychat.android.feature.model.PreviousChat
 
-// TODO 아직 진행 중인 대화일 경우 emotion 이 보이지 않도록
 internal fun PreviousChatEntity.toUiModel() =
   PreviousChat(
     sessionId = sessionId,
     startDate = startDate,
     emotion = emotion,
-    emotionIndex = if (emotion == "행복") 1 else 5,
+    emotionIndex = when (emotion.split("/").first()) {
+      "분노" -> 0
+      "기쁨" -> 1
+      "불안" -> 2
+      "당황" -> 3
+      "슬픔" -> 4
+      "상처" -> 5
+      else -> -1
+    },
   )
