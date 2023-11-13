@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ChatResponse(
-  @SerialName("responseContent")
-  val responseContent: String,
+data class CheckEmotionIsJudgeResponse(
+  @SerialName("isJudged")
+  val isJudged: Boolean,
 )

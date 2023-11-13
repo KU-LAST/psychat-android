@@ -11,6 +11,7 @@ val GetPreviousChatDetailResponseIsNull = IOException("Get Previous Chat Detail 
 val PreviousChatListResponseIsNull = IOException("Get Previous ChatList API response is null.")
 val StartChatSessionResponseIsNull = IOException("Start Chat Session API response is null.")
 val SendChatMessageResponseIsNull = IOException("Send Chat Message API response is null.")
+val CheckEmotionIsJudgedResponseIsNull = IOException("Check Emotion is Judged API response is null.")
 
 // Recommend
 val GetRecommendedContentListResponseIsNull = IOException("Get Recommended Content List API response is null.")

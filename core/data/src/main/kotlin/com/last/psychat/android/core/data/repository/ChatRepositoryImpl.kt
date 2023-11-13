@@ -6,6 +6,7 @@ import com.last.psychat.android.core.data.mapper.chat.toEntity
 import com.last.psychat.android.core.data.mapper.chat.toModel
 import com.last.psychat.android.core.domain.entity.chat.ChatRequestEntity
 import com.last.psychat.android.core.domain.entity.chat.ChatResponseEntity
+import com.last.psychat.android.core.domain.entity.chat.CheckEmotionIsJudgedEntity
 import com.last.psychat.android.core.domain.entity.chat.EndChatEntity
 import com.last.psychat.android.core.domain.entity.chat.PreviousChatDetailEntity
 import com.last.psychat.android.core.domain.entity.chat.PreviousChatListEntity
@@ -40,6 +41,10 @@ internal class ChatRepositoryImpl @Inject constructor(
 
   override suspend fun sendChatMessage(chatRequestEntity: ChatRequestEntity): ChatResponseEntity? {
     return remoteDataSource.sendChatMessage(chatRequestEntity.toModel())?.toEntity()
+  }
+
+  override suspend fun checkEmotionIsJudged(endChatEntity: EndChatEntity): CheckEmotionIsJudgedEntity? {
+    return remoteDataSource.checkEmotionIsJudged(endChatEntity.toModel())?.toEntity()
   }
 
   override suspend fun endChatSession(endChatEntity: EndChatEntity): EmotionResponseEntity? {

@@ -2,6 +2,7 @@ package com.last.psychat.android.core.data.datasource.remote.chat
 
 import com.last.psychat.android.core.data.model.chat.ChatRequest
 import com.last.psychat.android.core.data.model.chat.ChatResponse
+import com.last.psychat.android.core.data.model.chat.CheckEmotionIsJudgeResponse
 import com.last.psychat.android.core.data.model.chat.EndChatRequest
 import com.last.psychat.android.core.data.model.chat.PreviousChatListResponse
 import com.last.psychat.android.core.data.model.chat.SessionResponse
@@ -35,6 +36,12 @@ internal class ChatRemoteDataSourceImpl @Inject constructor(
   override suspend fun sendChatMessage(chatRequest: ChatRequest): ChatResponse? {
     return safeRequest {
       service.sendChatMessage(chatRequest)
+    }
+  }
+
+  override suspend fun checkEmotionIsJudged(endChatRequest: EndChatRequest): CheckEmotionIsJudgeResponse? {
+    return safeRequest {
+      service.checkEmotionIsJudged(endChatRequest)
     }
   }
 

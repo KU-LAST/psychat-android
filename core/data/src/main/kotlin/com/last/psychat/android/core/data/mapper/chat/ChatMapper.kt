@@ -3,6 +3,7 @@ package com.last.psychat.android.core.data.mapper.chat
 import com.last.psychat.android.core.data.model.chat.BotMessage
 import com.last.psychat.android.core.data.model.chat.ChatRequest
 import com.last.psychat.android.core.data.model.chat.ChatResponse
+import com.last.psychat.android.core.data.model.chat.CheckEmotionIsJudgeResponse
 import com.last.psychat.android.core.data.model.chat.EmotionResponse
 import com.last.psychat.android.core.data.model.chat.EndChatRequest
 import com.last.psychat.android.core.data.model.chat.PreviousChat
@@ -13,6 +14,7 @@ import com.last.psychat.android.core.data.model.chat.UserMessage
 import com.last.psychat.android.core.domain.entity.chat.BotMessageEntity
 import com.last.psychat.android.core.domain.entity.chat.ChatRequestEntity
 import com.last.psychat.android.core.domain.entity.chat.ChatResponseEntity
+import com.last.psychat.android.core.domain.entity.chat.CheckEmotionIsJudgedEntity
 import com.last.psychat.android.core.domain.entity.chat.EndChatEntity
 import com.last.psychat.android.core.domain.entity.chat.PreviousChatDetailEntity
 import com.last.psychat.android.core.domain.entity.chat.PreviousChatEntity
@@ -66,6 +68,11 @@ internal fun BotMessage.toEntity() =
 internal fun SessionResponse.toEntity() =
   SessionEntity(
     sessionId = sessionId,
+  )
+
+internal fun CheckEmotionIsJudgeResponse.toEntity() =
+  CheckEmotionIsJudgedEntity(
+    isJudged = isJudged,
   )
 
 internal fun EmotionResponse.toEntity() =

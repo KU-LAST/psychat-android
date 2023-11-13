@@ -2,6 +2,7 @@ package com.last.psychat.android.core.data.service
 
 import com.last.psychat.android.core.data.model.chat.ChatRequest
 import com.last.psychat.android.core.data.model.chat.ChatResponse
+import com.last.psychat.android.core.data.model.chat.CheckEmotionIsJudgeResponse
 import com.last.psychat.android.core.data.model.chat.EmotionResponse
 import com.last.psychat.android.core.data.model.chat.EndChatRequest
 import com.last.psychat.android.core.data.model.chat.PreviousChatDetailResponse
@@ -29,6 +30,11 @@ interface ChatService {
   suspend fun sendChatMessage(
     @Body chatRequest: ChatRequest,
   ): Response<ChatResponse>
+
+  @POST("check")
+  suspend fun checkEmotionIsJudged(
+    @Body endChatRequest: EndChatRequest,
+  ): Response<CheckEmotionIsJudgeResponse>
 
   @POST("end-chat")
   suspend fun endChatSession(

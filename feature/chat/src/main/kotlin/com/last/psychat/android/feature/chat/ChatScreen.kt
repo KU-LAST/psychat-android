@@ -81,7 +81,7 @@ internal fun ChatRoute(
     onNavigateBack = onNavigateBack,
     updateChatInputMessage = viewModel::updateChatInputMessage,
     sendChatMessage = viewModel::sendChatMessage,
-    endChatSession = viewModel::endChatSession,
+    checkEmotionIsJudged = viewModel::checkEmotionIsJudged,
   )
 }
 
@@ -92,7 +92,7 @@ internal fun ChatScreen(
   onNavigateBack: () -> Unit,
   updateChatInputMessage: (String) -> Unit,
   sendChatMessage: () -> Unit,
-  endChatSession: () -> Unit,
+  checkEmotionIsJudged: () -> Unit,
 ) {
   val listState = rememberLazyListState()
   val scope = rememberCoroutineScope()
@@ -109,7 +109,7 @@ internal fun ChatScreen(
         ChatTopBar(
           modifier = Modifier.height(56.dp),
           onNavigateBack = onNavigateBack,
-          navigateToResult = endChatSession,
+          navigateToResult = checkEmotionIsJudged,
         )
         HorizontalDivider(color = Gray500)
         Spacer(modifier = Modifier.height(8.dp))

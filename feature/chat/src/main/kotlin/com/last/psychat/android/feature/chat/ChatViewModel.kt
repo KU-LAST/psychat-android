@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.last.psychat.android.core.domain.entity.chat.ChatRequestEntity
 import com.last.psychat.android.core.domain.entity.chat.EndChatEntity
+import com.last.psychat.android.core.domain.usecase.chat.CheckEmotionIsJudgedUseCase
 import com.last.psychat.android.core.domain.usecase.chat.EndChatSessionUseCase
 import com.last.psychat.android.core.domain.usecase.chat.GetPreviousChatDetailUseCase
 import com.last.psychat.android.core.domain.usecase.chat.GetSessionIdUseCase
@@ -48,6 +49,7 @@ class ChatViewModel @Inject constructor(
   private val sendChatMessageUseCase: SendChatMessageUseCase,
   private val getSessionIdUseCase: GetSessionIdUseCase,
   private val getPreviousChatDetailUseCase: GetPreviousChatDetailUseCase,
+  private val checkEmotionIsJudgedUseCase: CheckEmotionIsJudgedUseCase,
   private val endChatSessionUseCase: EndChatSessionUseCase,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -142,7 +144,28 @@ class ChatViewModel @Inject constructor(
     }
   }
 
-  fun endChatSession() {
+  fun checkEmotionIsJudged() {
+    viewModelScope.launch {
+      val result = checkEmotionIsJudgedUseCase(EndChatEntity(sessionId = sessionId))
+      when {
+        result.isSuccess && result.getOrNull() != null -> {
+          val isJudged = result.getOrNull()!!.isJudged
+          if (isJudged) {
+            endChatSession()
+          }
+          else {
+            _eventFlow.emit(ChatUiEvent.ShowToast(UiText.StringResource(R.string.emotion_judgement_fail)))
+          }
+        }
+        result.isFailure -> {
+          val exception = result.exceptionOrNull()!!
+          _eventFlow.emit(ChatUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
+        }
+      }
+    }
+  }
+
+  private fun endChatSession() {
     viewModelScope.launch {
       val result = endChatSessionUseCase(EndChatEntity(sessionId = sessionId))
       when {
