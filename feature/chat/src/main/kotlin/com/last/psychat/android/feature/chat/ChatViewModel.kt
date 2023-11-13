@@ -76,7 +76,6 @@ class ChatViewModel @Inject constructor(
     getPreviousChatDetail(sessionId)
   }
 
-  // TODO 세션이 처음 시작된 경우가 아닐 경우 호출
   private fun getPreviousChatDetail(sessionId: Long) {
     viewModelScope.launch {
       val result = getPreviousChatDetailUseCase(sessionId)

@@ -5,6 +5,7 @@ package com.last.psychat.android.feature.result
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -59,7 +60,6 @@ import com.last.pyschat.android.core.designsystem.theme.H5
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import com.last.pyschat.android.core.designsystem.theme.Title
 
-// TODO 네트워크 에러 다이얼로그
 // TODO 시스템 백버튼 누르면 채팅 화면으로 이동하는 문제
 @Composable
 internal fun ResultRoute(
@@ -111,6 +111,10 @@ internal fun ResultScreen(
   val pageCount = uiState.recommendedContentList.size
   val pagerState = rememberPagerState(pageCount = { pageCount })
   val pagerHeight = 320.dp
+
+  BackHandler {
+    navigateToMain()
+  }
 
   LaunchedEffect(key1 = Unit) {
     getRecommendedContentList()

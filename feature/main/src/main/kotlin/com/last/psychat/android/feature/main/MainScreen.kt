@@ -33,7 +33,6 @@ import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 
-// TODO 네트워크 에러 다이얼로그
 @Composable
 internal fun MainRoute(
   navigateToChat: (Long) -> Unit,
