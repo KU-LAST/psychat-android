@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.last.psychat.android.core.ui.ObserveAsEvents
+import com.last.psychat.android.core.ui.components.EmptyScreen
 import com.last.psychat.android.core.ui.components.LoadingScreen
 import com.last.psychat.android.core.ui.components.PsyChatButton
 import com.last.psychat.android.feature.components.MainTopBar
@@ -83,7 +83,7 @@ internal fun MainScreen(
       HorizontalDivider(color = Gray500)
       Box(
         modifier = Modifier
-          .fillMaxHeight()
+          .fillMaxSize()
           .weight(1f)
           .padding(bottom = 32.dp),
       ) {
@@ -93,18 +93,23 @@ internal fun MainScreen(
             .align(Alignment.Center)
           )
         }
-        LazyColumn {
-          items(
-            items = uiState.previousChatList,
-            key = { it.sessionId },
-          ) { previousChat ->
-            PreviousCard(
-              previousChat = previousChat.toUiModel(),
-              onClick = { sessionId ->
-                resumeChatSession(sessionId)
-              },
-            )
-            HorizontalDivider(color = Gray300)
+        else if (uiState.previousChatList.isEmpty()) {
+          EmptyScreen(modifier = Modifier.fillMaxSize())
+        }
+        else {
+          LazyColumn {
+            items(
+              items = uiState.previousChatList,
+              key = { it.sessionId },
+            ) { previousChat ->
+              PreviousCard(
+                previousChat = previousChat.toUiModel(),
+                onClick = { sessionId ->
+                  resumeChatSession(sessionId)
+                },
+              )
+              HorizontalDivider(color = Gray300)
+            }
           }
         }
       }

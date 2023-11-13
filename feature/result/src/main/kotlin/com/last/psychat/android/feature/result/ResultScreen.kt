@@ -104,7 +104,7 @@ internal fun ResultScreen(
 
   val pageCount = uiState.recommendedContentList.size
   val pagerState = rememberPagerState(pageCount = { pageCount })
-  val pagerHeight = 280.dp
+  val pagerHeight = 320.dp
 
   Surface(
     modifier = modifier.fillMaxSize(),
@@ -232,17 +232,16 @@ internal fun ResultScreen(
             color = Gray500,
             modifier = Modifier.padding(bottom = 24.dp),
           )
-          PsyChatButton(
-            modifier = Modifier
-              .fillMaxWidth()
-              .height(56.dp)
-              .padding(horizontal = 24.dp),
-            onClick = navigateToMain,
-            text = context.getString(R.string.go_back),
-          )
-          Spacer(Modifier.height(32.dp))
         }
       }
+      PsyChatButton(
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(56.dp)
+          .padding(horizontal = 24.dp),
+        onClick = navigateToMain,
+        text = context.getString(R.string.go_back),
+      )
     }
   }
 }
