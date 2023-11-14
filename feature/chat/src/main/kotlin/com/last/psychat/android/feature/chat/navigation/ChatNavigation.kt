@@ -10,7 +10,7 @@ import com.last.psychat.android.feature.chat.ChatRoute
 
 const val SESSION_ID = "session_id"
 const val IS_END_CHAT = "is_end_chat"
-const val CHAT_NAVIGATION_ROUTE = "chat_route/{$SESSION_ID}/${IS_END_CHAT}"
+const val CHAT_NAVIGATION_ROUTE = "chat_route/{$SESSION_ID}/{$IS_END_CHAT}"
 
 fun NavController.navigateToChat(
   navOptions: NavOptions? = null,
@@ -32,7 +32,7 @@ fun NavGraphBuilder.chatScreen(
       },
       navArgument(IS_END_CHAT) {
         type = NavType.BoolType
-      }
+      },
     ),
   ) {
     ChatRoute(
