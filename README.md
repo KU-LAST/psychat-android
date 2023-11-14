@@ -39,7 +39,7 @@
   - StartUp
   - Splash
 
-- Kotlin Libraries (Coroutine, DateTime, Serialization)
+- Kotlin Libraries (Coroutine, DateTime, Serialization, Immutable)
 - Compose
   - Material3
   - Navigation
