@@ -13,6 +13,8 @@ import com.last.psychat.android.core.domain.usecase.chat.SendChatMessageUseCase
 import com.last.psychat.android.core.ui.UiText
 import com.last.psychat.android.feature.chat.mapper.toUiModel
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
+import com.last.psychat.android.feature.chat.navigation.IS_END_CHAT
+import com.last.psychat.android.feature.chat.navigation.SESSION_ID
 import com.last.psychat.core.util.getCurrentTimeFormatted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.net.URLEncoder
@@ -52,14 +54,14 @@ class ChatViewModel @Inject constructor(
   private val endChatSessionUseCase: EndChatSessionUseCase,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-//  private val sessionId: Long =
-//    requireNotNull(savedStateHandle.get<Long>(SESSION_ID)) { "sessionId is required." }
-//
-//  private val isEndChat: Boolean =
-//    requireNotNull(savedStateHandle.get<Boolean>(IS_END_CHAT)) { "isEndChat is required."}
+  private val sessionId: Long =
+    requireNotNull(savedStateHandle.get<Long>(SESSION_ID)) { "sessionId is required." }
 
-  private val sessionId: Long = 0L
-  private val isEndChat: Boolean = false
+  private val isEndChat: Boolean =
+    requireNotNull(savedStateHandle.get<Boolean>(IS_END_CHAT)) { "isEndChat is required."}
+
+//  private val sessionId: Long = 0L
+//  private val isEndChat: Boolean = false
 
   private val _uiState = MutableStateFlow(ChatUiState())
   val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
@@ -67,25 +69,25 @@ class ChatViewModel @Inject constructor(
   private val _eventFlow = MutableSharedFlow<ChatUiEvent>()
   val eventFlow: SharedFlow<ChatUiEvent> = _eventFlow.asSharedFlow()
 
-  init {
-    viewModelScope.launch {
-      _uiState.update {
-        it.copy(
-          chatMessageList = chatMessageList,
-          isEndChat = isEndChat
-        )
-      }
-    }
-  }
-
 //  init {
-//    _uiState.update {
-//      it.copy(
-//        isEndChat = isEndChat
-//      )
+//    viewModelScope.launch {
+//      _uiState.update {
+//        it.copy(
+//          chatMessageList = chatMessageList,
+//          isEndChat = isEndChat
+//        )
+//      }
 //    }
-//    getPreviousChatDetail(sessionId)
 //  }
+
+  init {
+    _uiState.update {
+      it.copy(
+        isEndChat = isEndChat
+      )
+    }
+    getPreviousChatDetail(sessionId)
+  }
 
   private fun getPreviousChatDetail(sessionId: Long) {
     viewModelScope.launch {
