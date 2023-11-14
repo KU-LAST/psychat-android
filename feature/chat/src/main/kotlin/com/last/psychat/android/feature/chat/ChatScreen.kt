@@ -193,7 +193,7 @@ internal fun ChatScreen(
         ) {
           Icon(
             imageVector = Icons.AutoMirrored.Outlined.Send,
-            contentDescription = "Send Message",
+            contentDescription = stringResource(R.string.send_message_description),
           )
         }
       }

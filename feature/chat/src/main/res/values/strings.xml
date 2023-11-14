@@ -4,4 +4,5 @@
   <string name="arrow_forward_descrption">Arrow Forward Icon</string>
   <string name="start_chat_info">대화가 시작 되었습니다.\n감정을 더 정확하게 이해하기 위해, 많은 대화를 나누어 주세요.</string>
   <string name="emotion_judgement_fail">아직 감정을 판단할 수 없어요. 좀 더 대화를 나눠 주세요.</string>
+  <string name="send_message_description">Send Message</string>
 </resources>
