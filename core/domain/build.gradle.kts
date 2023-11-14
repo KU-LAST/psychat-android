@@ -7,4 +7,5 @@ dependencies {
     libs.javax.inject,
     libs.kotlinx.coroutines.core,
   )
+  compileOnly(libs.compose.stable.marker)
 }
