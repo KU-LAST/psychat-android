@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,18 +31,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.last.psychat.android.core.ui.ObserveAsEvents
 import com.last.psychat.android.core.ui.extension.noRippleClickable
-import com.last.psychat.android.core.ui.keyboardAsState
 import com.last.psychat.android.feature.chat.components.ChatBubble
 import com.last.psychat.android.feature.chat.components.ChatTopBar
 import com.last.psychat.core.util.extension.formatDate
@@ -53,7 +48,6 @@ import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import com.last.pyschat.android.core.designsystem.theme.TextMRegular
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
-import timber.log.Timber
 
 // TODO adjustPan 을 적용할 경우 키보드가 올라오면 이전 채팅 내역이 보이지 않는 문제,
 //  adjustSize 를 적용할 경우, 깜빡거림 현상 존재, 채팅 내역이 키보드에 가려짐
@@ -97,18 +91,12 @@ internal fun ChatScreen(
   sendChatMessage: () -> Unit,
   checkEmotionIsJudged: () -> Unit,
 ) {
-  val keyboardHeight = with(LocalDensity.current) { WindowInsets.ime.getBottom(this).toDp() }
-
   val listState = rememberLazyListState()
-  val isKeyboardOpen by keyboardAsState()
+  // val isKeyboardOpen by keyboardAsState()
   val keyboardController = LocalSoftwareKeyboardController.current
 
   LaunchedEffect(key1 = uiState.chatMessageList.size) {
     listState.scrollToItem(uiState.chatMessageList.size - 1)
-  }
-
-  LaunchedEffect(key1 = isKeyboardOpen) {
-    Timber.tag("isKeyboardOpen").d("$keyboardHeight")
   }
 
   Surface(
@@ -126,6 +114,7 @@ internal fun ChatScreen(
           modifier = Modifier.height(56.dp),
           onNavigateBack = onNavigateBack,
           navigateToResult = checkEmotionIsJudged,
+          isEndChat = uiState.isEndChat,
         )
         HorizontalDivider(color = Gray500)
         Spacer(modifier = Modifier.height(8.dp))
@@ -211,10 +200,5 @@ internal fun ChatScreen(
       }
     }
   }
-}
-
-@Composable
-fun getKeyboardHeight(): Dp {
-  return with(LocalDensity.current) { WindowInsets.ime.getBottom(LocalDensity.current).toDp() }
 }
 

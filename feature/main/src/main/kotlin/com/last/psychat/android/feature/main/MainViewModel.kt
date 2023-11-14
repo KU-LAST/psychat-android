@@ -24,13 +24,14 @@ import kotlinx.coroutines.launch
 data class MainUiState(
   val sessionId: Long = -1,
   val previousChatList: ImmutableList<PreviousChatEntity> = persistentListOf(),
+  val isEndChat: Boolean = false,
   val isNetworkError: Boolean = false,
   val isLoading: Boolean = false,
   val error: Throwable? = null,
 )
 
 sealed interface MainUiEvent {
-  data class NavigateToChat(val sessionId: Long) : MainUiEvent
+  data class NavigateToChat(val sessionId: Long, val isEndChat: Boolean) : MainUiEvent
   data class ShowToast(val message: UiText) : MainUiEvent
 }
 
@@ -93,7 +94,12 @@ class MainViewModel @Inject constructor(
               sessionId = sessionId,
             )
           }
-          _eventFlow.emit(MainUiEvent.NavigateToChat(sessionId))
+          _eventFlow.emit(
+            MainUiEvent.NavigateToChat(
+              sessionId = sessionId,
+              isEndChat = false,
+            )
+          )
         }
 
         result.isFailure -> {
@@ -116,7 +122,12 @@ class MainViewModel @Inject constructor(
           sessionId = sessionId,
         )
       }
-      _eventFlow.emit(MainUiEvent.NavigateToChat(sessionId))
+      _eventFlow.emit(
+        MainUiEvent.NavigateToChat(
+          sessionId = sessionId,
+          isEndChat = true,
+        )
+      )
     }
   }
 

@@ -33,4 +33,24 @@ val chatMessageList = listOf(
     timestamp = "오전 10시 17분",
     isUser = false,
   ),
+  ChatMessageUiModel(
+    message = "어떻게 스트레스를 그나마 조금이라도 해소할 수 있을까?",
+    timestamp = "오전 10시 18분",
+    isUser = true,
+  ),
+  ChatMessageUiModel(
+    message = "쉬는 시간에 가볍게 산책을 다녀오시는 건 어떨까요?",
+    timestamp = "오전 10시 19분",
+    isUser = false,
+  ),
+  ChatMessageUiModel(
+    message = "어떻게 스트레스를 그나마 조금이라도 해소할 수 있을까?",
+    timestamp = "오전 10시 20분",
+    isUser = true,
+  ),
+  ChatMessageUiModel(
+    message = "쉬는 시간에 가볍게 산책을 다녀오시는 건 어떨까요?",
+    timestamp = "오전 10시 21분",
+    isUser = false,
+  ),
 )

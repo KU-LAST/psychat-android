@@ -32,6 +32,7 @@ import kotlinx.coroutines.withContext
 data class ChatUiState(
   val chatMessageList: List<ChatMessageUiModel> = emptyList(),
   val chatInputMessage: String = "",
+  val isEndChat: Boolean = false,
   val emotion: String = "",
   val isLoading: Boolean = false,
   val error: Throwable? = null,
@@ -52,9 +53,13 @@ class ChatViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 //  private val sessionId: Long =
-//    requireNotNull(savedStateHandle.get<Long>(CHAT_SESSION_ID)) { "sessionId is required." }
+//    requireNotNull(savedStateHandle.get<Long>(SESSION_ID)) { "sessionId is required." }
+//
+//  private val isEndChat: Boolean =
+//    requireNotNull(savedStateHandle.get<Boolean>(IS_END_CHAT)) { "isEndChat is required."}
 
   private val sessionId: Long = 0L
+  private val isEndChat: Boolean = false
 
   private val _uiState = MutableStateFlow(ChatUiState())
   val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
@@ -66,13 +71,19 @@ class ChatViewModel @Inject constructor(
     viewModelScope.launch {
       _uiState.update {
         it.copy(
-          chatMessageList = chatMessageList
+          chatMessageList = chatMessageList,
+          isEndChat = isEndChat
         )
       }
     }
   }
 
 //  init {
+//    _uiState.update {
+//      it.copy(
+//        isEndChat = isEndChat
+//      )
+//    }
 //    getPreviousChatDetail(sessionId)
 //  }
 

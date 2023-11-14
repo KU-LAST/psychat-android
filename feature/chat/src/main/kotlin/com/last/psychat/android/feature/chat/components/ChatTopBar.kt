@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.last.psychat.android.core.ui.components.ProfileImage
 import com.last.psychat.android.core.ui.extension.clickableSingle
@@ -29,6 +30,7 @@ fun ChatTopBar(
   modifier: Modifier = Modifier,
   onNavigateBack: () -> Unit,
   navigateToResult: () -> Unit,
+  isEndChat: Boolean,
 ) {
   val context = LocalContext.current
   Box(
@@ -56,14 +58,16 @@ fun ChatTopBar(
           tint = Gray900,
         )
       }
-      Text(
-        text = "결과 보기",
-        style = H5,
-        color = Gray900,
-        modifier = Modifier.clickableSingle(
-          onClick = navigateToResult,
-        ),
-      )
+      if (!isEndChat) {
+        Text(
+          text = stringResource(id = R.string.check_result),
+          style = H5,
+          color = Gray900,
+          modifier = Modifier.clickableSingle(
+            onClick = navigateToResult,
+          ),
+        )
+      }
     }
   }
 }

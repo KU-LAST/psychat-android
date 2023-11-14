@@ -3,6 +3,7 @@ package com.last.psychat.android.core.ui
 import android.app.Activity
 import android.graphics.Rect
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -13,6 +14,12 @@ val NavigationBarHeightDp
   @Composable
   get() = with(LocalDensity.current) {
     WindowInsets.systemBars.getBottom(this).toDp()
+  }
+
+val KeyboardHeightDp
+  @Composable
+  get() = with(LocalDensity.current) {
+    WindowInsets.ime.getBottom(this).toDp()
   }
 
 val StatusBarAndActionBarHeightDp

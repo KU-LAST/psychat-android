@@ -35,7 +35,7 @@ import com.last.pyschat.android.core.designsystem.theme.Gray500
 
 @Composable
 internal fun MainRoute(
-  navigateToChat: (Long) -> Unit,
+  navigateToChat: (Long, Boolean) -> Unit,
   viewModel: MainViewModel = hiltViewModel(),
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -44,7 +44,7 @@ internal fun MainRoute(
   ObserveAsEvents(viewModel.eventFlow) { event ->
     when (event) {
       is MainUiEvent.NavigateToChat -> {
-        navigateToChat(event.sessionId)
+        navigateToChat(event.sessionId, event.isEndChat)
       }
       is MainUiEvent.ShowToast -> {
         Toast.makeText(context, event.message.asString(context), Toast.LENGTH_SHORT).show()

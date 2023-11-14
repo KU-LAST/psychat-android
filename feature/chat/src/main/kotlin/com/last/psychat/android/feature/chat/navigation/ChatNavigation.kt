@@ -8,14 +8,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.last.psychat.android.feature.chat.ChatRoute
 
-const val CHAT_SESSION_ID = "session_id"
-const val CHAT_NAVIGATION_ROUTE = "chat_route/{$CHAT_SESSION_ID}"
+const val SESSION_ID = "session_id"
+const val IS_END_CHAT = "is_end_chat"
+const val CHAT_NAVIGATION_ROUTE = "chat_route/{$SESSION_ID}/${IS_END_CHAT}"
 
 fun NavController.navigateToChat(
   navOptions: NavOptions? = null,
   sessionId: Long,
+  isEndChat: Boolean,
 ) {
-  this.navigate("chat_route/$sessionId", navOptions)
+  this.navigate("chat_route/$sessionId/$isEndChat", navOptions)
 }
 
 fun NavGraphBuilder.chatScreen(
@@ -25,9 +27,12 @@ fun NavGraphBuilder.chatScreen(
   composable(
     route = CHAT_NAVIGATION_ROUTE,
     arguments = listOf(
-      navArgument(CHAT_SESSION_ID) {
+      navArgument(SESSION_ID) {
         type = NavType.LongType
       },
+      navArgument(IS_END_CHAT) {
+        type = NavType.BoolType
+      }
     ),
   ) {
     ChatRoute(

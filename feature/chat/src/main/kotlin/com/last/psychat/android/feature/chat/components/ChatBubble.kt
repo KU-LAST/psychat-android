@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.last.psychat.android.core.ui.components.ProfileImage
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
-import com.last.psychat.core.util.extension.formatDateTime
 import com.last.pyschat.android.core.designsystem.theme.Gray200
 import com.last.pyschat.android.core.designsystem.theme.Gray300
 import com.last.pyschat.android.core.designsystem.theme.Gray500
@@ -45,8 +44,8 @@ fun ChatBubble(
     verticalAlignment = Alignment.Bottom,
   ) {
     if (chatMessage.isUser) {
-      TimeText(time = chatMessage.timestamp.formatDateTime())
-      // TimeText(time = chatMessage.timestamp)
+      // TimeText(time = chatMessage.timestamp.formatDateTime())
+      TimeText(time = chatMessage.timestamp)
       Spacer(modifier = Modifier.width(8.dp))
       MessageBox(
         message = chatMessage.message,
@@ -64,8 +63,8 @@ fun ChatBubble(
         isUser = false,
       )
       Spacer(modifier = Modifier.width(8.dp))
-      TimeText(time = chatMessage.timestamp.formatDateTime())
-      // TimeText(time = chatMessage.timestamp)
+      // TimeText(time = chatMessage.timestamp.formatDateTime())
+      TimeText(time = chatMessage.timestamp)
     }
   }
 }

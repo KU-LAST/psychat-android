@@ -13,7 +13,7 @@ fun NavController.navigateToMain(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.mainScreen(
-  navigateToChat: (Long) -> Unit,
+  navigateToChat: (Long, Boolean) -> Unit,
 ) {
   composable(route = MAIN_NAVIGATION_ROUTE) {
     MainRoute(navigateToChat)
