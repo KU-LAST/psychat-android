@@ -52,7 +52,6 @@ import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 // TODO adjustPan 을 적용할 경우 키보드가 올라오면 이전 채팅 내역이 보이지 않는 문제,
 //  adjustSize 를 적용할 경우, 깜빡거림 현상 존재, 채팅 내역이 키보드에 가려짐
 // TODO 채팅을 보내면 텍스트 필드가 바로 비워지게?
-// 404 로 내려올 때 안내 메세지 변경
 @Composable
 internal fun ChatRoute(
   onNavigateBack: () -> Unit,
