@@ -8,7 +8,6 @@ import com.last.psychat.android.core.domain.entity.chat.EndChatEntity
 import com.last.psychat.android.core.domain.usecase.chat.CheckEmotionIsJudgedUseCase
 import com.last.psychat.android.core.domain.usecase.chat.EndChatSessionUseCase
 import com.last.psychat.android.core.domain.usecase.chat.GetPreviousChatDetailUseCase
-import com.last.psychat.android.core.domain.usecase.chat.GetSessionIdUseCase
 import com.last.psychat.android.core.domain.usecase.chat.SendChatMessageUseCase
 import com.last.psychat.android.core.ui.UiText
 import com.last.psychat.android.feature.chat.mapper.toUiModel
@@ -32,7 +31,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 data class ChatUiState(
-  val chatMessageList: List<ChatMessageUiModel> = emptyList(),
+  val chatMessageList: List<ChatMessageUiModel>? = null,
+  // val chatMessageList: List<ChatMessageUiModel> = emptyList(),
   val chatInputMessage: String = "",
   val isEndChat: Boolean = false,
   val emotion: String = "",
@@ -48,7 +48,6 @@ sealed interface ChatUiEvent {
 @HiltViewModel
 class ChatViewModel @Inject constructor(
   private val sendChatMessageUseCase: SendChatMessageUseCase,
-  private val getSessionIdUseCase: GetSessionIdUseCase,
   private val getPreviousChatDetailUseCase: GetPreviousChatDetailUseCase,
   private val checkEmotionIsJudgedUseCase: CheckEmotionIsJudgedUseCase,
   private val endChatSessionUseCase: EndChatSessionUseCase,
@@ -58,7 +57,7 @@ class ChatViewModel @Inject constructor(
     requireNotNull(savedStateHandle.get<Long>(SESSION_ID)) { "sessionId is required." }
 
   private val isEndChat: Boolean =
-    requireNotNull(savedStateHandle.get<Boolean>(IS_END_CHAT)) { "isEndChat is required."}
+    requireNotNull(savedStateHandle.get<Boolean>(IS_END_CHAT)) { "isEndChat is required." }
 
 //  private val sessionId: Long = 0L
 //  private val isEndChat: Boolean = false
@@ -83,7 +82,7 @@ class ChatViewModel @Inject constructor(
   init {
     _uiState.update {
       it.copy(
-        isEndChat = isEndChat
+        isEndChat = isEndChat,
       )
     }
     getPreviousChatDetail(sessionId)
@@ -115,7 +114,6 @@ class ChatViewModel @Inject constructor(
 
     _uiState.update { it.copy(isLoading = true) }
     viewModelScope.launch {
-      // val sessionId = getSessionIdUseCase()
       val messageContent = ChatMessageUiModel(
         message = _uiState.value.chatInputMessage,
         timestamp = getCurrentTimeFormatted(),
@@ -123,7 +121,7 @@ class ChatViewModel @Inject constructor(
       )
       _uiState.update {
         it.copy(
-          chatMessageList = it.chatMessageList + messageContent,
+          chatMessageList = it.chatMessageList?.plus(messageContent),
           // chatInputMessage = ""
         )
       }
@@ -139,7 +137,7 @@ class ChatViewModel @Inject constructor(
           val responseMessage = result.getOrNull()!!.toUiModel()
           _uiState.update {
             it.copy(
-              chatMessageList = it.chatMessageList + responseMessage,
+              chatMessageList = it.chatMessageList?.plus(responseMessage),
             )
           }
         }
@@ -194,10 +192,10 @@ class ChatViewModel @Inject constructor(
               emotion = withContext(Dispatchers.IO) {
                 URLEncoder.encode(
                   emotion,
-                  StandardCharsets.UTF_8.toString()
+                  StandardCharsets.UTF_8.toString(),
                 )
-              }
-            )
+              },
+            ),
           )
         }
         result.isFailure -> {
