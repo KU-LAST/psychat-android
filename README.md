@@ -10,12 +10,6 @@
 
 내 감정 기록을 한눈에, 필요할 때 간편하게, 내 상황에 알맞게
 
-<p align="center">
-<img src="https://github.com/Nexters/BandalArt-Android/assets/51016231/541f9309-bb9a-4131-be46-ac7df5f74fc1" width="30%"/>
-<img src="https://github.com/Nexters/BandalArt-Android/assets/51016231/3af26254-8c48-4e53-b79a-9f9764427a60" width="30%"/>
-<img src="https://github.com/Nexters/BandalArt-Android/assets/51016231/c772cc49-75df-4e2a-94f7-9d6c1f3e1aa3" width="30%"/>
-</p>
-
 ## Features
 
 |이전 채팅 목록 화면|챗봇 채팅 화면|감정 판단 결과 화면|
