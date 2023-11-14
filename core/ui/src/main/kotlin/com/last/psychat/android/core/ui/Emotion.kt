@@ -27,30 +27,35 @@ enum class Emotion(
     contentColor = Color.White,
     containerColor = AngryColor,
   ),
+
   // 1.기쁨
   Happy(
     icon = R.drawable.humorous,
     contentColor = Color.Black,
     containerColor = HappyColor,
   ),
+
   // 2.불안
   Tense(
     icon = R.drawable.tense,
     contentColor = Color.Black,
     containerColor = TenseColor,
   ),
+
   // 3.당황
   Surprised(
     icon = R.drawable.surprised,
     contentColor = Color.Black,
     containerColor = SurprisedColor,
   ),
+
   // 4.슬픔
   Depressed(
     icon = R.drawable.depressed,
     contentColor = Color.Black,
     containerColor = DepressedColor,
   ),
+
   // 5.상처
   Disappointed(
     icon = R.drawable.disappointed,

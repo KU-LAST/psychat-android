@@ -65,7 +65,7 @@ fun NetworkErrorAlertDialog(
           modifier = Modifier.align(Alignment.CenterHorizontally),
           text = description,
           color = Gray400,
-          style = TextSMedium
+          style = TextSMedium,
         )
         Spacer(modifier = Modifier.height(24.dp))
         Row(

@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.last.psychat.android.core.domain.entity.chat.PreviousChatEntity
 import com.last.psychat.android.core.domain.usecase.chat.GetPreviousChatListUseCase
-import com.last.psychat.android.core.domain.usecase.chat.SetSessionIdUseCase
 import com.last.psychat.android.core.domain.usecase.chat.StartChatSessionUseCase
 import com.last.psychat.android.core.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +38,6 @@ sealed interface MainUiEvent {
 class MainViewModel @Inject constructor(
   private val getPreviousChatListUseCase: GetPreviousChatListUseCase,
   private val startChatSessionUseCase: StartChatSessionUseCase,
-  private val setSessionIdUseCase: SetSessionIdUseCase,
 ) : ViewModel() {
 
   private val _uiState = MutableStateFlow(MainUiState())
@@ -98,7 +96,7 @@ class MainViewModel @Inject constructor(
             MainUiEvent.NavigateToChat(
               sessionId = sessionId,
               isEndChat = false,
-            )
+            ),
           )
         }
 
@@ -108,7 +106,11 @@ class MainViewModel @Inject constructor(
         }
       }
     }
-    _uiState.update { it.copy(isLoading = false) }
+    _uiState.update {
+      it.copy(
+        isLoading = false,
+      )
+    }
 
 //    viewModelScope.launch {
 //      _eventFlow.emit(MainUiEvent.NavigateToChat)
@@ -126,7 +128,7 @@ class MainViewModel @Inject constructor(
         MainUiEvent.NavigateToChat(
           sessionId = sessionId,
           isEndChat = true,
-        )
+        ),
       )
     }
   }

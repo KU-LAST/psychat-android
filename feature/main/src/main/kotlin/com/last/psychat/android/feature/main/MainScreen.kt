@@ -104,7 +104,7 @@ internal fun MainScreen(
           LoadingScreen(
             modifier = Modifier
               .fillMaxSize()
-              .align(Alignment.Center)
+              .align(Alignment.Center),
           )
         } else if (uiState.previousChatList.isEmpty()) {
           EmptyScreen(modifier = Modifier.fillMaxSize())

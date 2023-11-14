@@ -21,7 +21,6 @@ import com.last.psychat.android.core.ui.components.LoadingScreen
 import com.last.psychat.android.feature.splash.navigation.SPLASH_NAVIGATION_ROUTE
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 
-
 @Composable
 internal fun SplashRoute(
   navigateToMain: (NavOptions) -> Unit,
@@ -70,9 +69,7 @@ fun SplashScreen(
     modifier = modifier.fillMaxSize(),
     color = Gray50,
   ) {
-    Box(
-      modifier = Modifier.fillMaxSize()
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
       Column(
         modifier.align(Alignment.Center),
         horizontalAlignment = Alignment.CenterHorizontally,

@@ -126,7 +126,7 @@ internal fun ResultScreen(
       description = stringResource(R.string.network_error_description),
       onConfirmClick = {
         closeNetworkErrorDialog()
-          getRecommendedContentList()
+        getRecommendedContentList()
       },
     )
   }
@@ -143,19 +143,17 @@ internal fun ResultScreen(
       ResultTopBar(modifier = Modifier.height(56.dp))
       HorizontalDivider(color = Gray500)
       Spacer(modifier.height(32.dp))
-      Box(
-        modifier = Modifier.fillMaxSize()
-      ) {
+      Box(modifier = Modifier.fillMaxSize()) {
         if (uiState.isLoading) {
           LoadingScreen(
             modifier = Modifier
               .fillMaxSize()
-              .align(Alignment.Center)
+              .align(Alignment.Center),
           )
         }
         Column(
           modifier = Modifier.fillMaxSize(),
-          horizontalAlignment = Alignment.CenterHorizontally
+          horizontalAlignment = Alignment.CenterHorizontally,
         ) {
           Row(
             modifier = Modifier
@@ -189,7 +187,8 @@ internal fun ResultScreen(
             horizontalArrangement = Arrangement.Start,
           ) {
             Text(
-              text = if (getEmotionIndex(uiState.emotion) == 1) stringResource(R.string.positive_content_suggestion) else stringResource(R.string.negative_content_suggestion),
+              text = if (getEmotionIndex(uiState.emotion) == 1) stringResource(R.string.positive_content_suggestion)
+              else stringResource(R.string.negative_content_suggestion),
               style = Title,
               modifier = Modifier.padding(horizontal = 16.dp),
               maxLines = 2,

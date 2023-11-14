@@ -52,12 +52,12 @@ fun String.formatDateTime(): String {
   return dateTime.format(outputFormatter)
 }
 
-//fun String.formatDateTime(): String {
-//  val instant = Instant.parse(this.replace(" ", "T") + ":00Z") // "2023.11.09 13:38:45" -> "2023-11-09T13:38:45Z"
-//  val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+// fun String.formatDateTime(): String {
+//   val instant = Instant.parse(this.replace(" ", "T") + ":00Z") // "2023.11.09 13:38:45" -> "2023-11-09T13:38:45Z"
+//   val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
 //
-//  val hour = if (dateTime.hour > 12) dateTime.hour - 12 else dateTime.hour
-//  val period = if (dateTime.hour < 12) "오전" else "오후"
+//   val hour = if (dateTime.hour > 12) dateTime.hour - 12 else dateTime.hour
+//   val period = if (dateTime.hour < 12) "오전" else "오후"
 //
-//  return "$period ${hour}시 ${dateTime.minute}분 ${dateTime.second}초"
-//}
+//   return "$period ${hour}시 ${dateTime.minute}분 ${dateTime.second}초"
+// }

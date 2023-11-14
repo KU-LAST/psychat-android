@@ -48,7 +48,7 @@ class SplashViewModel @Inject constructor(
     viewModelScope.launch {
       _uiState.update {
         it.copy(
-          isLoading = true
+          isLoading = true,
         )
       }
       if (getLoginTokenUseCase().isEmpty()) {
@@ -59,7 +59,7 @@ class SplashViewModel @Inject constructor(
             setLoginTokenUseCase(loginToken)
             _uiState.update {
               it.copy(
-                isLoggedIn = true
+                isLoggedIn = true,
               )
             }
             _eventFlow.emit(SplashUiEvent.NavigateToMain)
@@ -74,7 +74,7 @@ class SplashViewModel @Inject constructor(
       }
       _uiState.update {
         it.copy(
-          isLoading = false
+          isLoading = false,
         )
       }
     }

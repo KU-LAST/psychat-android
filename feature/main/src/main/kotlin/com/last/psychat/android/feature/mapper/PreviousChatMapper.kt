@@ -9,5 +9,5 @@ internal fun PreviousChatEntity.toUiModel() =
     sessionId = sessionId,
     startDate = startDate,
     emotion = emotion,
-    emotionIndex = getEmotionIndex(emotion)
+    emotionIndex = getEmotionIndex(emotion),
   )

@@ -11,7 +11,7 @@ import com.last.pyschat.android.core.designsystem.theme.TextMRegular
 
 @Composable
 fun EmptyScreen(
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
 ) {
   Box(
     modifier = modifier,

@@ -82,7 +82,7 @@ internal object NetworkModule {
       .addInterceptor(tokenInterceptor)
       .addInterceptor(httpLoggingInterceptor)
       .connectTimeout(15, TimeUnit.SECONDS)
-      .readTimeout(60, TimeUnit.SECONDS)
+      .readTimeout(300, TimeUnit.SECONDS)
       .build()
 
     return Retrofit.Builder()

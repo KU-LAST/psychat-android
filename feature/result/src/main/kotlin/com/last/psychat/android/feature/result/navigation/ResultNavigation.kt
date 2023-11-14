@@ -19,7 +19,7 @@ fun NavController.navigateToResult(
 }
 
 fun NavGraphBuilder.resultScreen(
-  navigateToMain: (NavOptions) -> Unit
+  navigateToMain: (NavOptions) -> Unit,
 ) {
   composable(
     route = RESULT_NAVIGATION_ROUTE,

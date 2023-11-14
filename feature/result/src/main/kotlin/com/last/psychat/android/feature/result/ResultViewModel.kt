@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 data class ResultUiState(
   val emotion: String = "",
   val recommendedContentList: ImmutableList<RecommendedContentEntity> = persistentListOf(),
-  val isNetworkError: Boolean =  false,
+  val isNetworkError: Boolean = false,
   val isLoading: Boolean = false,
   val error: Throwable? = null,
 )
@@ -110,4 +110,3 @@ class ResultViewModel @Inject constructor(
     }
   }
 }
-
