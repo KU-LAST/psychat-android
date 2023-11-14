@@ -26,8 +26,11 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -40,14 +43,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.last.psychat.android.core.ui.ObserveAsEvents
 import com.last.psychat.android.core.ui.extension.noRippleClickable
+import com.last.psychat.android.core.ui.keyboardAsState
 import com.last.psychat.android.feature.chat.components.ChatBubble
 import com.last.psychat.android.feature.chat.components.ChatTopBar
+import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
 import com.last.psychat.core.util.extension.formatDate
 import com.last.psychat.core.util.getCurrentTime
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import com.last.pyschat.android.core.designsystem.theme.TextMRegular
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
+import kotlin.random.Random
+import kotlinx.coroutines.launch
 
 // TODO adjustPan 을 적용할 경우 키보드가 올라오면 이전 채팅 내역이 보이지 않는 문제,
 //  adjustSize 를 적용할 경우, 깜빡거림 현상 존재, 채팅 내역이 키보드에 가려짐
@@ -91,12 +98,14 @@ internal fun ChatScreen(
   checkEmotionIsJudged: () -> Unit,
 ) {
   val listState = rememberLazyListState()
-  // val isKeyboardOpen by keyboardAsState()
+  val scope = rememberCoroutineScope()
+  val isKeyboardOpen by keyboardAsState()
+  var previousChat by remember { mutableStateOf(listOf<ChatMessageUiModel>()) }
   val keyboardController = LocalSoftwareKeyboardController.current
 
-  LaunchedEffect(key1 = uiState.chatMessageList.size) {
-    listState.scrollToItem(uiState.chatMessageList.size - 1)
-  }
+//  LaunchedEffect(key1 = uiState.chatMessageList.size) {
+//    listState.scrollToItem(uiState.chatMessageList.size - 1)
+//  }
 
   Surface(
     modifier = modifier.fillMaxSize(),
@@ -117,52 +126,89 @@ internal fun ChatScreen(
         )
         HorizontalDivider(color = Gray500)
         Spacer(modifier = Modifier.height(8.dp))
+//        Row(
+//          modifier
+//            .fillMaxWidth()
+//            .wrapContentHeight(),
+//          horizontalArrangement = Arrangement.Center,
+//          verticalAlignment = Alignment.CenterVertically,
+//        ) {
+//          Text(
+//            text = getCurrentTime().formatDate(),
+//            style = TextMRegular,
+//            color = Gray500,
+//          )
+//        }
+//        Spacer(modifier = Modifier.height(8.dp))
+//        Row(
+//          modifier
+//            .fillMaxWidth()
+//            .wrapContentHeight(),
+//          horizontalArrangement = Arrangement.Center,
+//          verticalAlignment = Alignment.CenterVertically,
+//        ) {
+//          Text(
+//            text = stringResource(R.string.start_chat_info),
+//            style = TextXsRegular,
+//            color = Gray500,
+//            textAlign = TextAlign.Center,
+//          )
+//        }
+        Spacer(modifier = Modifier.height(8.dp))
         Column(
           modifier = Modifier.padding(),
         ) {
-          LazyColumn(
-            modifier = Modifier
-              .fillMaxHeight()
-              .padding(bottom = 120.dp),
-            state = listState
-          ) {
-            item {
-              Row(
-                modifier
-                  .fillMaxWidth()
-                  .wrapContentHeight(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-              ) {
-                Text(
-                  text = getCurrentTime().formatDate(),
-                  style = TextMRegular,
-                  color = Gray500,
-                )
+          uiState.chatMessageList?.let {
+            LazyColumn(
+              modifier = Modifier
+                .fillMaxHeight()
+                .padding(bottom = 120.dp),
+              state = listState,
+            ) {
+              item {
+                Row(
+                  modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                  horizontalArrangement = Arrangement.Center,
+                  verticalAlignment = Alignment.CenterVertically,
+                ) {
+                  Text(
+                    text = getCurrentTime().formatDate(),
+                    style = TextMRegular,
+                    color = Gray500,
+                  )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                  modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                  horizontalArrangement = Arrangement.Center,
+                  verticalAlignment = Alignment.CenterVertically,
+                ) {
+                  Text(
+                    text = stringResource(R.string.start_chat_info),
+                    style = TextXsRegular,
+                    color = Gray500,
+                    textAlign = TextAlign.Center,
+                  )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
               }
-              Spacer(modifier = Modifier.height(8.dp))
-              Row(
-                modifier
-                  .fillMaxWidth()
-                  .wrapContentHeight(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-              ) {
-                Text(
-                  text = stringResource(R.string.start_chat_info),
-                  style = TextXsRegular,
-                  color = Gray500,
-                  textAlign = TextAlign.Center,
-                )
+              items(
+                items = uiState.chatMessageList,
+                key = { (it.message + " " + it.timestamp + Random.nextInt()) },
+              ) { chatMessage ->
+                ChatBubble(chatMessage = chatMessage)
               }
-              Spacer(modifier = Modifier.height(8.dp))
+              if (isKeyboardOpen || previousChat.size != it.size) {
+                scope.launch {
+                  listState.scrollToItem(it.size - 1)
+                }
+              }
             }
-            items(
-              items = uiState.chatMessageList,
-              key = { (it.message + " " + it.timestamp) },
-            ) { chatMessage ->
-              ChatBubble(chatMessage = chatMessage)
-            }
+            previousChat = it
           }
         }
       }
@@ -200,4 +246,3 @@ internal fun ChatScreen(
     }
   }
 }
-
