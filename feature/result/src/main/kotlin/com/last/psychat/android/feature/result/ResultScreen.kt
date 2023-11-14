@@ -122,8 +122,8 @@ internal fun ResultScreen(
 
   if (uiState.isNetworkError) {
     NetworkErrorAlertDialog(
-      title = "네트워크 문제로 이전 대화 목록을 불러오지 못했어요",
-      message = "다시 시도 해주시기 바랍니다.",
+      title = stringResource(R.string.network_error_title),
+      description = stringResource(R.string.network_error_description),
       onConfirmClick = {
         closeNetworkErrorDialog()
           getRecommendedContentList()

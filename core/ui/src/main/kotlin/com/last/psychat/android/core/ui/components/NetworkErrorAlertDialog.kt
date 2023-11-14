@@ -33,7 +33,7 @@ import com.last.pyschat.android.core.designsystem.theme.Title
 fun NetworkErrorAlertDialog(
   modifier: Modifier = Modifier,
   title: String,
-  message: String,
+  description: String,
   onConfirmClick: () -> Unit,
 ) {
   val context = LocalContext.current
@@ -63,7 +63,7 @@ fun NetworkErrorAlertDialog(
         Spacer(modifier = Modifier.height(16.dp))
         Text(
           modifier = Modifier.align(Alignment.CenterHorizontally),
-          text = message,
+          text = description,
           color = Gray400,
           style = TextSMedium
         )

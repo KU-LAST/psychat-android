@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="start_chat">대화 시작</string>
+  <string name="network_error_title">네트워크 문제로 이전 대화 목록을\n불러오지 못했어요</string>
+  <string name="network_error_description">다시 시도 해주시기 바랍니다.</string>
 </resources>

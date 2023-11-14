@@ -8,4 +8,6 @@
   <string name="emotion_judgment_result">지금은 ”%1$s“한 감정이시네요</string>
   <string name="negative_content_suggestion">다음 콘텐츠의 도움을 받아보는 것이 어떨까요?</string>
   <string name="positive_content_suggestion">다음 콘텐츠를 즐기는 것이 어떨까요?</string>
+  <string name="network_error_title">네트워크 문제로 이전 대화 목록을\n불러오지 못했어요</string>
+  <string name="network_error_description">다시 시도 해주시기 바랍니다.</string>
 </resources>
