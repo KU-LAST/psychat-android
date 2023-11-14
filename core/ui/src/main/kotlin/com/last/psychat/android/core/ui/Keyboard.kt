@@ -1,15 +1,40 @@
 package com.last.psychat.android.core.ui
 
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.ime
+import android.graphics.Rect
+import android.view.ViewTreeObserver
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalView
 
-// https://stackoverflow.com/questions/68847559/how-can-i-detect-keyboard-opening-and-closing-in-jetpack-compose
+enum class Keyboard {
+  Opened, Closed
+}
+
 @Composable
-fun keyboardAsState(): State<Boolean> {
-  val isImeVisible = WindowInsets.ime.getBottom(LocalDensity.current) > 0
-  return rememberUpdatedState(newValue = isImeVisible)
+fun keyboardAsState(): State<Keyboard> {
+  val keyboardState = remember { mutableStateOf(Keyboard.Closed) }
+  val view = LocalView.current
+  DisposableEffect(view) {
+    val onGlobalListener = ViewTreeObserver.OnGlobalLayoutListener {
+      val rect = Rect()
+      view.getWindowVisibleDisplayFrame(rect)
+      val screenHeight = view.rootView.height
+      val keypadHeight = screenHeight - rect.bottom
+      keyboardState.value = if (keypadHeight > screenHeight * 0.15) {
+        Keyboard.Opened
+      } else {
+        Keyboard.Closed
+      }
+    }
+    view.viewTreeObserver.addOnGlobalLayoutListener(onGlobalListener)
+
+    onDispose {
+      view.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalListener)
+    }
+  }
+
+  return keyboardState
 }

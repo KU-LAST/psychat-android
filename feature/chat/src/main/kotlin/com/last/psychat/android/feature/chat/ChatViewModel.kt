@@ -13,7 +13,6 @@ import com.last.psychat.android.core.domain.usecase.chat.SendChatMessageUseCase
 import com.last.psychat.android.core.ui.UiText
 import com.last.psychat.android.feature.chat.mapper.toUiModel
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
-import com.last.psychat.android.feature.chat.navigation.CHAT_SESSION_ID
 import com.last.psychat.core.util.getCurrentTimeFormatted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.net.URLEncoder
@@ -31,8 +30,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 data class ChatUiState(
-  // 반드시 null 로 초기값을 설정 해야 하는지 고민
-  val chatMessageList: List<ChatMessageUiModel>? = null,
+  val chatMessageList: List<ChatMessageUiModel> = emptyList(),
   val chatInputMessage: String = "",
   val emotion: String = "",
   val isLoading: Boolean = false,
@@ -53,8 +51,10 @@ class ChatViewModel @Inject constructor(
   private val endChatSessionUseCase: EndChatSessionUseCase,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-  private val sessionId: Long =
-    requireNotNull(savedStateHandle.get<Long>(CHAT_SESSION_ID)) { "sessionId is required." }
+//  private val sessionId: Long =
+//    requireNotNull(savedStateHandle.get<Long>(CHAT_SESSION_ID)) { "sessionId is required." }
+
+  private val sessionId: Long = 0L
 
   private val _uiState = MutableStateFlow(ChatUiState())
   val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
@@ -62,19 +62,19 @@ class ChatViewModel @Inject constructor(
   private val _eventFlow = MutableSharedFlow<ChatUiEvent>()
   val eventFlow: SharedFlow<ChatUiEvent> = _eventFlow.asSharedFlow()
 
-//  init {
-//    viewModelScope.launch {
-//      _uiState.update {
-//        it.copy(
-//          chatMessageList = chatMessageList
-//        )
-//      }
-//    }
-//  }
-
   init {
-    getPreviousChatDetail(sessionId)
+    viewModelScope.launch {
+      _uiState.update {
+        it.copy(
+          chatMessageList = chatMessageList
+        )
+      }
+    }
   }
+
+//  init {
+//    getPreviousChatDetail(sessionId)
+//  }
 
   private fun getPreviousChatDetail(sessionId: Long) {
     viewModelScope.launch {
@@ -110,7 +110,7 @@ class ChatViewModel @Inject constructor(
       )
       _uiState.update {
         it.copy(
-          chatMessageList = it.chatMessageList?.plus(messageContent),
+          chatMessageList = it.chatMessageList + messageContent,
           // chatInputMessage = ""
         )
       }
@@ -125,7 +125,9 @@ class ChatViewModel @Inject constructor(
         result.isSuccess && result.getOrNull() != null -> {
           val responseMessage = result.getOrNull()!!.toUiModel()
           _uiState.update {
-            it.copy(chatMessageList = it.chatMessageList?.plus(responseMessage))
+            it.copy(
+              chatMessageList = it.chatMessageList + responseMessage,
+            )
           }
         }
         result.isFailure -> {
@@ -151,8 +153,7 @@ class ChatViewModel @Inject constructor(
           val isJudged = result.getOrNull()!!.isJudged
           if (isJudged) {
             endChatSession()
-          }
-          else {
+          } else {
             _eventFlow.emit(ChatUiEvent.ShowToast(UiText.StringResource(R.string.emotion_judgement_fail)))
           }
         }
