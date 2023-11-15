@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -238,6 +239,7 @@ internal fun ChatScreen(
             unfocusedBorderColor = Gray900,
             cursorColor = Gray900,
             focusedTextColor = Gray900,
+            selectionColors = TextSelectionColors(handleColor = Gray500, backgroundColor = Gray500),
           )
         )
         IconButton(
