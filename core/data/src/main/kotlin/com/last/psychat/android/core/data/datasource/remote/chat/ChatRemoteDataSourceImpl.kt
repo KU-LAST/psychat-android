@@ -51,6 +51,7 @@ internal class ChatRemoteDataSourceImpl @Inject constructor(
     }
   }
 
+  // TODO 에러 처리 보완
   override suspend fun endChatSession(endChatRequest: EndChatRequest): EmotionResponse? {
 //    return safeRequest {
 //      service.endChatSession(endChatRequest)
