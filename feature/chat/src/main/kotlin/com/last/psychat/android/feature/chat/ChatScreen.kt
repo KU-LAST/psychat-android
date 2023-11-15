@@ -103,8 +103,10 @@ internal fun ChatScreen(
   var previousChat by remember { mutableStateOf(listOf<ChatMessageUiModel>()) }
   val keyboardController = LocalSoftwareKeyboardController.current
 
-//  LaunchedEffect(key1 = uiState.chatMessageList.size) {
-//    listState.scrollToItem(uiState.chatMessageList.size - 1)
+//  LaunchedEffect(key1 = uiState.chatMessageList.size, key2 = isKeyboardOpen) {
+//    if (uiState.chatMessageList.isNotEmpty()) {
+//      listState.scrollToItem(uiState.chatMessageList.size - 1)
+//    }
 //  }
 
   Surface(
@@ -127,6 +129,48 @@ internal fun ChatScreen(
       )
       HorizontalDivider(color = Gray500)
       Spacer(modifier = Modifier.height(8.dp))
+//      LazyColumn(
+//        modifier = Modifier.weight(1f),
+//        state = listState,
+//      ) {
+//        item {
+//          Row(
+//            modifier
+//              .fillMaxWidth()
+//              .wrapContentHeight(),
+//            horizontalArrangement = Arrangement.Center,
+//            verticalAlignment = Alignment.CenterVertically,
+//          ) {
+//            Text(
+//              text = getCurrentTime().formatDate(),
+//              style = TextMRegular,
+//              color = Gray500,
+//            )
+//          }
+//          Spacer(modifier = Modifier.height(8.dp))
+//          Row(
+//            modifier
+//              .fillMaxWidth()
+//              .wrapContentHeight(),
+//            horizontalArrangement = Arrangement.Center,
+//            verticalAlignment = Alignment.CenterVertically,
+//          ) {
+//            Text(
+//              text = stringResource(R.string.start_chat_info),
+//              style = TextXsRegular,
+//              color = Gray500,
+//              textAlign = TextAlign.Center,
+//            )
+//          }
+//          Spacer(modifier = Modifier.height(8.dp))
+//        }
+//        items(
+//          items = uiState.chatMessageList,
+//          key = { it.message + " " + it.timestamp + Random.nextInt() },
+//        ) { chatMessage ->
+//          ChatBubble(chatMessage = chatMessage)
+//        }
+//      }
       uiState.chatMessageList?.let {
         LazyColumn(
           modifier = Modifier.weight(1f),
@@ -170,8 +214,10 @@ internal fun ChatScreen(
             ChatBubble(chatMessage = chatMessage)
           }
           if (isKeyboardOpen || previousChat.size != it.size) {
-            scope.launch {
-              listState.scrollToItem(it.size - 1)
+            if (it.isNotEmpty()) {
+              scope.launch {
+                listState.scrollToItem(it.size - 1)
+              }
             }
           }
         }
@@ -181,7 +227,7 @@ internal fun ChatScreen(
         modifier = Modifier
           .fillMaxWidth()
           .imePadding()
-          .padding(start = 16.dp),
+          .padding(start = 16.dp, top = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
       ) {
         OutlinedTextField(

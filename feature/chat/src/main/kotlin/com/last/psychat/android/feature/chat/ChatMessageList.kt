@@ -2,7 +2,6 @@ package com.last.psychat.android.feature.chat
 
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
 
-// yyyy.MM.dd HH:mm:ss
 val chatMessageList = listOf(
   ChatMessageUiModel(
     message = "나 요즘 너무 힘들어",
@@ -55,3 +54,5 @@ val chatMessageList = listOf(
     isUser = false,
   ),
 )
+
+// val chatMessageList = emptyList<ChatMessageUiModel>()

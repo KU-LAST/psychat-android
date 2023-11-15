@@ -123,7 +123,7 @@ class ChatViewModel @Inject constructor(
       _uiState.update {
         it.copy(
           chatMessageList = it.chatMessageList?.plus(messageContent),
-          // chatInputMessage = ""
+          // chatMessageList = it.chatMessageList + messageContent
         )
       }
       val result = sendChatMessageUseCase(
@@ -139,6 +139,7 @@ class ChatViewModel @Inject constructor(
           _uiState.update {
             it.copy(
               chatMessageList = it.chatMessageList?.plus(responseMessage),
+              // chatMessageList = chatMessageList + responseMessage
             )
           }
         }
