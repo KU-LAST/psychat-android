@@ -232,9 +232,7 @@ internal fun ChatScreen(
         )
         IconButton(
           onClick = {
-            if (uiState.chatInputMessage.isNotEmpty()) {
-              sendChatMessage()
-            }
+            if (uiState.chatInputMessage.isNotEmpty()) sendChatMessage()
           },
           enabled = !uiState.isLoading,
         ) {
