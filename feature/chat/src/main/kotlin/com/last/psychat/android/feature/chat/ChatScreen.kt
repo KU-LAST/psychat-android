@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -52,7 +52,6 @@ import com.last.psychat.android.feature.chat.components.ChatTopBar
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
 import com.last.psychat.core.util.extension.formatDate
 import com.last.psychat.core.util.getCurrentTime
-import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.TextMRegular
@@ -60,8 +59,6 @@ import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import kotlin.random.Random
 import kotlinx.coroutines.launch
 
-// TODO adjustPan 을 적용할 경우 키보드가 올라오면 이전 채팅 내역이 보이지 않는 문제,
-//  adjustSize 를 적용할 경우, 깜빡거림 현상 존재, 채팅 내역이 키보드에 가려짐
 // TODO 채팅을 보내면 텍스트 필드가 바로 비워지게?
 @Composable
 internal fun ChatRoute(
@@ -111,17 +108,18 @@ internal fun ChatScreen(
 //  LaunchedEffect(key1 = uiState.chatMessageList.size) {
 //    listState.scrollToItem(uiState.chatMessageList.size - 1)
 //  }
-
   Surface(
     modifier = modifier.fillMaxSize(),
-    color = Gray50,
   ) {
     Box(
-      modifier = Modifier.noRippleClickable {
-        keyboardController?.hide()
-      },
+      modifier = Modifier
+        .noRippleClickable {
+          keyboardController?.hide()
+        },
     ) {
-      Column {
+      Column(
+        modifier.fillMaxSize(),
+      ) {
         Spacer(modifier = Modifier.height(16.dp))
         ChatTopBar(
           modifier = Modifier.height(56.dp),
@@ -131,127 +129,90 @@ internal fun ChatScreen(
         )
         HorizontalDivider(color = Gray500)
         Spacer(modifier = Modifier.height(8.dp))
-//        Row(
-//          modifier
-//            .fillMaxWidth()
-//            .wrapContentHeight(),
-//          horizontalArrangement = Arrangement.Center,
-//          verticalAlignment = Alignment.CenterVertically,
-//        ) {
-//          Text(
-//            text = getCurrentTime().formatDate(),
-//            style = TextMRegular,
-//            color = Gray500,
-//          )
-//        }
-//        Spacer(modifier = Modifier.height(8.dp))
-//        Row(
-//          modifier
-//            .fillMaxWidth()
-//            .wrapContentHeight(),
-//          horizontalArrangement = Arrangement.Center,
-//          verticalAlignment = Alignment.CenterVertically,
-//        ) {
-//          Text(
-//            text = stringResource(R.string.start_chat_info),
-//            style = TextXsRegular,
-//            color = Gray500,
-//            textAlign = TextAlign.Center,
-//          )
-//        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Column(
-          modifier = Modifier.padding(),
-        ) {
-          uiState.chatMessageList?.let {
-            LazyColumn(
-              modifier = Modifier
-                .fillMaxHeight()
-                .padding(bottom = 120.dp),
-              state = listState,
-            ) {
-              item {
-                Row(
-                  modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                  horizontalArrangement = Arrangement.Center,
-                  verticalAlignment = Alignment.CenterVertically,
-                ) {
-                  Text(
-                    text = getCurrentTime().formatDate(),
-                    style = TextMRegular,
-                    color = Gray500,
-                  )
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                  modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                  horizontalArrangement = Arrangement.Center,
-                  verticalAlignment = Alignment.CenterVertically,
-                ) {
-                  Text(
-                    text = stringResource(R.string.start_chat_info),
-                    style = TextXsRegular,
-                    color = Gray500,
-                    textAlign = TextAlign.Center,
-                  )
-                }
-                Spacer(modifier = Modifier.height(8.dp))
+        uiState.chatMessageList?.let {
+          LazyColumn(
+            modifier = Modifier.weight(1f),
+            state = listState,
+          ) {
+            item {
+              Row(
+                modifier
+                  .fillMaxWidth()
+                  .wrapContentHeight(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+              ) {
+                Text(
+                  text = getCurrentTime().formatDate(),
+                  style = TextMRegular,
+                  color = Gray500,
+                )
               }
-              items(
-                items = uiState.chatMessageList,
-                key = { (it.message + " " + it.timestamp + Random.nextInt()) },
-              ) { chatMessage ->
-                ChatBubble(chatMessage = chatMessage)
+              Spacer(modifier = Modifier.height(8.dp))
+              Row(
+                modifier
+                  .fillMaxWidth()
+                  .wrapContentHeight(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+              ) {
+                Text(
+                  text = stringResource(R.string.start_chat_info),
+                  style = TextXsRegular,
+                  color = Gray500,
+                  textAlign = TextAlign.Center,
+                )
               }
-              if (isKeyboardOpen || previousChat.size != it.size) {
-                scope.launch {
-                  listState.scrollToItem(it.size - 1)
-                }
+              Spacer(modifier = Modifier.height(8.dp))
+            }
+            items(
+              items = uiState.chatMessageList,
+              key = { (it.message + " " + it.timestamp + Random.nextInt()) },
+            ) { chatMessage ->
+              ChatBubble(chatMessage = chatMessage)
+            }
+            if (isKeyboardOpen || previousChat.size != it.size) {
+              scope.launch {
+                listState.scrollToItem(it.size - 1)
               }
             }
-            previousChat = it
           }
+          previousChat = it
         }
-      }
-      Row(
-        modifier = Modifier
-          .padding(bottom = 32.dp)
-          .align(Alignment.BottomCenter),
-        verticalAlignment = Alignment.CenterVertically,
-      ) {
-        OutlinedTextField(
-          modifier = Modifier
-            .padding(start = 16.dp)
-            .weight(1f)
-            .heightIn(min = 56.dp, max = 84.dp),
-          value = uiState.chatInputMessage,
-          singleLine = false,
-          onValueChange = updateChatInputMessage,
-          keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text,
-          ),
-          colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Gray900,
-            unfocusedBorderColor = Gray900,
-            cursorColor = Gray900,
-            focusedTextColor = Gray900,
-            selectionColors = TextSelectionColors(handleColor = Gray500, backgroundColor = Gray500),
-          )
-        )
-        IconButton(
-          onClick = {
-            if (uiState.chatInputMessage.isNotEmpty()) sendChatMessage()
-          },
-          enabled = !uiState.isLoading,
+        Row(
+          modifier = Modifier.imePadding(),
+          verticalAlignment = Alignment.CenterVertically,
         ) {
-          Icon(
-            imageVector = Icons.AutoMirrored.Outlined.Send,
-            contentDescription = stringResource(R.string.send_message_description),
+          OutlinedTextField(
+            modifier = Modifier
+              .padding(start = 16.dp)
+              .weight(1f)
+              .heightIn(min = 56.dp, max = 84.dp),
+            value = uiState.chatInputMessage,
+            singleLine = false,
+            onValueChange = updateChatInputMessage,
+            keyboardOptions = KeyboardOptions(
+              keyboardType = KeyboardType.Text,
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+              focusedBorderColor = Gray900,
+              unfocusedBorderColor = Gray900,
+              cursorColor = Gray900,
+              focusedTextColor = Gray900,
+              selectionColors = TextSelectionColors(handleColor = Gray500, backgroundColor = Gray500),
+            )
           )
+          IconButton(
+            onClick = {
+              if (uiState.chatInputMessage.isNotEmpty()) sendChatMessage()
+            },
+            enabled = !uiState.isLoading,
+          ) {
+            Icon(
+              imageVector = Icons.AutoMirrored.Outlined.Send,
+              contentDescription = stringResource(R.string.send_message_description),
+            )
+          }
         }
       }
     }
