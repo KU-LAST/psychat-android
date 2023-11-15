@@ -165,7 +165,7 @@ internal fun ChatScreen(
           }
           items(
             items = uiState.chatMessageList,
-            key = { (it.message + " " + it.timestamp + Random.nextInt()) },
+            key = { it.message + " " + it.timestamp + Random.nextInt() },
           ) { chatMessage ->
             ChatBubble(chatMessage = chatMessage)
           }
