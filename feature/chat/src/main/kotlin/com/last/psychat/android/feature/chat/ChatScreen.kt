@@ -178,12 +178,14 @@ internal fun ChatScreen(
         previousChat = it
       }
       Row(
-        modifier = Modifier.imePadding(),
+        modifier = Modifier
+          .fillMaxWidth()
+          .imePadding()
+          .padding(start = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
       ) {
         OutlinedTextField(
           modifier = Modifier
-            .padding(start = 16.dp)
             .weight(1f)
             .heightIn(min = 56.dp, max = 84.dp),
           value = uiState.chatInputMessage,
