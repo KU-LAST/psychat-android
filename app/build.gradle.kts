@@ -12,6 +12,24 @@ android {
   buildFeatures {
     buildConfig = true
   }
+
+  buildTypes {
+    getByName("debug") {
+      isDebuggable = true
+      applicationIdSuffix = ".dev"
+      manifestPlaceholders += mapOf(
+        "appName" to "@string/app_name_dev"
+      )
+    }
+
+    getByName("release") {
+      isDebuggable = false
+      signingConfig = signingConfigs.getByName("debug")
+      manifestPlaceholders += mapOf(
+        "appName" to "@string/app_name"
+      )
+    }
+  }
 }
 
 dependencies {

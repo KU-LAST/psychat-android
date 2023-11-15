@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">psychat</string>
+    <string name="app_name">PsyChat</string>
+    <string name="app_name_dev">PsyChat.dev</string>
 </resources>
