@@ -7,8 +7,9 @@ import retrofit2.Response
 import timber.log.Timber
 
 // TODO inline keyword 를 붙히면 좋은 이유 정리
+// suspend 를 제거해도 되는 이유도
 @Suppress("TooGenericExceptionCaught")
-internal suspend fun <T> safeRequest(request: suspend () -> Response<T>): T? {
+internal inline fun <T> safeRequest(request: () -> Response<T>): T? {
   try {
     val response = request()
     if (response.isSuccessful) {
