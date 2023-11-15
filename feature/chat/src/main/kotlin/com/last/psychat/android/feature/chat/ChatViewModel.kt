@@ -9,6 +9,7 @@ import com.last.psychat.android.core.domain.usecase.chat.CheckEmotionIsJudgedUse
 import com.last.psychat.android.core.domain.usecase.chat.EndChatSessionUseCase
 import com.last.psychat.android.core.domain.usecase.chat.GetPreviousChatDetailUseCase
 import com.last.psychat.android.core.domain.usecase.chat.SendChatMessageUseCase
+import com.last.psychat.android.core.domain.util.EndChatSessionResponseServerError
 import com.last.psychat.android.core.ui.UiText
 import com.last.psychat.android.feature.chat.mapper.toUiModel
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
@@ -200,7 +201,12 @@ class ChatViewModel @Inject constructor(
         }
         result.isFailure -> {
           val exception = result.exceptionOrNull()!!
-          _eventFlow.emit(ChatUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
+          if (exception == EndChatSessionResponseServerError) {
+            _eventFlow.emit(ChatUiEvent.ShowToast(UiText.StringResource(R.string.already_end_chat_session)))
+          } else {
+            _eventFlow.emit(ChatUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
+            // _eventFlow.emit(ChatUiEvent.ShowToast(UiText.StringResource(R.string.already_end_chat_session)))
+          }
         }
       }
     }

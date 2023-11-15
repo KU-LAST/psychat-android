@@ -127,7 +127,7 @@ class MainViewModel @Inject constructor(
       _eventFlow.emit(
         MainUiEvent.NavigateToChat(
           sessionId = sessionId,
-          isEndChat = true,
+          isEndChat = false,
         ),
       )
     }
