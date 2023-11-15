@@ -54,8 +54,7 @@ class ResultViewModel @Inject constructor(
   init {
     _uiState.update {
       it.copy(
-        emotion = emotion,
-        // recommendedContentList = recommendedContentList,
+        emotion = emotion
       )
     }
   }
@@ -67,7 +66,11 @@ class ResultViewModel @Inject constructor(
           isLoading = true,
         )
       }
-      val result = getRecommendedContentListUseCase(EmotionRequestEntity(emotion = emotion))
+      val result = getRecommendedContentListUseCase(
+        EmotionRequestEntity(
+          emotion = emotion.replace("+", " "),
+        )
+      )
       when {
         result.isSuccess && result.getOrNull() != null -> {
           val recommendedContentList = result.getOrNull()!!.contentsList

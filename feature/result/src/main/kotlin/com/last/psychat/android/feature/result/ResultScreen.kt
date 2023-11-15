@@ -163,7 +163,10 @@ internal fun ResultScreen(
             verticalAlignment = Alignment.CenterVertically,
           ) {
             Text(
-              text = stringResource(R.string.emotion_judgment_result, uiState.emotion),
+              text = stringResource(
+                R.string.emotion_judgment_result,
+                uiState.emotion.replace("+", " "),
+              ),
               style = H3,
               textAlign = TextAlign.Center,
             )
