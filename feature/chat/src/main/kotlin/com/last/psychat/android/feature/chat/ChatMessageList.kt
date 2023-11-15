@@ -35,22 +35,22 @@ val chatMessageList = listOf(
     isUser = false,
   ),
   ChatMessageUiModel(
-    message = "어떻게 스트레스를 그나마 조금이라도 해소할 수 있을까?",
+    message = "산책 좋네! 어디서 산책하면 좋을려나",
     timestamp = "2023.11.16 12:07:12",
     isUser = true,
   ),
   ChatMessageUiModel(
-    message = "쉬는 시간에 가볍게 산책을 다녀오시는 건 어떨까요?",
+    message = "건대에서 가까운 어린이 대공원은 어떠신가요?",
     timestamp = "2023.11.16 12:08:12",
     isUser = false,
   ),
   ChatMessageUiModel(
-    message = "어떻게 스트레스를 그나마 조금이라도 해소할 수 있을까?",
+    message = "알았어 쉬는 시간에 짬을 내서라도 산책을 해보도록 할께",
     timestamp = "2023.11.16 12:09:12",
     isUser = true,
   ),
   ChatMessageUiModel(
-    message = "쉬는 시간에 가볍게 산책을 다녀오시는 건 어떨까요?",
+    message = "좋습니다",
     timestamp = "2023.11.16 12:10:12",
     isUser = false,
   ),
