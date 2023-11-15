@@ -236,6 +236,7 @@ internal fun ChatScreen(
               sendChatMessage()
             }
           },
+          enabled = !uiState.isLoading,
         ) {
           Icon(
             imageVector = Icons.AutoMirrored.Outlined.Send,
