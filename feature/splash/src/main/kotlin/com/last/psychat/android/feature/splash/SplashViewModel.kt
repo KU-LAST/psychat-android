@@ -8,6 +8,7 @@ import com.last.psychat.android.core.domain.usecase.login.SetLoginTokenUseCase
 import com.last.psychat.android.core.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -41,7 +42,10 @@ class SplashViewModel @Inject constructor(
   val eventFlow: SharedFlow<SplashUiEvent> = _eventFlow.asSharedFlow()
 
   init {
-    checkLoginToken()
+    viewModelScope.launch {
+      delay(500)
+      checkLoginToken()
+    }
   }
 
   private fun checkLoginToken() {
