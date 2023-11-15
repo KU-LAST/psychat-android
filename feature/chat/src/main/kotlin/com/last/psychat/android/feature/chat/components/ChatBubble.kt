@@ -46,7 +46,6 @@ fun ChatBubble(
   ) {
     if (chatMessage.isUser) {
       TimeText(time = chatMessage.timestamp.formatTime())
-      // TimeText(time = chatMessage.timestamp)
       Spacer(modifier = Modifier.width(8.dp))
       MessageBox(
         message = chatMessage.message,
@@ -65,7 +64,6 @@ fun ChatBubble(
       )
       Spacer(modifier = Modifier.width(8.dp))
       TimeText(time = chatMessage.timestamp.formatTime())
-      // TimeText(time = chatMessage.timestamp)
     }
   }
 }
