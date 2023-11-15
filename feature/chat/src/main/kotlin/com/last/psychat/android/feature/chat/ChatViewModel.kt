@@ -201,11 +201,10 @@ class ChatViewModel @Inject constructor(
         }
         result.isFailure -> {
           val exception = result.exceptionOrNull()!!
-          if (exception == EndChatSessionResponseServerError) {
+          if (exception.cause == EndChatSessionResponseServerError) {
             _eventFlow.emit(ChatUiEvent.ShowToast(UiText.StringResource(R.string.already_end_chat_session)))
           } else {
             _eventFlow.emit(ChatUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
-            // _eventFlow.emit(ChatUiEvent.ShowToast(UiText.StringResource(R.string.already_end_chat_session)))
           }
         }
       }

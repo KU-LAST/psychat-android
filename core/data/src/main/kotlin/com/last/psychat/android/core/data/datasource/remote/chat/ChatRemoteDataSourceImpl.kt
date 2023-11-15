@@ -59,18 +59,16 @@ internal class ChatRemoteDataSourceImpl @Inject constructor(
       val response = service.endChatSession(endChatRequest)
       if (response.isSuccessful) {
         return response.body()
+      } else if (response.code() == 500) {
+        throw EndChatSessionResponseServerError
       } else {
-        if (response.code() == 500) {
-          throw EndChatSessionResponseServerError
-        } else {
-          val errorBody = response.errorBody()?.string() ?: "Unknown error"
-          Timber.d(Exception(errorBody))
-          throw ExceptionWrapper(
-            statusCode = response.code(),
-            message = Exception(errorBody).toAlertMessage(),
-            cause = Exception(errorBody),
-          )
-        }
+        val errorBody = response.errorBody()?.string() ?: "Unknown error"
+        Timber.d(Exception(errorBody))
+        throw ExceptionWrapper(
+          statusCode = response.code(),
+          message = Exception(errorBody).toAlertMessage(),
+          cause = Exception(errorBody),
+        )
       }
     } catch (exception: HttpException) {
       Timber.d(exception)
