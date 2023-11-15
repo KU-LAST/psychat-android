@@ -10,8 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.last.psychat.android.core.ui.components.ProfileImage
+import com.last.psychat.android.feature.main.R
 import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.H5
 
@@ -26,7 +28,7 @@ fun MainTopBar(
     contentAlignment = Alignment.CenterStart,
   ) {
     Text(
-      text = "채팅 목록",
+      text = stringResource(R.string.chat_list),
       style = H5,
       color = Gray900,
     )

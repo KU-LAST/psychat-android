@@ -20,7 +20,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Send
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -89,7 +88,6 @@ internal fun ChatRoute(
   )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ChatScreen(
   modifier: Modifier = Modifier,
@@ -108,6 +106,7 @@ internal fun ChatScreen(
 //  LaunchedEffect(key1 = uiState.chatMessageList.size) {
 //    listState.scrollToItem(uiState.chatMessageList.size - 1)
 //  }
+
   Surface(
     modifier = modifier.fillMaxSize(),
   ) {
@@ -200,7 +199,7 @@ internal fun ChatScreen(
               cursorColor = Gray900,
               focusedTextColor = Gray900,
               selectionColors = TextSelectionColors(handleColor = Gray500, backgroundColor = Gray500),
-            )
+            ),
           )
           IconButton(
             onClick = {

@@ -18,6 +18,7 @@ import javax.inject.Inject
 import retrofit2.HttpException
 import timber.log.Timber
 
+@Suppress("TooGenericExceptionCaught")
 internal class ChatRemoteDataSourceImpl @Inject constructor(
   private val service: ChatService,
 ) : ChatRemoteDataSource {
