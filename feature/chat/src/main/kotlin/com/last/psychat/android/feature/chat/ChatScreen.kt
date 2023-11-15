@@ -19,10 +19,12 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Send
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,6 +53,7 @@ import com.last.psychat.core.util.extension.formatDate
 import com.last.psychat.core.util.getCurrentTime
 import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
+import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.TextMRegular
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import kotlin.random.Random
@@ -88,6 +91,7 @@ internal fun ChatRoute(
   )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ChatScreen(
   modifier: Modifier = Modifier,
@@ -229,6 +233,12 @@ internal fun ChatScreen(
           keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
           ),
+          colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = Gray900,
+            unfocusedBorderColor = Gray900,
+            cursorColor = Gray900,
+            focusedTextColor = Gray900,
+          )
         )
         IconButton(
           onClick = {
