@@ -50,6 +50,7 @@ import com.last.psychat.android.feature.chat.components.ChatTopBar
 import com.last.psychat.android.feature.chat.model.ChatMessageUiModel
 import com.last.psychat.core.util.extension.formatDate
 import com.last.psychat.core.util.getCurrentTime
+import com.last.pyschat.android.core.designsystem.theme.Gray50
 import com.last.pyschat.android.core.designsystem.theme.Gray500
 import com.last.pyschat.android.core.designsystem.theme.Gray900
 import com.last.pyschat.android.core.designsystem.theme.TextMRegular
@@ -108,6 +109,7 @@ internal fun ChatScreen(
 
   Surface(
     modifier = modifier.fillMaxSize(),
+    color = Gray50,
   ) {
     Column(
       modifier
