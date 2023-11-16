@@ -91,6 +91,11 @@ class ChatViewModel @Inject constructor(
 
   private fun getPreviousChatDetail(sessionId: Long) {
     viewModelScope.launch {
+      _uiState.update {
+        it.copy(
+          isLoading = true,
+        )
+      }
       val result = getPreviousChatDetailUseCase(sessionId)
       when {
         result.isSuccess && result.getOrNull() != null -> {
@@ -106,6 +111,11 @@ class ChatViewModel @Inject constructor(
           val exception = result.exceptionOrNull()!!
           _eventFlow.emit(ChatUiEvent.ShowToast(UiText.DirectString(exception.message.toString())))
         }
+      }
+      _uiState.update {
+        it.copy(
+          isLoading = false
+        )
       }
     }
   }

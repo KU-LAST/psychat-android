@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.last.psychat.android.core.ui.ObserveAsEvents
+import com.last.psychat.android.core.ui.components.LoadingScreen
 import com.last.psychat.android.core.ui.extension.noRippleClickable
 import com.last.psychat.android.core.ui.keyboardAsState
 import com.last.psychat.android.feature.chat.components.ChatBubble
@@ -129,6 +130,9 @@ internal fun ChatScreen(
       )
       HorizontalDivider(color = Gray500)
       Spacer(modifier = Modifier.height(8.dp))
+      if (uiState.isLoading) {
+        LoadingScreen(modifier = Modifier.fillMaxSize())
+      }
 //      LazyColumn(
 //        modifier = Modifier.weight(1f),
 //        state = listState,
