@@ -59,11 +59,11 @@ import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import kotlin.random.Random
 import kotlinx.coroutines.launch
 
-// TODO 채팅을 보내면 텍스트 필드가 바로 비워지게?
 @Composable
 internal fun ChatRoute(
   onNavigateBack: () -> Unit,
   navigateToResult: (String) -> Unit,
+  modifier: Modifier = Modifier,
   viewModel: ChatViewModel = hiltViewModel(),
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -86,17 +86,18 @@ internal fun ChatRoute(
     updateChatInputMessage = viewModel::updateChatInputMessage,
     sendChatMessage = viewModel::sendChatMessage,
     checkEmotionIsJudged = viewModel::checkEmotionIsJudged,
+    modifier = modifier,
   )
 }
 
 @Composable
 internal fun ChatScreen(
-  modifier: Modifier = Modifier,
   uiState: ChatUiState,
   onNavigateBack: () -> Unit,
   updateChatInputMessage: (String) -> Unit,
   sendChatMessage: () -> Unit,
   checkEmotionIsJudged: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   val listState = rememberLazyListState()
   val scope = rememberCoroutineScope()
@@ -115,7 +116,7 @@ internal fun ChatScreen(
     color = Gray50,
   ) {
     Column(
-      modifier
+      modifier = modifier
         .fillMaxSize()
         .noRippleClickable {
           keyboardController?.hide()
@@ -130,7 +131,7 @@ internal fun ChatScreen(
       )
       HorizontalDivider(color = Gray500)
       Spacer(modifier = Modifier.height(8.dp))
-      if (uiState.isLoading) {
+      if (uiState.isLoading && uiState.chatMessageList.isNullOrEmpty()) {
         LoadingScreen(modifier = Modifier.fillMaxSize())
       }
 //      LazyColumn(
@@ -175,6 +176,7 @@ internal fun ChatScreen(
 //          ChatBubble(chatMessage = chatMessage)
 //        }
 //      }
+
       uiState.chatMessageList?.let {
         LazyColumn(
           modifier = Modifier.weight(1f),

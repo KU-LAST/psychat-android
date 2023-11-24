@@ -31,8 +31,8 @@ import com.last.pyschat.android.core.designsystem.theme.TextSRegular
 
 @Composable
 fun ChatBubble(
-  modifier: Modifier = Modifier,
   chatMessage: ChatMessageUiModel,
+  modifier: Modifier = Modifier,
 ) {
   val messageArrangement = if (chatMessage.isUser) Arrangement.End else Arrangement.Start
 

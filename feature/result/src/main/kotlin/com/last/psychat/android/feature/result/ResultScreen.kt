@@ -60,10 +60,10 @@ import com.last.pyschat.android.core.designsystem.theme.H5
 import com.last.pyschat.android.core.designsystem.theme.TextXsRegular
 import com.last.pyschat.android.core.designsystem.theme.Title
 
-// TODO 시스템 백버튼 누르면 채팅 화면으로 이동하는 문제
 @Composable
 internal fun ResultRoute(
   navigateToMain: (NavOptions) -> Unit,
+  modifier: Modifier = Modifier,
   viewModel: ResultViewModel = hiltViewModel(),
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -93,17 +93,18 @@ internal fun ResultRoute(
     navigateToYoutube = viewModel::navigateToYoutube,
     navigateToMain = viewModel::navigateToMain,
     closeNetworkErrorDialog = viewModel::closeNetworkErrorDialog,
+    modifier = modifier,
   )
 }
 
 @Composable
 internal fun ResultScreen(
-  modifier: Modifier = Modifier,
   uiState: ResultUiState,
   getRecommendedContentList: () -> Unit,
   navigateToYoutube: (String) -> Unit,
   navigateToMain: () -> Unit,
   closeNetworkErrorDialog: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
   val scrollState = rememberScrollState()

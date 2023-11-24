@@ -24,6 +24,7 @@ import com.last.pyschat.android.core.designsystem.theme.Gray50
 @Composable
 internal fun SplashRoute(
   navigateToMain: (NavOptions) -> Unit,
+  modifier: Modifier = Modifier,
   viewModel: SplashViewModel = hiltViewModel(),
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -46,14 +47,15 @@ internal fun SplashRoute(
   SplashScreen(
     uiState = uiState,
     navigateToMain = viewModel::navigateToMain,
+    modifier = modifier,
   )
 }
 
 @Composable
 fun SplashScreen(
-  modifier: Modifier = Modifier,
   uiState: SplashUiState,
   navigateToMain: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   when {
     uiState.isLoading -> {

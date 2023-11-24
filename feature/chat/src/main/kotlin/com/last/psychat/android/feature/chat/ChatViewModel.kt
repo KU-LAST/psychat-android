@@ -114,7 +114,7 @@ class ChatViewModel @Inject constructor(
       }
       _uiState.update {
         it.copy(
-          isLoading = false
+          isLoading = false,
         )
       }
     }

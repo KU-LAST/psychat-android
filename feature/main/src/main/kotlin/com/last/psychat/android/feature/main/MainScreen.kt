@@ -36,6 +36,7 @@ import com.last.pyschat.android.core.designsystem.theme.Gray500
 @Composable
 internal fun MainRoute(
   navigateToChat: (Long, Boolean) -> Unit,
+  modifier: Modifier = Modifier,
   viewModel: MainViewModel = hiltViewModel(),
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -58,18 +59,18 @@ internal fun MainRoute(
     startChatSession = viewModel::startChatSession,
     resumeChatSession = viewModel::resumeChatSession,
     closeNetworkErrorDialog = viewModel::closeNetworkErrorDialog,
+    modifier = modifier,
   )
 }
 
-// TODO 스켈레톤 UI 구성
 @Composable
 internal fun MainScreen(
-  modifier: Modifier = Modifier,
   uiState: MainUiState,
   getPreviousChatList: () -> Unit,
   startChatSession: () -> Unit,
   resumeChatSession: (Long) -> Unit,
   closeNetworkErrorDialog: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   LaunchedEffect(key1 = Unit) {
     getPreviousChatList()

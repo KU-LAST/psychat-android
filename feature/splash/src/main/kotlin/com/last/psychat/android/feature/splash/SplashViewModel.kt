@@ -35,6 +35,7 @@ class SplashViewModel @Inject constructor(
   private val getLoginTokenUseCase: GetLoginTokenUseCase,
   private val setLoginTokenUseCase: SetLoginTokenUseCase,
 ) : ViewModel() {
+
   private val _uiState = MutableStateFlow(SplashUiState())
   val uiState: StateFlow<SplashUiState> = _uiState.asStateFlow()
 
