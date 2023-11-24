@@ -14,7 +14,14 @@
 
 |이전 채팅 목록 화면|챗봇 채팅 화면|감정 판단 결과 화면|
 |:-----:|:-----:|:-----:|
-|<img width="240" src="https://github.com/Nexters/BandalArt-Android/assets/51016231/e00aec2e-d9ca-4057-9a8e-af14b8da89bf.gif">|<img width="240" src="https://github.com/Nexters/BandalArt-Android/assets/51016231/e402dfcb-b490-43fa-9dca-ee843920c187.gif">|<img width="240" src="https://github.com/Nexters/BandalArt-Android/assets/51016231/d554c9bd-0067-429f-acee-10d9bf018f6a.gif">|
+|<img width="240" src="https://github.com/KU-LAST/psychat-android/assets/51016231/44c32ebe-05bf-4a5f-8d06-5ed8b1a7706a">|<img width="240" src="https://github.com/KU-LAST/psychat-android/assets/51016231/6233b39d-3779-416e-a301-905e80201950">|<img width="240" src="https://github.com/KU-LAST/psychat-android/assets/51016231/b7bc7040-319f-4986-8ee6-ba57d062a193">|
+
+## Article
+[Compose Navigation 을 통해 Argument 를 전달할 때 주의 해야할 점](https://velog.io/@mraz3068/Points-to-be-cautious-about-when-passing-arguments-through-Compose-Navigation)
+
+[Jetpack Compose 를 사용하여 채팅 화면 UI 구현하기](https://velog.io/@mraz3068/Jetpack-Compose-Chat-Screen-Implementation)
+
+[Type com.last.psychat.android.feature.main.BuildConfig is defined multiple times](https://velog.io/@mraz3068/Type-BuildConfig-is-defined-multiple-times)
 
 ## Development
 
