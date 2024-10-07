@@ -21,7 +21,7 @@
 
 [Jetpack Compose 를 사용하여 채팅 화면 UI 구현하기](https://velog.io/@mraz3068/Jetpack-Compose-Chat-Screen-Implementation)
 
-[Type com.last.psychat.android.feature.main.BuildConfig is defined multiple times](https://velog.io/@mraz3068/Type-BuildConfig-is-defined-multiple-times)
+[Type BuildConfig is defined multiple times](https://velog.io/@mraz3068/Type-BuildConfig-is-defined-multiple-times)
 
 ## Development
 
